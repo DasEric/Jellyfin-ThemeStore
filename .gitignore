@@ -1,0 +1,9 @@
+bin/
+obj/
+artifacts/
+.vs/
+TestResults/
+.vscode/settings.json
+*.user
+*.suo
+.DS_Store

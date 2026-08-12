@@ -1,0 +1,86 @@
+[
+  {
+    "guid": "4e75cc9d-4fcf-473a-bf35-e61484324d12",
+    "name": "Theme Store",
+    "description": "A per-user CSS theme store for Jellyfin Web with preview galleries and an administrator-defined server default.",
+    "overview": "Let every Jellyfin user choose a personal CSS theme without changing the experience for other users.",
+    "owner": "Theme Store contributors",
+    "category": "General",
+    "imageUrl": "https://raw.githubusercontent.com/OWNER/Jellyfin-ThemeStore/main/assets/skinmanager.svg",
+    "versions": []
+  },
+  {
+    "guid": "5e87cc92-571a-4d8d-8d98-d2d4147f9f90",
+    "name": "File Transformation",
+    "description": "Allows plugins to transform jellyfin-web responses without modifying web files on disk.",
+    "overview": "Runtime dependency for Theme Store.",
+    "owner": "IAmParadox27",
+    "category": "General",
+    "imageUrl": "https://raw.githubusercontent.com/IAmParadox27/jellyfin-plugin-file-transformation/main/src/logo.png",
+    "versions": [
+      {
+        "version": "2.5.5.0",
+        "changelog": "Upstream File Transformation release.",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://github.com/IAmParadox27/jellyfin-plugin-file-transformation/releases/download/2.5.5.0/Release-10.11.0.zip",
+        "checksum": "519CA3A99A4ADDB3E67FD910ADE7E408",
+        "timestamp": "2026-03-15T13:12:07Z",
+        "dependencies": []
+      },
+      {
+        "version": "2.5.5.0",
+        "changelog": "Upstream File Transformation release.",
+        "targetAbi": "10.11.1.0",
+        "sourceUrl": "https://github.com/IAmParadox27/jellyfin-plugin-file-transformation/releases/download/2.5.5.0/Release-10.11.1.zip",
+        "checksum": "79C3719F597A7C07545C5833E16C1C3E",
+        "timestamp": "2026-03-15T13:12:07Z",
+        "dependencies": []
+      },
+      {
+        "version": "2.5.5.0",
+        "changelog": "Upstream File Transformation release.",
+        "targetAbi": "10.11.2.0",
+        "sourceUrl": "https://github.com/IAmParadox27/jellyfin-plugin-file-transformation/releases/download/2.5.5.0/Release-10.11.2.zip",
+        "checksum": "1484C2C353A06A9FF554B06E4772C35E",
+        "timestamp": "2026-03-15T13:12:07Z",
+        "dependencies": []
+      },
+      {
+        "version": "2.5.5.0",
+        "changelog": "Upstream File Transformation release.",
+        "targetAbi": "10.11.3.0",
+        "sourceUrl": "https://github.com/IAmParadox27/jellyfin-plugin-file-transformation/releases/download/2.5.5.0/Release-10.11.3.zip",
+        "checksum": "7AC78B6E8D111A847E1FE48DCA8AB285",
+        "timestamp": "2026-03-15T13:12:07Z",
+        "dependencies": []
+      },
+      {
+        "version": "2.5.5.0",
+        "changelog": "Upstream File Transformation release.",
+        "targetAbi": "10.11.4.0",
+        "sourceUrl": "https://github.com/IAmParadox27/jellyfin-plugin-file-transformation/releases/download/2.5.5.0/Release-10.11.4.zip",
+        "checksum": "135E71F23F5204A8799AEB3B69EA53E8",
+        "timestamp": "2026-03-15T13:12:07Z",
+        "dependencies": []
+      },
+      {
+        "version": "2.5.5.0",
+        "changelog": "Upstream File Transformation release.",
+        "targetAbi": "10.11.5.0",
+        "sourceUrl": "https://github.com/IAmParadox27/jellyfin-plugin-file-transformation/releases/download/2.5.5.0/Release-10.11.5.zip",
+        "checksum": "8826A99A68B162295AB89F1575056B39",
+        "timestamp": "2026-03-15T13:12:07Z",
+        "dependencies": []
+      },
+      {
+        "version": "2.5.5.0",
+        "changelog": "Upstream File Transformation release.",
+        "targetAbi": "10.11.6.0",
+        "sourceUrl": "https://github.com/IAmParadox27/jellyfin-plugin-file-transformation/releases/download/2.5.5.0/Release-10.11.6.zip",
+        "checksum": "64CF0AC3E9BDE83CEACDACFBDCD4E007",
+        "timestamp": "2026-03-15T13:12:07Z",
+        "dependencies": []
+      }
+    ]
+  }
+]
