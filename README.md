@@ -29,21 +29,24 @@ Supported clients include regular web browsers and many Jellyfin applications th
 
 Custom themes are intentionally disabled on login, setup, administrator, and Theme Store pages. This keeps a safe recovery interface available if a theme is broken.
 
-## Installation from a Jellyfin plugin repository
+## Install through Jellyfin
 
-After creating the first GitHub release, the repository URL will be:
+Copy the following **Theme Store repository URL** into Jellyfin:
 
 ```text
-https://raw.githubusercontent.com/YOUR-GITHUB-NAME/Jellyfin-ThemeStore/main/manifest.json
+https://daseric.github.io/Jellyfin-ThemeStore/manifest.json
 ```
 
-1. Open `Dashboard → Plugins → Repositories` in Jellyfin.
-2. Add the URL of this repository's `manifest.json`.
-3. In the plugin catalog, install **File Transformation** first and **Theme Store** second.
-4. Restart Jellyfin.
-5. Open `Dashboard → Plugins → Theme Store` and configure the catalog and server default.
+1. Sign in to Jellyfin as an administrator.
+2. Open `Dashboard → Plugins → Repositories`.
+3. Add a repository named **Jellyfin Theme Store**, paste the URL above, and save it.
+4. Open the plugin catalog and install **File Transformation** first and **Theme Store** second.
+5. Restart Jellyfin.
+6. Open `Dashboard → Plugins → Theme Store` and configure the catalog and server default.
 
-Before publishing this local project, replace `YOUR-GITHUB-NAME` and the remaining `OWNER` placeholders with the actual GitHub user or organization. For every `v*` tag, the release workflow automatically writes the release download URL, checksum, and image URL to `manifest.json`.
+You can also open the [Theme Store repository manifest](https://daseric.github.io/Jellyfin-ThemeStore/manifest.json) directly or read Jellyfin's [official plugin repository documentation](https://jellyfin.org/docs/general/server/plugins/#repositories).
+
+The repository becomes installable after its first GitHub release. For every `v*` tag, the release workflow automatically writes the release download URL, checksum, and image URL to `manifest.json`.
 
 ## Managing the theme catalog
 
@@ -144,6 +147,8 @@ git push origin v1.0.0.0
 ```
 
 GitHub Actions runs the test suite, builds `ThemeStore_1.0.0.0.zip`, creates the GitHub release, and updates the newest version in `manifest.json`. The dependency on File Transformation is added automatically.
+
+Before the first Pages deployment, select **GitHub Actions** under `Settings → Pages → Build and deployment → Source`. After a successful release, the same workflow publishes the generated repository manifest as `/manifest.json`.
 
 ## Data and uninstalling
 

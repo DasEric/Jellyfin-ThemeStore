@@ -1,15 +1,20 @@
-name: Release
+name: Build, release and publish Jellyfin repository
 
 on:
   push:
     tags: ["v*"]
 
-permissions:
-  contents: write
+concurrency:
+  group: jellyfin-release
+  cancel-in-progress: false
+
+permissions: {}
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,3 +59,30 @@ jobs:
           git add manifest.json
           git commit -m "chore: update plugin manifest for v${VERSION}" || exit 0
           git push origin main
+      - name: Prepare Jellyfin repository site
+        shell: bash
+        run: |
+          mkdir -p _site
+          cp manifest.json _site/manifest.json
+          touch _site/.nojekyll
+      - name: Upload Jellyfin repository site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy-repository:
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Publish Jellyfin repository manifest
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -12,7 +12,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <Authors>Jellyfin Theme Store contributors; based on work by Jellyfin Plugin Group</Authors>
-    <RepositoryUrl>https://github.com/OWNER/Jellyfin-ThemeStore</RepositoryUrl>
+    <RepositoryUrl>https://github.com/DasEric/Jellyfin-ThemeStore</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Description>A per-user CSS theme store for Jellyfin Web.</Description>
     <Copyright>Original portions Copyright © 2026 Jellyfin SM; modifications Copyright © 2026 Jellyfin Theme Store contributors</Copyright>
