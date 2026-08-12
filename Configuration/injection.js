@@ -25,7 +25,35 @@
     const client = api();
     const url = apiUrl(path, query);
     if (client && client.fetch) return client.fetch(Object.assign({ url: url }, options || {}));
-    return fetch(url, options || {});
+    const request = Object.assign({}, options || {});
+    const dataType = request.dataType;
+    if (request.type && !request.method) request.method = request.type;
+    delete request.type;
+    delete request.dataType;
+    return fetch(url, request).then(function (response) {
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      if (dataType === 'json') return response.json();
+      if (dataType === 'text') return response.text();
+      return response;
+    });
+  }
+
+  function readText(value) {
+    if (typeof value === 'string') return Promise.resolve(value);
+    if (value && typeof value.text === 'function') {
+      if (value.ok === false) throw new Error('HTTP ' + value.status);
+      return value.text();
+    }
+    throw new Error('Theme CSS response is not text.');
+  }
+
+  function readJson(value) {
+    if (value && typeof value.json === 'function') {
+      if (value.ok === false) throw new Error('HTTP ' + value.status);
+      return value.json();
+    }
+    if (value && typeof value === 'object') return Promise.resolve(value);
+    throw new Error('Theme catalog response is not JSON.');
   }
 
   function clearTheme() {
@@ -64,11 +92,8 @@
     clearTheme();
     if (!themeId || themeId === 'jellyfin-default') return;
     const epoch = runId;
-    apiFetch('ThemeStore/Theme.css', {}, { id: themeId, v: version || '1' })
-      .then(function (response) {
-        if (!response.ok) throw new Error('HTTP ' + response.status);
-        return response.text();
-      })
+    apiFetch('ThemeStore/Theme.css', { type: 'GET', dataType: 'text' }, { id: themeId, v: version || '1' })
+      .then(readText)
       .then(function (css) {
         if (epoch !== runId || SAFE_ROUTE.test(window.location.hash) || document.getElementById(MODAL_ID)) return;
         Object.keys(variables || {}).forEach(function (key) {
@@ -103,11 +128,8 @@
       setTimeout(refreshTheme, 250);
       return;
     }
-    apiFetch('ThemeStore/Catalog')
-      .then(function (response) {
-        if (!response.ok) throw new Error('HTTP ' + response.status);
-        return response.json();
-      })
+    apiFetch('ThemeStore/Catalog', { type: 'GET', dataType: 'json' })
+      .then(readJson)
       .then(function (data) {
         const id = chooseTheme(data);
         const theme = (data.Themes || []).find(function (entry) { return entry.Id === id; });

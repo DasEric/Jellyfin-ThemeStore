@@ -41,6 +41,9 @@ public sealed class ThemeCatalogParserTests
         Assert.Contains(".mainDrawer-scrollContainer", script);
         Assert.Contains(".customMenuOptions", script);
         Assert.Contains("ThemeStore/Page", script);
+        Assert.Contains("dataType: 'text'", script);
+        Assert.Contains("dataType: 'json'", script);
+        Assert.Contains("typeof value.text === 'function'", script);
         Assert.DoesNotContain(".lnkHomePreferences", script);
     }
 
