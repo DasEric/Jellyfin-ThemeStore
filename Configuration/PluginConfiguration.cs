@@ -14,9 +14,9 @@ namespace Jellyfin.Plugin.ThemeStore.Configuration
 
         /// <summary>
         /// When true, users can override the server-wide theme with their own
-        /// choice via the "My Theme" user-settings page. Their preferences are
-        /// stored in browser localStorage; the server-injected JS reads that key
-        /// and substitutes the user's CSS on every page load.
+        /// choice via the Theme Store entry in Jellyfin's main drawer. Preferences
+        /// are stored server-side per Jellyfin user id and follow the account
+        /// across supported web-based clients.
         /// Added in config version 5.
         /// </summary>
         public bool AllowUserThemes { get; set; } = true;

@@ -106,22 +106,20 @@ namespace Jellyfin.Plugin.ThemeStore
         }
 
         public IEnumerable<PluginPageInfo> GetPages()
+            => CreatePages();
+
+        public static IReadOnlyList<PluginPageInfo> CreatePages()
         {
             return new[]
             {
                 new PluginPageInfo
                 {
-                    Name = Name,
-                    DisplayName = "Theme Store",
+                    Name = "ThemeStoreSettings",
+                    DisplayName = "Theme Store Settings",
                     EnableInMainMenu = true,
-                    EmbeddedResourcePath = $"{GetType().Namespace}.Configuration.configPage.html"
-                },
-                new PluginPageInfo
-                {
-                    Name = "ThemeStoreUserPage",
-                    DisplayName = "Theme Store",
-                    EnableInMainMenu = false,
-                    EmbeddedResourcePath = $"{GetType().Namespace}.Configuration.userThemePage.html"
+                    MenuSection = "server",
+                    MenuIcon = "settings",
+                    EmbeddedResourcePath = $"{typeof(Plugin).Namespace}.Configuration.configPage.html"
                 }
             };
         }

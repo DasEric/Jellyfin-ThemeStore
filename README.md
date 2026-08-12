@@ -6,7 +6,7 @@ This project is based on [Jellyfin-PG/Skin-Manager](https://github.com/Jellyfin-
 
 ## Features
 
-- Theme Store entry in every user's normal Jellyfin settings
+- Theme Store entry in Jellyfin's hamburger menu for every signed-in user
 - Personal selections stored server-side and isolated by Jellyfin user ID
 - A user's theme follows their account across browsers and devices
 - Administrator-defined server default: Jellyfin, catalog theme, or custom CSS
@@ -42,7 +42,7 @@ https://daseric.github.io/Jellyfin-ThemeStore/manifest.json
 3. Add a repository named **Jellyfin Theme Store**, paste the URL above, and save it.
 4. Open the plugin catalog and install **File Transformation** first and **Theme Store** second.
 5. Restart Jellyfin.
-6. Open `Dashboard → Plugins → Theme Store` and configure the catalog and server default.
+6. Open `Dashboard → Plugins → Theme Store Settings` and configure the catalog and server default.
 
 You can also open the [Theme Store repository manifest](https://daseric.github.io/Jellyfin-ThemeStore/manifest.json) directly or read Jellyfin's [official plugin repository documentation](https://jellyfin.org/docs/general/server/plugins/#repositories).
 
@@ -109,7 +109,7 @@ JSON catalogs may also declare the existing Skin Manager `vars` array. Users and
 
 ### Administrators
 
-The following options are available under `Dashboard → Plugins → Theme Store`:
+The following options are available under `Dashboard → Plugins → Theme Store Settings`:
 
 - Theme catalog URL
 - Global server default
@@ -121,7 +121,7 @@ When personal themes are enabled, users without a personal selection continue to
 
 ### Users
 
-A **Theme Store** entry appears in the normal user settings. The selection is saved on the Jellyfin server under the authenticated user ID. Choosing **Use server default** removes only the current user's personal selection.
+A **Theme Store** entry appears directly in Jellyfin's hamburger menu for every signed-in user. It opens the preview gallery and personal theme picker without entering the administrator dashboard. The selection is saved on the Jellyfin server under the authenticated user ID. Choosing **Use server default** removes only the current user's personal selection.
 
 ## Security and privacy
 

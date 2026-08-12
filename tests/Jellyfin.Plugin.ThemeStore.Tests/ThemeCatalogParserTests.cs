@@ -1,8 +1,13 @@
 using System;
+using System.Linq;
+using System.Reflection;
+using System.Security.Claims;
 using Jellyfin.Plugin.ThemeStore;
 using Jellyfin.Plugin.ThemeStore.Services;
 using Jellyfin.Plugin.ThemeStore.Api;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace Jellyfin.Plugin.ThemeStore.Tests;
@@ -10,11 +15,47 @@ namespace Jellyfin.Plugin.ThemeStore.Tests;
 public sealed class ThemeCatalogParserTests
 {
     [Fact]
-    public void EmbedsBothJellyfinPages()
+    public void EmbedsAdminAndUserFrontendResources()
     {
         string[] resources = typeof(global::Jellyfin.Plugin.ThemeStore.Plugin).Assembly.GetManifestResourceNames();
         Assert.Contains("Jellyfin.Plugin.ThemeStore.Configuration.configPage.html", resources);
+        Assert.Contains("Jellyfin.Plugin.ThemeStore.Configuration.injection.js", resources);
         Assert.Contains("Jellyfin.Plugin.ThemeStore.Configuration.userThemePage.html", resources);
+        Assert.Contains("Jellyfin.Plugin.ThemeStore.Configuration.userThemePage.js", resources);
+    }
+
+    [Fact]
+    public void RegistersOnlyAdminSettingsAsJellyfinPluginPage()
+    {
+        var page = Assert.Single(global::Jellyfin.Plugin.ThemeStore.Plugin.CreatePages());
+        Assert.Equal("ThemeStoreSettings", page.Name);
+        Assert.Equal("Theme Store Settings", page.DisplayName);
+        Assert.True(page.EnableInMainMenu);
+        Assert.Equal("server", page.MenuSection);
+    }
+
+    [Fact]
+    public void UserDrawerInjectionTargetsJellyfinMainDrawer()
+    {
+        string script = ReadEmbeddedText("Jellyfin.Plugin.ThemeStore.Configuration.injection.js");
+        Assert.Contains(".mainDrawer-scrollContainer", script);
+        Assert.Contains(".customMenuOptions", script);
+        Assert.Contains("ThemeStore/Page", script);
+        Assert.DoesNotContain(".lnkHomePreferences", script);
+    }
+
+    [Fact]
+    public void InjectsExternalBootstrapExactlyOnce()
+    {
+        string first = SkinInjector.InjectTheme(new PatchRequestPayload
+        {
+            Contents = "<html><head><title>Jellyfin</title></head><body></body></html>"
+        });
+        string second = SkinInjector.InjectTheme(new PatchRequestPayload { Contents = first });
+
+        Assert.Contains("../ThemeStore/InjectionScript", second);
+        Assert.Equal(1, second.Split("../ThemeStore/InjectionScript", StringSplitOptions.None).Length - 1);
+        Assert.Equal(1, second.Split("<!-- ThemeStore-Start -->", StringSplitOptions.None).Length - 1);
     }
 
     [Fact]
@@ -99,6 +140,47 @@ public sealed class ThemeCatalogParserTests
         Assert.NotEmpty(controller.GetMethod(nameof(ThemeStoreController.DeletePreference))!.GetCustomAttributes(typeof(AuthorizeAttribute), true));
         Assert.NotEmpty(controller.GetMethod(nameof(ThemeStoreController.GetThemeCss))!.GetCustomAttributes(typeof(AuthorizeAttribute), true));
         Assert.NotEmpty(controller.GetMethod(nameof(ThemeStoreController.ClearCache))!.GetCustomAttributes(typeof(AuthorizeAttribute), true));
+        Assert.NotEmpty(controller.GetMethod(nameof(ThemeStoreController.GetInjectionScript))!.GetCustomAttributes(typeof(AllowAnonymousAttribute), true));
         Assert.NotEmpty(controller.GetMethod(nameof(ThemeStoreController.GetPage))!.GetCustomAttributes(typeof(AllowAnonymousAttribute), true));
+        Assert.NotEmpty(controller.GetMethod(nameof(ThemeStoreController.GetPageScript))!.GetCustomAttributes(typeof(AllowAnonymousAttribute), true));
+
+        Assert.DoesNotContain(
+            controller.GetMethod(nameof(ThemeStoreController.GetCatalog))!.GetCustomAttributes(typeof(AuthorizeAttribute), true).Cast<AuthorizeAttribute>(),
+            attribute => attribute.Policy == MediaBrowser.Common.Api.Policies.RequiresElevation);
+        Assert.DoesNotContain(
+            controller.GetMethod(nameof(ThemeStoreController.SavePreference))!.GetCustomAttributes(typeof(AuthorizeAttribute), true).Cast<AuthorizeAttribute>(),
+            attribute => attribute.Policy == MediaBrowser.Common.Api.Policies.RequiresElevation);
+        Assert.DoesNotContain(
+            controller.GetMethod(nameof(ThemeStoreController.DeletePreference))!.GetCustomAttributes(typeof(AuthorizeAttribute), true).Cast<AuthorizeAttribute>(),
+            attribute => attribute.Policy == MediaBrowser.Common.Api.Policies.RequiresElevation);
+    }
+
+    [Fact]
+    public void ResolvesStandardNameIdentifierForRegularUsers()
+    {
+        Guid expected = Guid.NewGuid();
+        var controller = new ThemeStoreController(null!, null!, null!)
+        {
+            ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = new ClaimsPrincipal(new ClaimsIdentity(
+                        new[] { new Claim(ClaimTypes.NameIdentifier, expected.ToString()) },
+                        "test"))
+                }
+            }
+        };
+        MethodInfo method = typeof(ThemeStoreController).GetMethod("GetUserId", BindingFlags.Instance | BindingFlags.NonPublic)!;
+
+        Assert.Equal(expected, (Guid)method.Invoke(controller, null)!);
+    }
+
+    private static string ReadEmbeddedText(string resourceName)
+    {
+        using var stream = typeof(global::Jellyfin.Plugin.ThemeStore.Plugin).Assembly.GetManifestResourceStream(resourceName);
+        Assert.NotNull(stream);
+        using var reader = new System.IO.StreamReader(stream!);
+        return reader.ReadToEnd();
     }
 }

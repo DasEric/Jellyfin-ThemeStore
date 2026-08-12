@@ -1,38 +1,231 @@
 <!doctype html>
 <html lang="de">
 <head>
-    <title>Theme Store</title>
-    <style>
-        .tsPage *{box-sizing:border-box}.tsPage .lead{opacity:.72;line-height:1.5}.tsPage .panel{padding:1.2em;margin:1em 0;border:1px solid rgba(255,255,255,.15);border-radius:10px;background:rgba(255,255,255,.035)}
-        .tsPage .row{display:flex;gap:1em;align-items:end;flex-wrap:wrap}.tsPage .grow{flex:1 1 360px}.tsPage .modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.7em}.tsPage .mode{padding:1em;border:1px solid rgba(255,255,255,.18);border-radius:8px;cursor:pointer}.tsPage .mode.on{border-color:#00a4dc;background:rgba(0,164,220,.12)}
-        .tsPage .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1em;margin-top:1em}.tsPage .card{border:1px solid rgba(255,255,255,.15);border-radius:10px;overflow:hidden;background:rgba(0,0,0,.16)}.tsPage .card.on{outline:3px solid #00a4dc}.tsPage .pic{aspect-ratio:16/9;background:rgba(255,255,255,.07);position:relative;overflow:hidden}.tsPage .pic img{width:100%;height:100%;object-fit:cover}.tsPage .cardBody{padding:.8em}.tsPage .card h3{margin:0 0 .3em;font-size:1em}.tsPage .meta{opacity:.55;font-size:.78em}.tsPage .warning{padding:.7em;margin:.5em 0;background:rgba(255,170,0,.1);border:1px solid rgba(255,170,0,.3);border-radius:6px}.tsPage textarea{min-height:190px;font-family:monospace}.tsPage .footer{display:flex;gap:.8em;justify-content:flex-end;align-items:center;flex-wrap:wrap;margin-top:1.2em}.tsPage .status{margin-right:auto;opacity:.7}
-    </style>
+  <title>Theme Store Settings</title>
+  <style>
+    .ts-settings *{box-sizing:border-box}.ts-settings .ts-lead{opacity:.72;line-height:1.5}.ts-settings .ts-panel{padding:1.2em;margin:1em 0;border:1px solid rgba(255,255,255,.15);border-radius:10px;background:rgba(255,255,255,.035)}
+    .ts-settings .ts-row{display:flex;gap:1em;align-items:end;flex-wrap:wrap}.ts-settings .ts-grow{flex:1 1 360px}.ts-settings .ts-modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.7em}.ts-settings .ts-mode{padding:1em;text-align:left;color:inherit;background:rgba(0,0,0,.08);border:1px solid rgba(255,255,255,.18);border-radius:8px;cursor:pointer}.ts-settings .ts-mode.on{border-color:#00a4dc;background:rgba(0,164,220,.12)}
+    .ts-settings .ts-meta{opacity:.62;font-size:.82em;margin-top:.25em}.ts-settings .ts-warning{padding:.7em;margin:.5em 0;background:rgba(255,170,0,.1);border:1px solid rgba(255,170,0,.3);border-radius:6px}.ts-settings textarea{min-height:190px;font-family:monospace}.ts-settings .ts-footer{display:flex;gap:.8em;justify-content:flex-end;align-items:center;flex-wrap:wrap;margin-top:1.2em}.ts-settings .ts-status{margin-right:auto;opacity:.7}
+  </style>
 </head>
 <body>
-<div id="ThemeStoreConfigurationPage" data-role="page" class="page type-interior pluginConfigurationPage tsPage" data-require="emby-input,emby-button,emby-select,emby-checkbox">
-    <div data-role="content"><div class="content-primary">
-        <h2>Theme Store</h2><p class="lead">Lege den Serverstandard fest und erlaube Jellyfin-Benutzern optional eine persönliche, kontogebundene Auswahl. Themes gelten nur in Jellyfin-Web-basierten Clients.</p>
-        <div class="panel"><div class="row"><div class="inputContainer grow"><label class="inputLabel inputLabelUnfocused" for="catalogUrl">Theme-Katalog-URL</label><input id="catalogUrl" class="emby-input" type="url" placeholder="https://raw.githubusercontent.com/.../catalog.txt"></div><button id="loadCatalog" is="emby-button" type="button" class="raised emby-button">Katalog laden</button></div><div id="warnings"></div></div>
-        <div class="panel"><h3>Serverstandard</h3><div class="modes"><div class="mode" data-mode="Jellyfin"><strong>Jellyfin Standard</strong><div class="meta">Kein zusätzliches CSS</div></div><div class="mode" data-mode="Catalog"><strong>Katalog-Theme</strong><div class="meta">Ein Theme aus dem Store</div></div><div class="mode" data-mode="CustomCss"><strong>Eigenes CSS</strong><div class="meta">Frei eingegebenes Custom CSS</div></div></div><div id="customArea" class="inputContainer" style="margin-top:1em"><label class="inputLabel inputLabelUnfocused" for="customCss">Custom CSS</label><textarea id="customCss" class="emby-textarea" spellcheck="false" placeholder="@import url('https://example.org/theme.css');"></textarea><div class="fieldDescription">Wird als Serverstandard verwendet. Externe Ressourcen können Verbindungen zu Dritten aufbauen.</div></div></div>
-        <div class="panel"><label class="checkboxContainer"><input id="allowUsers" is="emby-checkbox" type="checkbox"><span>Benutzern persönliche Themes erlauben</span></label><div class="fieldDescription">Eine persönliche Auswahl überschreibt den Serverstandard nur für das jeweilige Jellyfin-Konto und wird serverseitig gespeichert.</div></div>
-        <div class="panel"><div class="row"><h3 style="margin:0">Themes</h3><div class="inputContainer grow" style="margin:0"><input id="search" class="emby-input" type="search" placeholder="Themes durchsuchen …"></div></div><div id="grid" class="grid"><div>Katalog noch nicht geladen.</div></div></div>
-        <div class="footer"><span id="status" class="status">Keine ungespeicherten Änderungen</span><button id="clearCache" is="emby-button" type="button" class="raised emby-button">CSS-Cache leeren</button><button id="save" is="emby-button" type="button" class="raised button-submit emby-button">Speichern &amp; anwenden</button></div>
-    </div></div>
-    <script>
-    (function(){
-        'use strict';var PLUGIN_ID='4e75cc9d-4fcf-473a-bf35-e61484324d12';var state={config:null,themes:[],mode:'Jellyfin',themeId:'',themeName:'Jellyfin Default',themeVars:{},query:''};var $=function(id){return document.getElementById(id);};
-        function api(path,options,query){var url=ApiClient.getUrl(path,query||{});return ApiClient.fetch(Object.assign({url:url},options||{}));}
-        function warning(text){var d=document.createElement('div');d.className='warning';d.textContent=text;$('warnings').appendChild(d);}
-        function selectMode(mode){state.mode=mode;document.querySelectorAll('.tsPage .mode').forEach(function(n){n.classList.toggle('on',n.dataset.mode===mode);});$('customArea').style.display=mode==='CustomCss'?'block':'none';$('grid').style.opacity=mode==='Catalog'?'1':'.55';$('grid').style.pointerEvents=mode==='Catalog'?'auto':'none';dirty();}
-        function dirty(){$('status').textContent='Ungespeicherte Änderungen';}
-        function loadConfig(){Dashboard.showLoadingMsg();ApiClient.getPluginConfiguration(PLUGIN_ID).then(function(c){state.config=c;$('catalogUrl').value=c.ThemeCatalogUrl||c.SkinUrl||'';$('customCss').value=c.CustomCss||'';$('allowUsers').checked=!!c.AllowUserThemes;state.themeId=c.DefaultThemeId||'';state.themeName=c.DefaultThemeName||'Jellyfin Default';try{state.themeVars=JSON.parse(c.DefaultThemeVariablesJson||'{}')||{};}catch(e){state.themeVars={};}selectMode(c.DefaultThemeMode||'Jellyfin');$('status').textContent='Keine ungespeicherten Änderungen';return loadCatalog(false);}).catch(function(e){warning(e.message||String(e));}).finally(Dashboard.hideLoadingMsg);}
-        function loadCatalog(refresh){$('warnings').innerHTML='';$('grid').textContent='Katalog wird geladen …';return api('ThemeStore/AdminCatalog',{}, {refresh:!!refresh}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(function(data){state.themes=data.Themes||[];(data.Warnings||[]).forEach(warning);render();}).catch(function(e){$('grid').textContent='Katalog konnte nicht geladen werden.';warning(e.message||String(e));});}
-        function configureTheme(t){var values={};var current=t.Id===state.themeId?state.themeVars:{};for(var i=0;i<(t.Vars||[]).length;i++){var variable=t.Vars[i];var initial=current[variable.Key]!==undefined?current[variable.Key]:(variable.Default||'');var answer=window.prompt((variable.Name||variable.Key)+(variable.Description?'\n'+variable.Description:''),initial);if(answer===null)return;values[variable.Key]=answer;}state.themeId=t.Id;state.themeName=t.Name;state.themeVars=values;selectMode('Catalog');render();}
-        function render(){var grid=$('grid');grid.innerHTML='';var q=state.query.toLowerCase();state.themes.filter(function(t){return !q||[t.Name,t.Author,t.Description,(t.Tags||[]).join(' ')].join(' ').toLowerCase().includes(q);}).forEach(function(t){var card=document.createElement('article');card.className='card'+(t.Id===state.themeId?' on':'');var pic=document.createElement('div');pic.className='pic';if((t.PreviewUrls||[]).length){var img=document.createElement('img');img.src=t.PreviewUrls[0];img.alt='Vorschau von '+t.Name;img.loading='lazy';img.referrerPolicy='no-referrer';img.onerror=function(){this.remove();};pic.appendChild(img);}var body=document.createElement('div');body.className='cardBody';var title=document.createElement('h3');title.textContent=t.Name;var meta=document.createElement('div');meta.className='meta';meta.textContent=[t.Author,t.Version].filter(Boolean).join(' · ');var button=document.createElement('button');button.type='button';button.setAttribute('is','emby-button');button.className='raised emby-button';button.textContent=t.Id===state.themeId?((t.Vars||[]).length?'Variablen anpassen':'Ausgewählt'):((t.Vars||[]).length?'Wählen & anpassen':'Als Standard wählen');button.addEventListener('click',function(){configureTheme(t);});body.appendChild(title);body.appendChild(meta);body.appendChild(button);card.appendChild(pic);card.appendChild(body);grid.appendChild(card);});if(!grid.children.length)grid.textContent='Keine passenden Themes gefunden.';}
-        function save(){var c=Object.assign({},state.config,{ThemeCatalogUrl:$('catalogUrl').value.trim(),SkinUrl:$('catalogUrl').value.trim(),DefaultThemeMode:state.mode,DefaultThemeId:state.themeId,DefaultThemeName:state.themeName,DefaultThemeVariablesJson:JSON.stringify(state.themeVars||{}),CustomCss:$('customCss').value,AllowUserThemes:$('allowUsers').checked});Dashboard.showLoadingMsg();ApiClient.updatePluginConfiguration(PLUGIN_ID,c).then(function(){state.config=c;$('status').textContent='Gespeichert. Seite wird neu geladen …';setTimeout(function(){window.location.reload();},500);}).catch(function(e){warning(e.message||String(e));}).finally(Dashboard.hideLoadingMsg);}
-        document.querySelectorAll('.tsPage .mode').forEach(function(n){n.addEventListener('click',function(){selectMode(n.dataset.mode);});});$('loadCatalog').addEventListener('click',function(){state.config.ThemeCatalogUrl=$('catalogUrl').value.trim();ApiClient.updatePluginConfiguration(PLUGIN_ID,Object.assign({},state.config,{ThemeCatalogUrl:state.config.ThemeCatalogUrl,SkinUrl:state.config.ThemeCatalogUrl})).then(function(){return loadCatalog(true);});});$('search').addEventListener('input',function(){state.query=this.value.trim();render();});$('catalogUrl').addEventListener('input',dirty);$('customCss').addEventListener('input',dirty);$('allowUsers').addEventListener('change',dirty);$('save').addEventListener('click',save);$('clearCache').addEventListener('click',function(){api('ThemeStore/ClearCache',{method:'POST'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);Dashboard.alert('CSS-Cache wurde geleert.');}).catch(function(e){warning(e.message||String(e));});});document.querySelector('.tsPage').addEventListener('pageshow',loadConfig);
-    })();
-    </script>
+<div id="ThemeStoreConfigurationPage" data-role="page" class="page type-interior pluginConfigurationPage ts-settings" data-require="emby-input,emby-button,emby-select,emby-checkbox">
+  <div data-role="content"><div class="content-primary">
+    <h2>Theme Store Settings</h2>
+    <p class="ts-lead">Hier werden nur die globalen Servervorgaben verwaltet. Benutzer öffnen den eigentlichen Theme Store über das Jellyfin-Hamburgermenü und speichern dort ihre persönliche Auswahl.</p>
+
+    <section class="ts-panel">
+      <h3>Theme-Katalog</h3>
+      <div class="ts-row">
+        <div class="inputContainer ts-grow"><label class="inputLabel inputLabelUnfocused" for="catalogUrl">Katalog-URL</label><input id="catalogUrl" class="emby-input" type="url" placeholder="https://raw.githubusercontent.com/.../catalog.txt"></div>
+        <button id="loadCatalog" is="emby-button" type="button" class="raised emby-button">URL übernehmen &amp; Katalog laden</button>
+      </div>
+      <div class="fieldDescription">Unterstützt den einfachen zweizeiligen CSS-Katalog und das kompatible JSON-Format.</div>
+      <div id="warnings"></div>
+    </section>
+
+    <section class="ts-panel">
+      <h3>Serverstandard</h3>
+      <div class="ts-modes">
+        <button class="ts-mode" data-mode="Jellyfin" type="button"><strong>Jellyfin Standard</strong><div class="ts-meta">Kein zusätzliches CSS</div></button>
+        <button class="ts-mode" data-mode="Catalog" type="button"><strong>Katalog-Theme</strong><div class="ts-meta">Ein Theme aus dem konfigurierten Katalog</div></button>
+        <button class="ts-mode" data-mode="CustomCss" type="button"><strong>Eigenes CSS</strong><div class="ts-meta">Frei eingegebenes serverweites CSS</div></button>
+      </div>
+
+      <div id="catalogDefaultArea" class="inputContainer" style="margin-top:1em">
+        <label class="selectLabel" for="defaultTheme">Standardtheme aus dem Katalog</label>
+        <select id="defaultTheme" is="emby-select" class="emby-select-withcolor emby-select"></select>
+        <div class="fieldDescription">Die Vorschauen und die persönliche Auswahl befinden sich ausschließlich im Theme Store des Benutzermenüs.</div>
+        <button id="configureVariables" is="emby-button" type="button" class="raised emby-button" style="margin-top:.7em">Theme-Variablen konfigurieren</button>
+      </div>
+
+      <div id="customArea" class="inputContainer" style="margin-top:1em">
+        <label class="inputLabel inputLabelUnfocused" for="customCss">Serverweites Custom CSS</label>
+        <textarea id="customCss" class="emby-textarea" spellcheck="false" placeholder="@import url('https://example.org/theme.css');"></textarea>
+        <div class="fieldDescription">Externe Ressourcen können Verbindungen zu Drittanbietern aufbauen.</div>
+      </div>
+    </section>
+
+    <section class="ts-panel">
+      <h3>Benutzerzugriff</h3>
+      <label class="checkboxContainer"><input id="allowUsers" is="emby-checkbox" type="checkbox"><span>Persönliche Themes erlauben</span></label>
+      <div class="fieldDescription">Der Theme Store bleibt für alle angemeldeten Benutzer im Hamburgermenü sichtbar. Ist diese Option deaktiviert, kann der Katalog angesehen, aber kein persönliches Theme ausgewählt werden.</div>
+    </section>
+
+    <div class="ts-footer">
+      <span id="status" class="ts-status">Keine ungespeicherten Änderungen</span>
+      <button id="clearCache" is="emby-button" type="button" class="raised emby-button">CSS-Cache leeren</button>
+      <button id="save" is="emby-button" type="button" class="raised button-submit emby-button">Speichern &amp; anwenden</button>
+    </div>
+  </div></div>
+  <script>
+  (function () {
+    'use strict';
+    var PLUGIN_ID = '4e75cc9d-4fcf-473a-bf35-e61484324d12';
+    var page = document.querySelector('#ThemeStoreConfigurationPage');
+    var state = { config: null, themes: [], mode: 'Jellyfin', themeId: '', themeName: 'Jellyfin Default', themeVars: {} };
+    var $ = function (id) { return page.querySelector('#' + id); };
+
+    function api(path, options, query) {
+      var url = ApiClient.getUrl(path, query || {});
+      return ApiClient.fetch(Object.assign({ url: url }, options || {}));
+    }
+    function warning(text) {
+      var box = document.createElement('div');
+      box.className = 'ts-warning';
+      box.textContent = text;
+      $('warnings').appendChild(box);
+    }
+    function dirty() { $('status').textContent = 'Ungespeicherte Änderungen'; }
+    function selectedTheme() { return state.themes.find(function (theme) { return theme.Id === state.themeId; }); }
+
+    function selectMode(mode, markDirty) {
+      state.mode = mode;
+      page.querySelectorAll('.ts-mode').forEach(function (button) { button.classList.toggle('on', button.dataset.mode === mode); });
+      $('catalogDefaultArea').style.display = mode === 'Catalog' ? 'block' : 'none';
+      $('customArea').style.display = mode === 'CustomCss' ? 'block' : 'none';
+      if (markDirty !== false) dirty();
+    }
+
+    function renderThemeOptions() {
+      var select = $('defaultTheme');
+      select.innerHTML = '';
+      var placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = state.themes.length ? 'Theme auswählen …' : 'Keine Themes geladen';
+      select.appendChild(placeholder);
+      state.themes.forEach(function (theme) {
+        var option = document.createElement('option');
+        option.value = theme.Id;
+        option.textContent = theme.Name + ([theme.Author, theme.Version].filter(Boolean).length ? ' — ' + [theme.Author, theme.Version].filter(Boolean).join(' · ') : '');
+        select.appendChild(option);
+      });
+      if (state.themeId && !state.themes.some(function (theme) { return theme.Id === state.themeId; })) {
+        var missing = document.createElement('option');
+        missing.value = state.themeId;
+        missing.textContent = state.themeName + ' (nicht mehr im Katalog)';
+        select.appendChild(missing);
+      }
+      select.value = state.themeId;
+      $('configureVariables').disabled = !selectedTheme() || !(selectedTheme().Vars || []).length;
+    }
+
+    function loadCatalog(refresh) {
+      $('warnings').innerHTML = '';
+      $('defaultTheme').disabled = true;
+      return api('ThemeStore/AdminCatalog', {}, { refresh: !!refresh })
+        .then(function (response) { if (!response.ok) throw new Error('HTTP ' + response.status); return response.json(); })
+        .then(function (data) {
+          state.themes = data.Themes || [];
+          (data.Warnings || []).forEach(warning);
+          renderThemeOptions();
+        })
+        .catch(function (error) {
+          state.themes = [];
+          renderThemeOptions();
+          warning('Katalog konnte nicht geladen werden: ' + (error.message || String(error)));
+        })
+        .finally(function () { $('defaultTheme').disabled = false; });
+    }
+
+    function configWithFormValues() {
+      return Object.assign({}, state.config, {
+        ThemeCatalogUrl: $('catalogUrl').value.trim(),
+        SkinUrl: $('catalogUrl').value.trim(),
+        DefaultThemeMode: state.mode,
+        DefaultThemeId: state.themeId,
+        DefaultThemeName: state.themeName,
+        DefaultThemeVariablesJson: JSON.stringify(state.themeVars || {}),
+        CustomCss: $('customCss').value,
+        AllowUserThemes: $('allowUsers').checked
+      });
+    }
+
+    function loadConfig() {
+      Dashboard.showLoadingMsg();
+      ApiClient.getPluginConfiguration(PLUGIN_ID)
+        .then(function (config) {
+          state.config = config;
+          $('catalogUrl').value = config.ThemeCatalogUrl || config.SkinUrl || '';
+          $('customCss').value = config.CustomCss || '';
+          $('allowUsers').checked = !!config.AllowUserThemes;
+          state.themeId = config.DefaultThemeId || '';
+          state.themeName = config.DefaultThemeName || 'Jellyfin Default';
+          try { state.themeVars = JSON.parse(config.DefaultThemeVariablesJson || '{}') || {}; } catch (_) { state.themeVars = {}; }
+          selectMode(config.DefaultThemeMode || 'Jellyfin', false);
+          $('status').textContent = 'Keine ungespeicherten Änderungen';
+          return loadCatalog(false);
+        })
+        .catch(function (error) { warning(error.message || String(error)); })
+        .finally(function () { Dashboard.hideLoadingMsg(); });
+    }
+
+    function configureVariables() {
+      var theme = selectedTheme();
+      if (!theme) return;
+      var values = {};
+      var current = state.themeVars || {};
+      for (var i = 0; i < (theme.Vars || []).length; i++) {
+        var variable = theme.Vars[i];
+        var initial = current[variable.Key] !== undefined ? current[variable.Key] : (variable.Default || '');
+        var answer = window.prompt((variable.Name || variable.Key) + (variable.Description ? '\n' + variable.Description : ''), initial);
+        if (answer === null) return;
+        values[variable.Key] = answer;
+      }
+      state.themeVars = values;
+      dirty();
+    }
+
+    function save() {
+      if (state.mode === 'Catalog' && !state.themeId) {
+        Dashboard.alert('Bitte ein Standardtheme aus dem Katalog auswählen.');
+        return;
+      }
+      var config = configWithFormValues();
+      Dashboard.showLoadingMsg();
+      ApiClient.updatePluginConfiguration(PLUGIN_ID, config)
+        .then(function () {
+          state.config = config;
+          $('status').textContent = 'Gespeichert. Seite wird neu geladen …';
+          setTimeout(function () { window.location.reload(); }, 500);
+        })
+        .catch(function (error) { warning(error.message || String(error)); })
+        .finally(function () { Dashboard.hideLoadingMsg(); });
+    }
+
+    page.querySelectorAll('.ts-mode').forEach(function (button) { button.addEventListener('click', function () { selectMode(button.dataset.mode, true); }); });
+    $('defaultTheme').addEventListener('change', function () {
+      var oldId = state.themeId;
+      state.themeId = this.value;
+      var theme = selectedTheme();
+      state.themeName = theme ? theme.Name : 'Jellyfin Default';
+      if (oldId !== state.themeId) state.themeVars = {};
+      renderThemeOptions();
+      dirty();
+    });
+    $('configureVariables').addEventListener('click', configureVariables);
+    $('loadCatalog').addEventListener('click', function () {
+      var config = configWithFormValues();
+      config.ThemeCatalogUrl = $('catalogUrl').value.trim();
+      config.SkinUrl = config.ThemeCatalogUrl;
+      Dashboard.showLoadingMsg();
+      ApiClient.updatePluginConfiguration(PLUGIN_ID, config)
+        .then(function () { state.config = config; return loadCatalog(true); })
+        .catch(function (error) { warning(error.message || String(error)); })
+        .finally(function () { Dashboard.hideLoadingMsg(); });
+    });
+    $('catalogUrl').addEventListener('input', dirty);
+    $('customCss').addEventListener('input', dirty);
+    $('allowUsers').addEventListener('change', dirty);
+    $('save').addEventListener('click', save);
+    $('clearCache').addEventListener('click', function () {
+      api('ThemeStore/ClearCache', { method: 'POST' })
+        .then(function (response) { if (!response.ok) throw new Error('HTTP ' + response.status); Dashboard.alert('CSS-Cache wurde geleert.'); })
+        .catch(function (error) { warning(error.message || String(error)); });
+    });
+    page.addEventListener('pageshow', loadConfig);
+  })();
+  </script>
 </div>
 </body>
 </html>

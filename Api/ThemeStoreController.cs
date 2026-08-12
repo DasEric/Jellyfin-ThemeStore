@@ -22,8 +22,8 @@ namespace Jellyfin.Plugin.ThemeStore.Api
     public sealed class ThemeStoreController : ControllerBase
     {
         private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNameCaseInsensitive = true };
-        private static volatile byte[] _pageBytes;
-        private static readonly object PageLock = new();
+        private static readonly Dictionary<string, byte[]> ResourceCache = new(StringComparer.Ordinal);
+        private static readonly object ResourceLock = new();
         private readonly ThemeCatalogService _catalogService;
         private readonly UserThemeStore _userThemeStore;
         private readonly ILogger<ThemeStoreController> _logger;
@@ -35,14 +35,23 @@ namespace Jellyfin.Plugin.ThemeStore.Api
             _logger = logger;
         }
 
+        [HttpGet("InjectionScript")]
+        [AllowAnonymous]
+        [Produces("application/javascript")]
+        public IActionResult GetInjectionScript()
+            => GetEmbeddedResource("Configuration.injection.js", "application/javascript; charset=utf-8");
+
         [HttpGet("Page")]
         [AllowAnonymous]
         [Produces("text/html")]
         public IActionResult GetPage()
-        {
-            byte[] bytes = GetPageBytes();
-            return bytes == null ? NotFound() : File(bytes, "text/html; charset=utf-8");
-        }
+            => GetEmbeddedResource("Configuration.userThemePage.html", "text/html; charset=utf-8");
+
+        [HttpGet("PageScript")]
+        [AllowAnonymous]
+        [Produces("application/javascript")]
+        public IActionResult GetPageScript()
+            => GetEmbeddedResource("Configuration.userThemePage.js", "application/javascript; charset=utf-8");
 
         [HttpGet("Catalog")]
         [Authorize]
@@ -133,11 +142,19 @@ namespace Jellyfin.Plugin.ThemeStore.Api
 
         private Guid GetUserId()
         {
-            string value = User.FindFirstValue("Jellyfin-UserId");
-            if (!Guid.TryParse(value, out Guid userId) || userId == Guid.Empty)
-                throw new InvalidOperationException("The authenticated Jellyfin user id is missing.");
+            string[] values =
+            {
+                User.FindFirstValue("Jellyfin-UserId"),
+                User.FindFirstValue(ClaimTypes.NameIdentifier),
+                User.FindFirstValue("UserId")
+            };
+            foreach (string value in values)
+            {
+                if (Guid.TryParse(value, out Guid userId) && userId != Guid.Empty)
+                    return userId;
+            }
 
-            return userId;
+            throw new InvalidOperationException("The authenticated Jellyfin user id is missing.");
         }
 
         private static Dictionary<string, string> SanitizeVariables(IDictionary<string, string> variables)
@@ -171,27 +188,27 @@ namespace Jellyfin.Plugin.ThemeStore.Api
             }
         }
 
-        private static byte[] GetPageBytes()
+        private IActionResult GetEmbeddedResource(string suffix, string mediaType)
         {
-            if (_pageBytes != null)
-                return _pageBytes;
-
-            lock (PageLock)
+            byte[] bytes;
+            lock (ResourceLock)
             {
-                if (_pageBytes != null)
-                    return _pageBytes;
+                if (!ResourceCache.TryGetValue(suffix, out bytes))
+                {
+                    var assembly = typeof(ThemeStoreController).Assembly;
+                    string resourceName = $"{typeof(Plugin).Namespace}.{suffix}";
+                    using var stream = assembly.GetManifestResourceStream(resourceName);
+                    if (stream == null)
+                        return NotFound();
 
-                var assembly = typeof(ThemeStoreController).Assembly;
-                string resourceName = $"{typeof(Plugin).Namespace}.Configuration.userThemePage.html";
-                using var stream = assembly.GetManifestResourceStream(resourceName);
-                if (stream == null)
-                    return null;
-
-                var bytes = new byte[stream.Length];
-                stream.ReadExactly(bytes, 0, bytes.Length);
-                _pageBytes = bytes;
-                return bytes;
+                    bytes = new byte[stream.Length];
+                    stream.ReadExactly(bytes, 0, bytes.Length);
+                    ResourceCache[suffix] = bytes;
+                }
             }
+
+            Response.Headers.CacheControl = "no-cache";
+            return File(bytes, mediaType);
         }
     }
 
