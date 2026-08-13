@@ -16,7 +16,11 @@ namespace Jellyfin.Plugin.ThemeStore
         /// field is added to PluginConfiguration, then add a migration case
         /// in the switch block below to apply safe defaults for that version.
         /// </summary>
-        private const int CurrentConfigVersion = 6;
+        private const int CurrentConfigVersion = 7;
+
+        public const string DefaultCatalogUrl = "https://daseric.github.io/Jellyfin-ThemeStore/catalog.json";
+
+        private const string LegacyCatalogUrl = "https://raw.githubusercontent.com/Jellyfin-PG/Skin-Manager-Themes/refs/heads/main/skins.json";
 
         public override string Name => "Theme Store";
 
@@ -85,6 +89,11 @@ namespace Jellyfin.Plugin.ThemeStore
                             Configuration.DefaultThemeName = string.IsNullOrWhiteSpace(Configuration.Skin) ? "Imported theme" : Configuration.Skin;
                         }
                         break;
+
+                    case 7:
+                        Configuration.ThemeCatalogUrl = MigrateCatalogUrl(Configuration.ThemeCatalogUrl);
+                        Configuration.SkinUrl = MigrateCatalogUrl(Configuration.SkinUrl);
+                        break;
                 }
 
                 Configuration.ConfigVersion = v;
@@ -93,6 +102,16 @@ namespace Jellyfin.Plugin.ThemeStore
 
             if (dirty)
                 SaveConfiguration();
+        }
+
+        public static string MigrateCatalogUrl(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)
+                || string.Equals(value.Trim(), LegacyCatalogUrl, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(value.Trim(), "https://raw.githubusercontent.com/Jellyfin-PG/Skin-Manager-Themes/main/skins.json", StringComparison.OrdinalIgnoreCase))
+                return DefaultCatalogUrl;
+
+            return value.Trim();
         }
 
         /// <summary>

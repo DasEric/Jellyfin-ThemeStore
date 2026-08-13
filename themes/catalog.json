@@ -1,0 +1,1588 @@
+[
+  {
+    "id": "abyss",
+    "name": "Abyss",
+    "author": "AumGupta",
+    "description": "A clean, minimal dark theme with frosted glass surfaces, smooth transitions, and a clutter-free home screen spotlight add-on.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/AumGupta/abyss-jellyfin",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/docs/assets/images/abyss_1.png",
+      "https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/docs/assets/images/abyss_2.png",
+      "https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/docs/assets/images/abyss_3.png",
+      "https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/docs/assets/images/abyss_4.png",
+      "https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/docs/assets/images/abyss_5.png",
+      "https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/docs/assets/images/abyss_6.png"
+    ],
+    "tags": [
+      "Abyss"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "abyss-lite",
+    "name": "Abyss - Lite",
+    "author": "AumGupta",
+    "description": "A clean, minimal dark theme with frosted glass surfaces, smooth transitions, and a clutter-free home screen spotlight add-on. Variant: Abyss - Lite.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/AumGupta/abyss-jellyfin",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css",
+      "https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/styles/abyss-lite.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/docs/assets/images/abyss_1.png",
+      "https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/docs/assets/images/abyss_2.png",
+      "https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/docs/assets/images/abyss_3.png",
+      "https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/docs/assets/images/abyss_4.png",
+      "https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/docs/assets/images/abyss_5.png",
+      "https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/docs/assets/images/abyss_6.png"
+    ],
+    "tags": [
+      "Abyss"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "better-jellyfin-ui",
+    "name": "better-jellyfin-ui",
+    "author": "tromoSM",
+    "description": "A refined and modern UI enhancement for Jellyfin focused on improved layout, animations, and iOS design.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/tromoSM/better-jellyfin-ui",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-main.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-library-i.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-or.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-player.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-admin.png"
+    ],
+    "tags": [
+      "better-jellyfin-ui"
+    ],
+    "license": "Apache-2.0"
+  },
+  {
+    "id": "better-jellyfin-ui-floating-header",
+    "name": "better-jellyfin-ui - Floating Header",
+    "author": "tromoSM",
+    "description": "A refined and modern UI enhancement for Jellyfin focused on improved layout, animations, and iOS design. Variant: better-jellyfin-ui - Floating Header.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/tromoSM/better-jellyfin-ui",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/Floating-header.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-main.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-library-i.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-or.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-player.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-admin.png"
+    ],
+    "tags": [
+      "better-jellyfin-ui"
+    ],
+    "license": "Apache-2.0"
+  },
+  {
+    "id": "better-jellyfin-ui-high-contrast",
+    "name": "better-jellyfin-ui - High Contrast",
+    "author": "tromoSM",
+    "description": "A refined and modern UI enhancement for Jellyfin focused on improved layout, animations, and iOS design. Variant: better-jellyfin-ui - High Contrast.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/tromoSM/better-jellyfin-ui",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/High-contrast-interface.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-main.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-library-i.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-or.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-player.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-admin.png"
+    ],
+    "tags": [
+      "better-jellyfin-ui"
+    ],
+    "license": "Apache-2.0"
+  },
+  {
+    "id": "better-jellyfin-ui-hover-scale",
+    "name": "better-jellyfin-ui - Hover Scale",
+    "author": "tromoSM",
+    "description": "A refined and modern UI enhancement for Jellyfin focused on improved layout, animations, and iOS design. Variant: better-jellyfin-ui - Hover Scale.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/tromoSM/better-jellyfin-ui",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/Scale-up-animation-on-hover-card.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-main.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-library-i.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-or.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-player.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-admin.png"
+    ],
+    "tags": [
+      "better-jellyfin-ui"
+    ],
+    "license": "Apache-2.0"
+  },
+  {
+    "id": "better-jellyfin-ui-no-liquid-borders",
+    "name": "better-jellyfin-ui - No Liquid Glass Borders",
+    "author": "tromoSM",
+    "description": "A refined and modern UI enhancement for Jellyfin focused on improved layout, animations, and iOS design. Variant: better-jellyfin-ui - No Liquid Glass Borders.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/tromoSM/better-jellyfin-ui",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/no-liquid-glass-borders.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-main.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-library-i.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-or.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-player.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-admin.png"
+    ],
+    "tags": [
+      "better-jellyfin-ui"
+    ],
+    "license": "Apache-2.0"
+  },
+  {
+    "id": "better-jellyfin-ui-alternative-navigation",
+    "name": "better-jellyfin-ui - Alternative Navigation",
+    "author": "tromoSM",
+    "description": "A refined and modern UI enhancement for Jellyfin focused on improved layout, animations, and iOS design. Variant: better-jellyfin-ui - Alternative Navigation.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/tromoSM/better-jellyfin-ui",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/alternative-navigation-bar.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-main.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-library-i.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-or.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-player.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-admin.png"
+    ],
+    "tags": [
+      "better-jellyfin-ui"
+    ],
+    "license": "Apache-2.0"
+  },
+  {
+    "id": "better-jellyfin-ui-no-header-logo",
+    "name": "better-jellyfin-ui - No Header Logo",
+    "author": "tromoSM",
+    "description": "A refined and modern UI enhancement for Jellyfin focused on improved layout, animations, and iOS design. Variant: better-jellyfin-ui - No Header Logo.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/tromoSM/better-jellyfin-ui",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/Remove-jellyfin-logo-from-header.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-main.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-library-i.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-or.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-player.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-admin.png"
+    ],
+    "tags": [
+      "better-jellyfin-ui"
+    ],
+    "license": "Apache-2.0"
+  },
+  {
+    "id": "better-jellyfin-ui-alternative-detail-logo",
+    "name": "better-jellyfin-ui - Alternative Detail Logo",
+    "author": "tromoSM",
+    "description": "A refined and modern UI enhancement for Jellyfin focused on improved layout, animations, and iOS design. Variant: better-jellyfin-ui - Alternative Detail Logo.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/tromoSM/better-jellyfin-ui",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/alternative-detail-logo.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-main.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-library-i.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-or.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-player.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-admin.png"
+    ],
+    "tags": [
+      "better-jellyfin-ui"
+    ],
+    "license": "Apache-2.0"
+  },
+  {
+    "id": "better-jellyfin-ui-trickplay",
+    "name": "better-jellyfin-ui - Trickplay Support",
+    "author": "tromoSM",
+    "description": "A refined and modern UI enhancement for Jellyfin focused on improved layout, animations, and iOS design. Variant: better-jellyfin-ui - Trickplay Support.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/tromoSM/better-jellyfin-ui",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+      "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/Trickplay-support.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-main.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-library-i.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-or.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-player.png",
+      "https://raw.githubusercontent.com/tromoSM/better-jellyfin-ui/main/Assets/desktop-admin.png"
+    ],
+    "tags": [
+      "better-jellyfin-ui"
+    ],
+    "license": "Apache-2.0"
+  },
+  {
+    "id": "catppuccin-latte",
+    "name": "Catppuccin - Latte",
+    "author": "catppuccin",
+    "description": "A Jellyfin theme by catppuccin. Variant: Catppuccin - Latte.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/catppuccin/jellyfin",
+    "cssUrl": "https://jellyfin.catppuccin.com/theme.css",
+    "cssUrls": [
+      "https://jellyfin.catppuccin.com/theme.css",
+      "https://jellyfin.catppuccin.com/catppuccin-latte.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/catppuccin/jellyfin/main/assets/latte.webp"
+    ],
+    "tags": [
+      "catppuccin"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "catppuccin-frappe",
+    "name": "Catppuccin - Frappé",
+    "author": "catppuccin",
+    "description": "A Jellyfin theme by catppuccin. Variant: Catppuccin - Frappé.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/catppuccin/jellyfin",
+    "cssUrl": "https://jellyfin.catppuccin.com/theme.css",
+    "cssUrls": [
+      "https://jellyfin.catppuccin.com/theme.css",
+      "https://jellyfin.catppuccin.com/catppuccin-frappe.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/catppuccin/jellyfin/main/assets/frappe.webp"
+    ],
+    "tags": [
+      "catppuccin"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "catppuccin-macchiato",
+    "name": "Catppuccin - Macchiato",
+    "author": "catppuccin",
+    "description": "A Jellyfin theme by catppuccin. Variant: Catppuccin - Macchiato.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/catppuccin/jellyfin",
+    "cssUrl": "https://jellyfin.catppuccin.com/theme.css",
+    "cssUrls": [
+      "https://jellyfin.catppuccin.com/theme.css",
+      "https://jellyfin.catppuccin.com/catppuccin-macchiato.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/catppuccin/jellyfin/main/assets/macchiato.webp"
+    ],
+    "tags": [
+      "catppuccin"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "catppuccin-mocha",
+    "name": "Catppuccin - Mocha",
+    "author": "catppuccin",
+    "description": "A Jellyfin theme by catppuccin. Variant: Catppuccin - Mocha.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/catppuccin/jellyfin",
+    "cssUrl": "https://jellyfin.catppuccin.com/theme.css",
+    "cssUrls": [
+      "https://jellyfin.catppuccin.com/theme.css",
+      "https://jellyfin.catppuccin.com/catppuccin-mocha.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/catppuccin/jellyfin/main/assets/mocha.webp"
+    ],
+    "tags": [
+      "catppuccin"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "elegantfin",
+    "name": "ElegantFin",
+    "author": "lscambo13",
+    "description": "A Jellyfin theme by lscambo13.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/lscambo13/ElegantFin",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/ElegantFin-jellyfin-theme-build-latest-minified.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/ElegantFin-jellyfin-theme-build-latest-minified.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/lscambo13/ElegantFin/main/Previews/previews-v25.08.02/optimized/desktop/4.%20Movie%20Page.webp",
+      "https://raw.githubusercontent.com/lscambo13/ElegantFin/main/Previews/previews-v25.08.02/optimized/desktop/1.%20Homepage.webp",
+      "https://raw.githubusercontent.com/lscambo13/ElegantFin/main/Previews/previews-v25.08.02/optimized/desktop/3.%20Sidebar.webp",
+      "https://raw.githubusercontent.com/lscambo13/ElegantFin/main/Previews/previews-v25.08.02/optimized/desktop/9.%20Web%20Player.webp",
+      "https://raw.githubusercontent.com/lscambo13/ElegantFin/main/Previews/previews-v25.08.02/optimized/desktop/20.%20Live%20TV%20Guide.webp",
+      "https://raw.githubusercontent.com/lscambo13/ElegantFin/main/Previews/previews-v25.08.02/optimized/desktop/12.%20Movie%20Details.webp"
+    ],
+    "tags": [
+      "ElegantFin"
+    ],
+    "license": "GPL-2.0"
+  },
+  {
+    "id": "elegantfin-media-bar",
+    "name": "ElegantFin - Media Bar Support",
+    "author": "lscambo13",
+    "description": "A Jellyfin theme by lscambo13. Variant: ElegantFin - Media Bar Support.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/lscambo13/ElegantFin",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/ElegantFin-jellyfin-theme-build-latest-minified.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/ElegantFin-jellyfin-theme-build-latest-minified.css",
+      "https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/assets/add-ons/media-bar-plugin-support-latest-min.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/lscambo13/ElegantFin/main/Previews/previews-v25.08.02/optimized/desktop/4.%20Movie%20Page.webp",
+      "https://raw.githubusercontent.com/lscambo13/ElegantFin/main/Previews/previews-v25.08.02/optimized/desktop/1.%20Homepage.webp",
+      "https://raw.githubusercontent.com/lscambo13/ElegantFin/main/Previews/previews-v25.08.02/optimized/desktop/3.%20Sidebar.webp",
+      "https://raw.githubusercontent.com/lscambo13/ElegantFin/main/Previews/previews-v25.08.02/optimized/desktop/9.%20Web%20Player.webp",
+      "https://raw.githubusercontent.com/lscambo13/ElegantFin/main/Previews/previews-v25.08.02/optimized/desktop/20.%20Live%20TV%20Guide.webp",
+      "https://raw.githubusercontent.com/lscambo13/ElegantFin/main/Previews/previews-v25.08.02/optimized/desktop/12.%20Movie%20Details.webp"
+    ],
+    "tags": [
+      "ElegantFin"
+    ],
+    "license": "GPL-2.0"
+  },
+  {
+    "id": "evergarden-summer",
+    "name": "Evergarden - Summer",
+    "author": "everviolet",
+    "description": "A Jellyfin theme by everviolet. Variant: Evergarden - Summer.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/everviolet/jellyfin",
+    "cssUrl": "https://everviolet.github.io/jellyfin/evergarden-summer.css",
+    "cssUrls": [
+      "https://everviolet.github.io/jellyfin/evergarden-summer.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/everviolet/jellyfin/main/assets/summer.webp"
+    ],
+    "tags": [
+      "evergarden"
+    ],
+    "license": "EUPL-1.2"
+  },
+  {
+    "id": "evergarden-spring",
+    "name": "Evergarden - Spring",
+    "author": "everviolet",
+    "description": "A Jellyfin theme by everviolet. Variant: Evergarden - Spring.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/everviolet/jellyfin",
+    "cssUrl": "https://everviolet.github.io/jellyfin/evergarden-spring.css",
+    "cssUrls": [
+      "https://everviolet.github.io/jellyfin/evergarden-spring.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/everviolet/jellyfin/main/assets/spring.webp"
+    ],
+    "tags": [
+      "evergarden"
+    ],
+    "license": "EUPL-1.2"
+  },
+  {
+    "id": "evergarden-fall",
+    "name": "Evergarden - Fall",
+    "author": "everviolet",
+    "description": "A Jellyfin theme by everviolet. Variant: Evergarden - Fall.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/everviolet/jellyfin",
+    "cssUrl": "https://everviolet.github.io/jellyfin/evergarden-fall.css",
+    "cssUrls": [
+      "https://everviolet.github.io/jellyfin/evergarden-fall.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/everviolet/jellyfin/main/assets/fall.webp"
+    ],
+    "tags": [
+      "evergarden"
+    ],
+    "license": "EUPL-1.2"
+  },
+  {
+    "id": "evergarden-winter",
+    "name": "Evergarden - Winter",
+    "author": "everviolet",
+    "description": "A Jellyfin theme by everviolet. Variant: Evergarden - Winter.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/everviolet/jellyfin",
+    "cssUrl": "https://everviolet.github.io/jellyfin/evergarden-winter.css",
+    "cssUrls": [
+      "https://everviolet.github.io/jellyfin/evergarden-winter.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/everviolet/jellyfin/main/assets/winter.webp"
+    ],
+    "tags": [
+      "evergarden"
+    ],
+    "license": "EUPL-1.2"
+  },
+  {
+    "id": "finimalism-v11",
+    "name": "Finimalism - Jellyfin 11",
+    "author": "tedhinklater",
+    "description": "A Jellyfin theme by tedhinklater. Variant: Finimalism - Jellyfin 11.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/tedhinklater/finimalism",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/tedhinklater/finimalism@main/Finimalism11.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/tedhinklater/finimalism@main/Finimalism11.css"
+    ],
+    "previewUrls": [
+      "https://github.com/user-attachments/assets/caaa8d3a-c3f1-46d7-8a51-4ba6f08c047f",
+      "https://github.com/user-attachments/assets/b2c1e0ca-0304-47d6-b4cc-3f77ac83f806"
+    ],
+    "tags": [
+      "finimalism"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "finimalism-v12",
+    "name": "Finimalism - Jellyfin 12",
+    "author": "tedhinklater",
+    "description": "A Jellyfin theme by tedhinklater. Variant: Finimalism - Jellyfin 12.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/tedhinklater/finimalism",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/tedhinklater/finimalism@main/Finimalism12.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/tedhinklater/finimalism@main/Finimalism12.css"
+    ],
+    "previewUrls": [
+      "https://github.com/user-attachments/assets/caaa8d3a-c3f1-46d7-8a51-4ba6f08c047f",
+      "https://github.com/user-attachments/assets/b2c1e0ca-0304-47d6-b4cc-3f77ac83f806"
+    ],
+    "tags": [
+      "finimalism"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "flow",
+    "name": "Flow",
+    "author": "LitCastVlog",
+    "description": "A Jellyfin theme by LitCastVlog.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/LitCastVlog/Flow",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/screen.jpg",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/details.png",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/episodegrid-outline.gif",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/blue.png"
+    ],
+    "tags": [
+      "Flow"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "flow-mobile",
+    "name": "Flow - Mobile",
+    "author": "LitCastVlog",
+    "description": "A Jellyfin theme by LitCastVlog. Variant: Flow - Mobile.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/LitCastVlog/Flow",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner-mobile.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner-mobile.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/screen.jpg",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/details.png",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/episodegrid-outline.gif",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/blue.png"
+    ],
+    "tags": [
+      "Flow"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "flow-orange",
+    "name": "Flow - Orange",
+    "author": "LitCastVlog",
+    "description": "A Jellyfin theme by LitCastVlog. Variant: Flow - Orange.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/LitCastVlog/Flow",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-Orange.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/screen.jpg",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/details.png",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/episodegrid-outline.gif",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/blue.png"
+    ],
+    "tags": [
+      "Flow"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "flow-pink",
+    "name": "Flow - Pink",
+    "author": "LitCastVlog",
+    "description": "A Jellyfin theme by LitCastVlog. Variant: Flow - Pink.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/LitCastVlog/Flow",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-Pink.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/screen.jpg",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/details.png",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/episodegrid-outline.gif",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/blue.png"
+    ],
+    "tags": [
+      "Flow"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "flow-rainbow",
+    "name": "Flow - Rainbow",
+    "author": "LitCastVlog",
+    "description": "A Jellyfin theme by LitCastVlog. Variant: Flow - Rainbow.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/LitCastVlog/Flow",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-Rainbow.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/screen.jpg",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/details.png",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/episodegrid-outline.gif",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/blue.png"
+    ],
+    "tags": [
+      "Flow"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "flow-red",
+    "name": "Flow - Red",
+    "author": "LitCastVlog",
+    "description": "A Jellyfin theme by LitCastVlog. Variant: Flow - Red.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/LitCastVlog/Flow",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-Red.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/screen.jpg",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/details.png",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/episodegrid-outline.gif",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/blue.png"
+    ],
+    "tags": [
+      "Flow"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "flow-white",
+    "name": "Flow - White",
+    "author": "LitCastVlog",
+    "description": "A Jellyfin theme by LitCastVlog. Variant: Flow - White.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/LitCastVlog/Flow",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-White.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/screen.jpg",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/details.png",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/episodegrid-outline.gif",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/blue.png"
+    ],
+    "tags": [
+      "Flow"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "flow-blue",
+    "name": "Flow - Blue",
+    "author": "LitCastVlog",
+    "description": "A Jellyfin theme by LitCastVlog. Variant: Flow - Blue.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/LitCastVlog/Flow",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-Blue.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/screen.jpg",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/details.png",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/episodegrid-outline.gif",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/blue.png"
+    ],
+    "tags": [
+      "Flow"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "flow-dark",
+    "name": "Flow - Dark",
+    "author": "LitCastVlog",
+    "description": "A Jellyfin theme by LitCastVlog. Variant: Flow - Dark.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/LitCastVlog/Flow",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+      "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-Dark.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/screen.jpg",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/details.png",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/episodegrid-outline.gif",
+      "https://raw.githubusercontent.com/LitCastVlog/Flow/main/images/blue.png"
+    ],
+    "tags": [
+      "Flow"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "finity-complete",
+    "name": "Finity - Complete",
+    "author": "prism2001",
+    "description": "A Jellyfin theme by prism2001. Variant: Finity - Complete.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/prism2001/finity",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/prism2001/finity@main/complete/finity-complete.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/prism2001/finity@main/complete/finity-complete.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/prism2001/finity/main/screenshots/home_featured.png",
+      "https://raw.githubusercontent.com/prism2001/finity/main/screenshots/home_drawers.png",
+      "https://raw.githubusercontent.com/prism2001/finity/main/screenshots/show_season.png",
+      "https://raw.githubusercontent.com/prism2001/finity/main/screenshots/movie.png"
+    ],
+    "tags": [
+      "Finity"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "finity-minimal",
+    "name": "Finity - Minimal",
+    "author": "prism2001",
+    "description": "A Jellyfin theme by prism2001. Variant: Finity - Minimal.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/prism2001/finity",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/prism2001/finity@main/minimal/finity-minimal.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/prism2001/finity@main/minimal/finity-minimal.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/prism2001/finity/main/screenshots/home_featured.png",
+      "https://raw.githubusercontent.com/prism2001/finity/main/screenshots/home_drawers.png",
+      "https://raw.githubusercontent.com/prism2001/finity/main/screenshots/show_season.png",
+      "https://raw.githubusercontent.com/prism2001/finity/main/screenshots/movie.png"
+    ],
+    "tags": [
+      "Finity"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "infinitv",
+    "name": "InfiniTV",
+    "author": "buesche87",
+    "description": "A Jellyfin theme by buesche87.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/buesche87/infinitv",
+    "cssUrl": "https://buesche87.github.io/infinitv/infinitv.css",
+    "cssUrls": [
+      "https://buesche87.github.io/infinitv/infinitv.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/buesche87/infinitv/refs/heads/main/resource/desktop-home.png",
+      "https://raw.githubusercontent.com/buesche87/infinitv/refs/heads/main/resource/desktop-library.png",
+      "https://raw.githubusercontent.com/buesche87/infinitv/refs/heads/main/resource/desktop-series.png",
+      "https://raw.githubusercontent.com/buesche87/infinitv/refs/heads/main/resource/desktop-episodes.png",
+      "https://raw.githubusercontent.com/buesche87/infinitv/refs/heads/main/resource/desktop-movie.png",
+      "https://raw.githubusercontent.com/buesche87/infinitv/refs/heads/main/resource/desktop-player.png"
+    ],
+    "tags": [
+      "infinitv"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "jamfin",
+    "name": "Jamfin",
+    "author": "JamsRepos",
+    "description": "Bringing a modern, sleek glassmorphism design to Jellyfin, enhancing your media server's aesthetics.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/JamsRepos/Jamfin",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/JamsRepos/Jamfin@latest/theme/complete.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/JamsRepos/Jamfin@latest/theme/complete.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/JamsRepos/Jamfin/main/assets/screenshots/home.jpg",
+      "https://raw.githubusercontent.com/JamsRepos/Jamfin/main/assets/screenshots/details.jpg",
+      "https://raw.githubusercontent.com/JamsRepos/Jamfin/main/assets/screenshots/library.jpg",
+      "https://raw.githubusercontent.com/JamsRepos/Jamfin/main/assets/screenshots/admin.jpg"
+    ],
+    "tags": [
+      "Jamfin"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "jellyskin",
+    "name": "JellySkin",
+    "author": "prayag17",
+    "description": "Vibrante & Minimal theme using custom icons and more",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/prayag17/JellySkin",
+    "cssUrl": "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/main.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/main.css"
+    ],
+    "previewUrls": [
+      "https://user-images.githubusercontent.com/55829513/200134094-9bafba9d-4cfa-48c3-bbf4-e01bc21ecdd1.png",
+      "https://user-images.githubusercontent.com/55829513/200134098-6463a6e7-95bb-4af6-a451-b6ac5ef7abad.png",
+      "https://user-images.githubusercontent.com/55829513/200133209-413d6e6c-3569-4aaf-9db7-f576c141f519.png",
+      "https://user-images.githubusercontent.com/55829513/200133240-075f604d-ae7f-48cb-9a42-445d8f3ef427.png",
+      "https://user-images.githubusercontent.com/55829513/200133258-4eabfc3d-475f-4b42-a496-bc2de60c11a5.png",
+      "https://user-images.githubusercontent.com/55829513/200133302-5d7e7ac1-201b-4cb4-a839-ee53c5c6a6f2.png"
+    ],
+    "tags": [
+      "JellySkin"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "jellyskin-mauve",
+    "name": "JellySkin - Mauve",
+    "author": "prayag17",
+    "description": "Vibrante & Minimal theme using custom icons and more Variant: JellySkin - Mauve.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/prayag17/JellySkin",
+    "cssUrl": "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/main.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/main.css",
+      "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/addons/gradients/mauve.css"
+    ],
+    "previewUrls": [
+      "https://user-images.githubusercontent.com/55829513/200134094-9bafba9d-4cfa-48c3-bbf4-e01bc21ecdd1.png",
+      "https://user-images.githubusercontent.com/55829513/200134098-6463a6e7-95bb-4af6-a451-b6ac5ef7abad.png",
+      "https://user-images.githubusercontent.com/55829513/200133209-413d6e6c-3569-4aaf-9db7-f576c141f519.png",
+      "https://user-images.githubusercontent.com/55829513/200133240-075f604d-ae7f-48cb-9a42-445d8f3ef427.png",
+      "https://user-images.githubusercontent.com/55829513/200133258-4eabfc3d-475f-4b42-a496-bc2de60c11a5.png",
+      "https://user-images.githubusercontent.com/55829513/200133302-5d7e7ac1-201b-4cb4-a839-ee53c5c6a6f2.png"
+    ],
+    "tags": [
+      "JellySkin"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "jellyskin-night-sky",
+    "name": "JellySkin - Night Sky",
+    "author": "prayag17",
+    "description": "Vibrante & Minimal theme using custom icons and more Variant: JellySkin - Night Sky.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/prayag17/JellySkin",
+    "cssUrl": "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/main.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/main.css",
+      "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/addons/gradients/nightSky.css"
+    ],
+    "previewUrls": [
+      "https://user-images.githubusercontent.com/55829513/200134094-9bafba9d-4cfa-48c3-bbf4-e01bc21ecdd1.png",
+      "https://user-images.githubusercontent.com/55829513/200134098-6463a6e7-95bb-4af6-a451-b6ac5ef7abad.png",
+      "https://user-images.githubusercontent.com/55829513/200133209-413d6e6c-3569-4aaf-9db7-f576c141f519.png",
+      "https://user-images.githubusercontent.com/55829513/200133240-075f604d-ae7f-48cb-9a42-445d8f3ef427.png",
+      "https://user-images.githubusercontent.com/55829513/200133258-4eabfc3d-475f-4b42-a496-bc2de60c11a5.png",
+      "https://user-images.githubusercontent.com/55829513/200133302-5d7e7ac1-201b-4cb4-a839-ee53c5c6a6f2.png"
+    ],
+    "tags": [
+      "JellySkin"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "jellyskin-sea",
+    "name": "JellySkin - Sea",
+    "author": "prayag17",
+    "description": "Vibrante & Minimal theme using custom icons and more Variant: JellySkin - Sea.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/prayag17/JellySkin",
+    "cssUrl": "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/main.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/main.css",
+      "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/addons/gradients/sea.css"
+    ],
+    "previewUrls": [
+      "https://user-images.githubusercontent.com/55829513/200134094-9bafba9d-4cfa-48c3-bbf4-e01bc21ecdd1.png",
+      "https://user-images.githubusercontent.com/55829513/200134098-6463a6e7-95bb-4af6-a451-b6ac5ef7abad.png",
+      "https://user-images.githubusercontent.com/55829513/200133209-413d6e6c-3569-4aaf-9db7-f576c141f519.png",
+      "https://user-images.githubusercontent.com/55829513/200133240-075f604d-ae7f-48cb-9a42-445d8f3ef427.png",
+      "https://user-images.githubusercontent.com/55829513/200133258-4eabfc3d-475f-4b42-a496-bc2de60c11a5.png",
+      "https://user-images.githubusercontent.com/55829513/200133302-5d7e7ac1-201b-4cb4-a839-ee53c5c6a6f2.png"
+    ],
+    "tags": [
+      "JellySkin"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "jellyfin-better-styles",
+    "name": "Jellyfin Better Styles",
+    "author": "Tetrax-10",
+    "description": "This theme preserves the original aesthetics while upgrading layout and animations for a more polished look and feel. Better Movie/TV page layout, improved card animation on hover.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/Tetrax-10/jellyfin-better-styles",
+    "cssUrl": "https://tetrax-10.github.io/jellyfin-better-styles/theme.css",
+    "cssUrls": [
+      "https://tetrax-10.github.io/jellyfin-better-styles/theme.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/Tetrax-10/jellyfin-better-styles/main/assets/movie-tv-page.png",
+      "https://raw.githubusercontent.com/Tetrax-10/jellyfin-better-styles/main/assets/cards.gif"
+    ],
+    "tags": [
+      "Jellyfin Better Styles"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "netfin",
+    "name": "NetFin",
+    "author": "ya0903",
+    "description": "A cinematic Netflix-inspired theme with deep dark visuals, refined hover effects, and a focus on poster artwork.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/ya0903/NetFin",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/ya0903/NetFin@main/netfin.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/ya0903/NetFin@main/netfin.css"
+    ],
+    "previewUrls": [
+      "https://github.com/user-attachments/assets/5eee060a-0c1d-4ab3-8b64-027251973997",
+      "https://github.com/user-attachments/assets/adc6ae25-6687-43b9-aa19-3319794c297b",
+      "https://github.com/user-attachments/assets/192bd752-be1a-462d-a9f2-088f61940f4a",
+      "https://github.com/user-attachments/assets/69d1e032-e99e-4fdf-af4e-428d7e81252b"
+    ],
+    "tags": [
+      "NetFin"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "neutralfin",
+    "name": "NeutralFin",
+    "author": "KartoffelChipss",
+    "description": "NeutralFin is a custom Jellyfin theme based on lscambo13's ElegantFin, featuring a sleek black and grey color scheme for a more neutral and modern look.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/KartoffelChipss/NeutralFin",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/KartoffelChipss/NeutralFin@latest/theme/neutralfin-minified.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/KartoffelChipss/NeutralFin@latest/theme/neutralfin-minified.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/KartoffelChipss/NeutralFin/main/assets/neutralfin-movie2.webp",
+      "https://raw.githubusercontent.com/KartoffelChipss/NeutralFin/main/assets/neutralfin-home.webp",
+      "https://raw.githubusercontent.com/KartoffelChipss/NeutralFin/main/assets/neutralfin-movies.webp",
+      "https://raw.githubusercontent.com/KartoffelChipss/NeutralFin/main/assets/neutralfin-movie.webp"
+    ],
+    "tags": [
+      "NeutralFin"
+    ],
+    "license": "GPL-2.0"
+  },
+  {
+    "id": "ultrachromic-monochromic",
+    "name": "Ultrachromic - Monochromic",
+    "author": "CTalvio",
+    "description": "The final form, the true evolution of the chromic theme saga Note: There are several variations of the theme, for a more detailed overview, see the Ultrachromic README. Variant: Ultrachromic - Monochromic.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/CTalvio/Ultrachromic",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/CTalvio/Ultrachromic/presets/monochromic_preset.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/CTalvio/Ultrachromic/presets/monochromic_preset.css"
+    ],
+    "previewUrls": [
+      "https://user-images.githubusercontent.com/4365015/127774204-03957527-7178-4ea2-8674-d83fe6a97d1c.png",
+      "https://user-images.githubusercontent.com/4365015/127768733-c86aee2c-3bff-4b78-be54-003823d60276.png",
+      "https://user-images.githubusercontent.com/4365015/127768970-e827c7e4-f4ce-4229-a68a-b2e87a723ef0.png",
+      "https://user-images.githubusercontent.com/4365015/127778994-ddee8235-6bb2-42ae-a8b1-f9023dc69398.png"
+    ],
+    "tags": [
+      "Ultrachromic"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "ultrachromic-kaleidochromic",
+    "name": "Ultrachromic - Kaleidochromic",
+    "author": "CTalvio",
+    "description": "The final form, the true evolution of the chromic theme saga Note: There are several variations of the theme, for a more detailed overview, see the Ultrachromic README. Variant: Ultrachromic - Kaleidochromic.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/CTalvio/Ultrachromic",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/CTalvio/Ultrachromic/presets/kaleidochromic_preset.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/CTalvio/Ultrachromic/presets/kaleidochromic_preset.css"
+    ],
+    "previewUrls": [
+      "https://user-images.githubusercontent.com/4365015/127774204-03957527-7178-4ea2-8674-d83fe6a97d1c.png",
+      "https://user-images.githubusercontent.com/4365015/127768733-c86aee2c-3bff-4b78-be54-003823d60276.png",
+      "https://user-images.githubusercontent.com/4365015/127768970-e827c7e4-f4ce-4229-a68a-b2e87a723ef0.png",
+      "https://user-images.githubusercontent.com/4365015/127778994-ddee8235-6bb2-42ae-a8b1-f9023dc69398.png"
+    ],
+    "tags": [
+      "Ultrachromic"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "ultrachromic-novachromic",
+    "name": "Ultrachromic - Novachromic",
+    "author": "CTalvio",
+    "description": "The final form, the true evolution of the chromic theme saga Note: There are several variations of the theme, for a more detailed overview, see the Ultrachromic README. Variant: Ultrachromic - Novachromic.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/CTalvio/Ultrachromic",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/CTalvio/Ultrachromic/presets/novachromic_preset.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/CTalvio/Ultrachromic/presets/novachromic_preset.css"
+    ],
+    "previewUrls": [
+      "https://user-images.githubusercontent.com/4365015/127774204-03957527-7178-4ea2-8674-d83fe6a97d1c.png",
+      "https://user-images.githubusercontent.com/4365015/127768733-c86aee2c-3bff-4b78-be54-003823d60276.png",
+      "https://user-images.githubusercontent.com/4365015/127768970-e827c7e4-f4ce-4229-a68a-b2e87a723ef0.png",
+      "https://user-images.githubusercontent.com/4365015/127778994-ddee8235-6bb2-42ae-a8b1-f9023dc69398.png"
+    ],
+    "tags": [
+      "Ultrachromic"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "scyfin",
+    "name": "Scyfin",
+    "author": "loof2736",
+    "description": "Custom CSS theme for Jellyfin with support for backdrops and themes",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/loof2736/scyfin",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/scyfin-theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/scyfin-theme.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/homepage.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/homepage-backdrops.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/details.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/details-backdrops.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/dashboard.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/login.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/seafoam.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/coral.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/snow.png"
+    ],
+    "tags": [
+      "scyfin"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "scyfin-seafoam",
+    "name": "Scyfin - Seafoam",
+    "author": "loof2736",
+    "description": "Custom CSS theme for Jellyfin with support for backdrops and themes Variant: Scyfin - Seafoam.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/loof2736/scyfin",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/scyfin-theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/scyfin-theme.css",
+      "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/theme-seafoam.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/homepage.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/homepage-backdrops.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/details.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/details-backdrops.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/dashboard.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/login.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/seafoam.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/coral.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/snow.png"
+    ],
+    "tags": [
+      "scyfin"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "scyfin-coral",
+    "name": "Scyfin - Coral",
+    "author": "loof2736",
+    "description": "Custom CSS theme for Jellyfin with support for backdrops and themes Variant: Scyfin - Coral.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/loof2736/scyfin",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/scyfin-theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/scyfin-theme.css",
+      "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/theme-coral.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/homepage.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/homepage-backdrops.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/details.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/details-backdrops.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/dashboard.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/login.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/seafoam.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/coral.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/snow.png"
+    ],
+    "tags": [
+      "scyfin"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "scyfin-snow",
+    "name": "Scyfin - Snow",
+    "author": "loof2736",
+    "description": "Custom CSS theme for Jellyfin with support for backdrops and themes Variant: Scyfin - Snow.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/loof2736/scyfin",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/scyfin-theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/scyfin-theme.css",
+      "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/theme-snow.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/homepage.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/homepage-backdrops.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/details.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/details-backdrops.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/dashboard.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/login.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/seafoam.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/coral.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/snow.png"
+    ],
+    "tags": [
+      "scyfin"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "scyfin-oled",
+    "name": "Scyfin - OLED",
+    "author": "loof2736",
+    "description": "Custom CSS theme for Jellyfin with support for backdrops and themes Variant: Scyfin - OLED.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/loof2736/scyfin",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/scyfin-theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/scyfin-theme.css",
+      "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/theme-oled.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/homepage.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/homepage-backdrops.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/details.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/details-backdrops.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/dashboard.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/login.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/seafoam.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/coral.png",
+      "https://raw.githubusercontent.com/loof2736/scyfin/main/images/snow.png"
+    ],
+    "tags": [
+      "scyfin"
+    ],
+    "license": "GPL-3.0"
+  },
+  {
+    "id": "zestytheme",
+    "name": "ZestyTheme",
+    "author": "stpnwf",
+    "description": "A minimal and elegant theme for Jellyfin",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/home.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/nice-guys.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/avatar.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/player.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/login.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/phone.jpg"
+    ],
+    "tags": [
+      "ZestyTheme"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "zestytheme-blue",
+    "name": "ZestyTheme - Blue",
+    "author": "stpnwf",
+    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Blue.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/blue.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/home.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/nice-guys.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/avatar.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/player.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/login.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/phone.jpg"
+    ],
+    "tags": [
+      "ZestyTheme"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "zestytheme-coral",
+    "name": "ZestyTheme - Coral",
+    "author": "stpnwf",
+    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Coral.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/coral.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/home.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/nice-guys.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/avatar.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/player.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/login.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/phone.jpg"
+    ],
+    "tags": [
+      "ZestyTheme"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "zestytheme-gray",
+    "name": "ZestyTheme - Gray",
+    "author": "stpnwf",
+    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Gray.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/gray.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/home.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/nice-guys.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/avatar.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/player.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/login.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/phone.jpg"
+    ],
+    "tags": [
+      "ZestyTheme"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "zestytheme-green",
+    "name": "ZestyTheme - Green",
+    "author": "stpnwf",
+    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Green.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/green.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/home.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/nice-guys.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/avatar.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/player.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/login.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/phone.jpg"
+    ],
+    "tags": [
+      "ZestyTheme"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "zestytheme-purple",
+    "name": "ZestyTheme - Purple",
+    "author": "stpnwf",
+    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Purple.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/purple.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/home.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/nice-guys.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/avatar.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/player.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/login.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/phone.jpg"
+    ],
+    "tags": [
+      "ZestyTheme"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "zestytheme-red",
+    "name": "ZestyTheme - Red",
+    "author": "stpnwf",
+    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Red.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/red.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/home.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/nice-guys.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/avatar.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/player.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/login.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/phone.jpg"
+    ],
+    "tags": [
+      "ZestyTheme"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "zestytheme-yellow",
+    "name": "ZestyTheme - Yellow",
+    "author": "stpnwf",
+    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Yellow.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+      "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/yellow.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/home.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/nice-guys.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/avatar.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/player.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/login.jpg",
+      "https://raw.githubusercontent.com/stpnwf/ZestyTheme/main/images/phone.jpg"
+    ],
+    "tags": [
+      "ZestyTheme"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "zombie-release",
+    "name": "zombie-release",
+    "author": "MakD",
+    "description": "A theme for Jellyfin 10.9.x combining the best from the Public Themes Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/MakD/zombie-release",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/login.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/homepage.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/detail.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/sidebar.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/tv-series.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/seasonpage.png"
+    ],
+    "tags": [
+      "zombie-release",
+      "legacy",
+      "Jellyfin 10.9"
+    ],
+    "license": "Unlicensed upstream"
+  },
+  {
+    "id": "zombie-release-amazon-prime",
+    "name": "zombie-release - Amazon Prime",
+    "author": "MakD",
+    "description": "A theme for Jellyfin 10.9.x combining the best from the Public Themes Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: zombie-release - Amazon Prime.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/MakD/zombie-release",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/amazon-prime.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/login.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/homepage.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/detail.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/sidebar.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/tv-series.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/seasonpage.png"
+    ],
+    "tags": [
+      "zombie-release",
+      "legacy",
+      "Jellyfin 10.9"
+    ],
+    "license": "Unlicensed upstream"
+  },
+  {
+    "id": "zombie-release-apple-tv",
+    "name": "zombie-release - Apple TV",
+    "author": "MakD",
+    "description": "A theme for Jellyfin 10.9.x combining the best from the Public Themes Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: zombie-release - Apple TV.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/MakD/zombie-release",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/apple-tv.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/login.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/homepage.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/detail.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/sidebar.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/tv-series.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/seasonpage.png"
+    ],
+    "tags": [
+      "zombie-release",
+      "legacy",
+      "Jellyfin 10.9"
+    ],
+    "license": "Unlicensed upstream"
+  },
+  {
+    "id": "zombie-release-disney",
+    "name": "zombie-release - Disney",
+    "author": "MakD",
+    "description": "A theme for Jellyfin 10.9.x combining the best from the Public Themes Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: zombie-release - Disney.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/MakD/zombie-release",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/disney.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/login.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/homepage.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/detail.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/sidebar.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/tv-series.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/seasonpage.png"
+    ],
+    "tags": [
+      "zombie-release",
+      "legacy",
+      "Jellyfin 10.9"
+    ],
+    "license": "Unlicensed upstream"
+  },
+  {
+    "id": "zombie-release-hbo-max",
+    "name": "zombie-release - HBO Max",
+    "author": "MakD",
+    "description": "A theme for Jellyfin 10.9.x combining the best from the Public Themes Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: zombie-release - HBO Max.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/MakD/zombie-release",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/hbo-max.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/login.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/homepage.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/detail.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/sidebar.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/tv-series.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/seasonpage.png"
+    ],
+    "tags": [
+      "zombie-release",
+      "legacy",
+      "Jellyfin 10.9"
+    ],
+    "license": "Unlicensed upstream"
+  },
+  {
+    "id": "zombie-release-hulu",
+    "name": "zombie-release - Hulu",
+    "author": "MakD",
+    "description": "A theme for Jellyfin 10.9.x combining the best from the Public Themes Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: zombie-release - Hulu.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/MakD/zombie-release",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/hulu.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/login.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/homepage.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/detail.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/sidebar.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/tv-series.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/seasonpage.png"
+    ],
+    "tags": [
+      "zombie-release",
+      "legacy",
+      "Jellyfin 10.9"
+    ],
+    "license": "Unlicensed upstream"
+  },
+  {
+    "id": "zombie-release-netflix",
+    "name": "zombie-release - Netflix",
+    "author": "MakD",
+    "description": "A theme for Jellyfin 10.9.x combining the best from the Public Themes Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: zombie-release - Netflix.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/MakD/zombie-release",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/netflix.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/login.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/homepage.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/detail.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/sidebar.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/tv-series.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/seasonpage.png"
+    ],
+    "tags": [
+      "zombie-release",
+      "legacy",
+      "Jellyfin 10.9"
+    ],
+    "license": "Unlicensed upstream"
+  },
+  {
+    "id": "zombie-release-youtube",
+    "name": "zombie-release - YouTube",
+    "author": "MakD",
+    "description": "A theme for Jellyfin 10.9.x combining the best from the Public Themes Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: zombie-release - YouTube.",
+    "version": "awesome-main",
+    "sourceUrl": "https://github.com/MakD/zombie-release",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+      "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/youtube.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/login.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/homepage.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/detail.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/sidebar.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/tv-series.png",
+      "https://raw.githubusercontent.com/MakD/zombie-release/main/img/desktop/seasonpage.png"
+    ],
+    "tags": [
+      "zombie-release",
+      "legacy",
+      "Jellyfin 10.9"
+    ],
+    "license": "Unlicensed upstream"
+  }
+]

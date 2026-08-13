@@ -117,7 +117,7 @@ export default function (view) {
 
       const body = node('div', 'ts-cardbody');
       body.appendChild(node('h2', '', theme.Name));
-      body.appendChild(node('div', 'ts-meta', [theme.Author, theme.Version].filter(Boolean).join(' · ')));
+      body.appendChild(node('div', 'ts-meta', [theme.Author, theme.Version, theme.License].filter(Boolean).join(' · ')));
       if (theme.Description) body.appendChild(node('p', '', theme.Description));
       const selected = theme.Id === state.selected;
       const configurable = (theme.Vars || []).length > 0;

@@ -13,6 +13,7 @@ This project is based on [Jellyfin-PG/Skin-Manager](https://github.com/Jellyfin-
 - Multiple preview images per theme with a full-size gallery
 - Search by name, author, description, and tags
 - Configurable theme variables from JSON catalogs for administrators and users
+- A maintained catalog sourced from Awesome Jellyfin with complete theme variants and add-on combinations
 - A simple human-readable catalog format plus compatibility with the existing JSON format
 - Local CSS caching on the Jellyfin server
 - Authenticated user APIs with separate administrator permissions
@@ -48,7 +49,28 @@ You can also open the [Theme Store repository manifest](https://daseric.github.i
 
 The repository becomes installable after its first GitHub release. For every `v*` tag, the release workflow automatically writes the release download URL, checksum, and image URL to `manifest.json`.
 
-## Managing the theme catalog
+## Included theme catalog
+
+The default catalog is published together with the Jellyfin plugin repository at:
+
+```text
+https://daseric.github.io/Jellyfin-ThemeStore/catalog.json
+```
+
+It is curated from [Awesome Jellyfin's theme list](https://github.com/awesome-jellyfin/awesome-jellyfin/blob/main/THEMES.md). Theme CSS and screenshots remain hosted by their respective authors; this repository stores the metadata and the ordered combinations needed for complete variants. The initial catalog contains 18 upstream projects and 67 selectable entries, including Catppuccin flavors, Evergarden seasons, Ultrachromic presets, Scyfin colors, Flow colors, ZestyTheme colors, and other documented variants.
+
+Each variant has its own permanent ID, so `Catppuccin - Mocha` and `Catppuccin - Latte` are independent selections. When an upstream option is only an add-on, the catalog declares both the base CSS and the add-on CSS in order. Standalone fragments that do not form a usable theme are not listed by themselves.
+
+The curated definitions live in [`themes/sources.json`](themes/sources.json), while [`themes/catalog.json`](themes/catalog.json) is generated. To refresh descriptions and preview images from Awesome Jellyfin after reviewing upstream installation instructions, run:
+
+```bash
+python scripts/update_theme_catalog.py
+python scripts/update_theme_catalog.py --check
+```
+
+The update is intentionally review-driven instead of scraping arbitrary installation snippets at runtime. This prevents an upstream README edit from silently changing every Jellyfin server immediately. Add or update explicit CSS URLs and variants in `themes/sources.json`, regenerate the catalog, review the diff, and create a new plugin release.
+
+## Custom catalogs
 
 An example catalog is included at [`themes/catalog.txt`](themes/catalog.txt). Each theme uses two lines:
 
@@ -67,10 +89,19 @@ Separate multiple themes with an empty line:
 @import url('https://cdn.example.org/midnight/theme.css');
 ```
 
+A named variant may contain multiple ordered imports. This is useful when an add-on requires a base theme:
+
+```css
+#Scyfin - OLED, https://example.org/scyfin-oled.png
+@import url('https://cdn.example.org/scyfin-theme.css');
+@import url('https://cdn.example.org/theme-oled.css');
+```
+
 Catalog rules:
 
-- The text after `#` and before the first comma is the visible theme name.
+- The text after `#` and before the first comma is the visible theme or variant name.
 - Any number of preview images may follow the theme name.
+- One or more `@import` lines may follow a header. They are loaded in order as one complete selection.
 - Relative image and CSS paths are resolved against the catalog URL.
 - Supported image formats depend on the browser; common formats include PNG, JPG/JPEG, WebP, GIF, AVIF, and SVG.
 - Only absolute or correctly resolvable HTTP and HTTPS URLs are accepted.
@@ -91,6 +122,10 @@ Existing Skin Manager catalogs remain supported. Use `previewUrls` to provide mu
     "description": "A blue theme for Jellyfin.",
     "version": "1.2.0",
     "cssUrl": "./css/ocean.css",
+    "cssUrls": [
+      "./css/ocean.css",
+      "./css/ocean-compact-cards.css"
+    ],
     "previewUrl": "./previews/ocean-home.png",
     "previewUrls": [
       "./previews/ocean-home.png",
@@ -102,6 +137,8 @@ Existing Skin Manager catalogs remain supported. Use `previewUrls` to provide mu
 ```
 
 If `id` is omitted, the plugin generates a stable ID from the theme name. An explicit and permanent `id` is recommended for catalogs intended for long-term use.
+
+Use `cssUrls` for an ordered base-theme and variant/add-on combination. `cssUrl` remains supported for existing catalogs; when both are present, duplicate URLs are removed and `cssUrl` is treated as the first source.
 
 JSON catalogs may also declare the existing Skin Manager `vars` array. Users and administrators will be prompted to configure those values when selecting the theme.
 
@@ -146,7 +183,7 @@ git tag v1.0.0.0
 git push origin v1.0.0.0
 ```
 
-GitHub Actions runs the test suite, builds `ThemeStore_1.0.0.0.zip`, creates the GitHub release, and updates the newest version in `manifest.json`. The dependency on File Transformation is added automatically.
+GitHub Actions runs the test suite, builds `ThemeStore_1.0.0.0.zip`, creates the GitHub release, updates the newest version in `manifest.json`, and publishes both `manifest.json` and `catalog.json` through GitHub Pages. The dependency on File Transformation is added automatically.
 
 Before the first Pages deployment, select **GitHub Actions** under `Settings → Pages → Build and deployment → Source`. After a successful release, the same workflow publishes the generated repository manifest as `/manifest.json`.
 
@@ -161,3 +198,5 @@ The original code was published as [Jellyfin-PG/Skin-Manager](https://github.com
 [File Transformation](https://github.com/IAmParadox27/jellyfin-plugin-file-transformation) is maintained by IAmParadox27. It is a separately installed runtime dependency under GPL-3.0. Its source code and binaries are not bundled with this repository.
 
 See [`NOTICE.md`](NOTICE.md) for additional attribution details.
+
+The included catalog metadata and screenshots are derived from [awesome-jellyfin/awesome-jellyfin](https://github.com/awesome-jellyfin/awesome-jellyfin). Every catalog card identifies the upstream author and license where one is declared. The third-party themes are fetched from their authors' URLs and are not bundled into the plugin binary; each remains subject to its own upstream license and terms.

@@ -64,6 +64,7 @@ jobs:
         run: |
           mkdir -p _site
           cp manifest.json _site/manifest.json
+          cp themes/catalog.json _site/catalog.json
           touch _site/.nojekyll
       - name: Upload Jellyfin repository site
         uses: actions/upload-pages-artifact@v4
@@ -83,6 +84,6 @@ jobs:
     steps:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-      - name: Publish Jellyfin repository manifest
+      - name: Publish Jellyfin repository and theme catalog
         id: deployment
         uses: actions/deploy-pages@v4

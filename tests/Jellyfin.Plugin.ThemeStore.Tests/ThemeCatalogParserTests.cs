@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
+using System.IO;
 using Jellyfin.Plugin.ThemeStore;
 using Jellyfin.Plugin.ThemeStore.Services;
 using Jellyfin.Plugin.ThemeStore.Api;
@@ -22,6 +23,23 @@ public sealed class ThemeCatalogParserTests
         Assert.Contains("Jellyfin.Plugin.ThemeStore.Configuration.injection.js", resources);
         Assert.Contains("Jellyfin.Plugin.ThemeStore.Configuration.userThemePage.html", resources);
         Assert.Contains("Jellyfin.Plugin.ThemeStore.Configuration.userThemePage.js", resources);
+    }
+
+    [Fact]
+    public void IncludedCatalogContainsAllCuratedThemesAndVariants()
+    {
+        string path = Path.Combine(AppContext.BaseDirectory, "themes", "catalog.json");
+        string content = File.ReadAllText(path);
+        var result = ThemeCatalogParser.Parse(content, new Uri(global::Jellyfin.Plugin.ThemeStore.Plugin.DefaultCatalogUrl));
+
+        Assert.Empty(result.Warnings);
+        Assert.Equal(67, result.Themes.Count);
+        Assert.Equal(67, result.Themes.Select(theme => theme.Id).Distinct(StringComparer.OrdinalIgnoreCase).Count());
+        Assert.Contains(result.Themes, theme => theme.Id == "catppuccin-mocha" && theme.CssUrls.Count == 2);
+        Assert.Contains(result.Themes, theme => theme.Id == "scyfin-oled" && theme.CssUrls.Count == 2);
+        Assert.All(result.Themes, theme => Assert.StartsWith("https://", theme.SourceUrl));
+        Assert.All(result.Themes, theme => Assert.NotEmpty(theme.PreviewUrls));
+        Assert.All(result.Themes, theme => Assert.NotEmpty(theme.License));
     }
 
     [Fact]
@@ -46,6 +64,7 @@ public sealed class ThemeCatalogParserTests
         Assert.Contains("typeof value.text === 'function'", script);
         Assert.Contains("function ensureThemeLast()", script);
         Assert.Contains("priorityObserver", script);
+        Assert.Contains("theme.License", ReadEmbeddedText("Jellyfin.Plugin.ThemeStore.Configuration.userThemePage.js"));
         Assert.DoesNotContain(".lnkHomePreferences", script);
     }
 
@@ -83,14 +102,64 @@ public sealed class ThemeCatalogParserTests
     }
 
     [Fact]
+    public void ParsesOrderedBaseAndAddonImportsAsOneVariant()
+    {
+        const string input = """
+            #Scyfin - OLED, preview.png
+            @import url('https://cdn.example/scyfin.css');
+            @import url('https://cdn.example/oled.css');
+            """;
+        var theme = Assert.Single(ThemeCatalogParser.Parse(input, new Uri("https://example.org/catalog.txt")).Themes);
+
+        Assert.Equal("https://cdn.example/scyfin.css", theme.CssUrl);
+        Assert.Equal(new[] { "https://cdn.example/scyfin.css", "https://cdn.example/oled.css" }, theme.CssUrls);
+    }
+
+    [Fact]
+    public void ParsesJsonCssUrlArraysForCompleteVariants()
+    {
+        const string input = """
+            [{"id":"catppuccin-mocha","name":"Catppuccin - Mocha","cssUrls":["base.css","mocha.css"]}]
+            """;
+        var theme = Assert.Single(ThemeCatalogParser.Parse(input, new Uri("https://example.org/themes/catalog.json")).Themes);
+
+        Assert.Equal("https://example.org/themes/base.css", theme.CssUrl);
+        Assert.Equal(new[] { "https://example.org/themes/base.css", "https://example.org/themes/mocha.css" }, theme.CssUrls);
+    }
+
+    [Fact]
+    public void ExplicitCssUrlIsAlwaysFirstInJsonVariantOrder()
+    {
+        const string input = """
+            [{"name":"Variant","cssUrl":"base.css","cssUrls":["addon.css","base.css"]}]
+            """;
+        var theme = Assert.Single(ThemeCatalogParser.Parse(input, new Uri("https://example.org/catalog.json")).Themes);
+
+        Assert.Equal(new[] { "https://example.org/base.css", "https://example.org/addon.css" }, theme.CssUrls);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("https://raw.githubusercontent.com/Jellyfin-PG/Skin-Manager-Themes/refs/heads/main/skins.json")]
+    [InlineData("https://raw.githubusercontent.com/Jellyfin-PG/Skin-Manager-Themes/main/skins.json")]
+    public void MigratesOnlyTheLegacyDefaultCatalog(string value)
+        => Assert.Equal(global::Jellyfin.Plugin.ThemeStore.Plugin.DefaultCatalogUrl, global::Jellyfin.Plugin.ThemeStore.Plugin.MigrateCatalogUrl(value));
+
+    [Fact]
+    public void PreservesAdministratorCatalogDuringMigration()
+        => Assert.Equal("https://example.org/custom.json", global::Jellyfin.Plugin.ThemeStore.Plugin.MigrateCatalogUrl(" https://example.org/custom.json "));
+
+    [Fact]
     public void ParsesLegacyJsonAndPreviewArrays()
     {
         const string input = """
-            [{"name":"Night","author":"Tester","version":"2.0","cssUrl":"themes/night.css","previewUrl":"one.png","previewUrls":["two.webp"]}]
+            [{"name":"Night","author":"Tester","version":"2.0","license":"MIT","cssUrl":"themes/night.css","previewUrl":"one.png","previewUrls":["two.webp"]}]
             """;
         var result = ThemeCatalogParser.Parse(input, new Uri("https://example.org/store/catalog.json"));
         var theme = Assert.Single(result.Themes);
         Assert.Equal("https://example.org/store/themes/night.css", theme.CssUrl);
+        Assert.Equal("MIT", theme.License);
         Assert.Equal(new[] { "https://example.org/store/one.png", "https://example.org/store/two.webp" }, theme.PreviewUrls);
     }
 

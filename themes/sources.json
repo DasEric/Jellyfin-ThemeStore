@@ -1,0 +1,189 @@
+{
+  "awesomeThemesUrl": "https://raw.githubusercontent.com/awesome-jellyfin/awesome-jellyfin/main/THEMES.md",
+  "themes": [
+    {
+      "sourceName": "Abyss",
+      "license": "MIT",
+      "variants": [
+        { "id": "abyss", "name": "Abyss", "cssUrls": ["https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css"] },
+        { "id": "abyss-lite", "name": "Abyss - Lite", "cssUrls": ["https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css", "https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/styles/abyss-lite.css"] }
+      ]
+    },
+    {
+      "sourceName": "better-jellyfin-ui",
+      "license": "Apache-2.0",
+      "baseCssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/theme.css",
+      "variants": [
+        { "id": "better-jellyfin-ui", "name": "better-jellyfin-ui" },
+        { "id": "better-jellyfin-ui-floating-header", "name": "better-jellyfin-ui - Floating Header", "addonCssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/Floating-header.css" },
+        { "id": "better-jellyfin-ui-high-contrast", "name": "better-jellyfin-ui - High Contrast", "addonCssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/High-contrast-interface.css" },
+        { "id": "better-jellyfin-ui-hover-scale", "name": "better-jellyfin-ui - Hover Scale", "addonCssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/Scale-up-animation-on-hover-card.css" },
+        { "id": "better-jellyfin-ui-no-liquid-borders", "name": "better-jellyfin-ui - No Liquid Glass Borders", "addonCssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/no-liquid-glass-borders.css" },
+        { "id": "better-jellyfin-ui-alternative-navigation", "name": "better-jellyfin-ui - Alternative Navigation", "addonCssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/alternative-navigation-bar.css" },
+        { "id": "better-jellyfin-ui-no-header-logo", "name": "better-jellyfin-ui - No Header Logo", "addonCssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/Remove-jellyfin-logo-from-header.css" },
+        { "id": "better-jellyfin-ui-alternative-detail-logo", "name": "better-jellyfin-ui - Alternative Detail Logo", "addonCssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/alternative-detail-logo.css" },
+        { "id": "better-jellyfin-ui-trickplay", "name": "better-jellyfin-ui - Trickplay Support", "addonCssUrl": "https://cdn.jsdelivr.net/gh/tromoSM/better-jellyfin-ui@main/options/Trickplay-support.css" }
+      ]
+    },
+    {
+      "sourceName": "catppuccin",
+      "license": "MIT",
+      "baseCssUrl": "https://jellyfin.catppuccin.com/theme.css",
+      "variants": [
+        { "id": "catppuccin-latte", "name": "Catppuccin - Latte", "addonCssUrl": "https://jellyfin.catppuccin.com/catppuccin-latte.css", "previewIndexes": [0] },
+        { "id": "catppuccin-frappe", "name": "Catppuccin - Frappé", "addonCssUrl": "https://jellyfin.catppuccin.com/catppuccin-frappe.css", "previewIndexes": [1] },
+        { "id": "catppuccin-macchiato", "name": "Catppuccin - Macchiato", "addonCssUrl": "https://jellyfin.catppuccin.com/catppuccin-macchiato.css", "previewIndexes": [2] },
+        { "id": "catppuccin-mocha", "name": "Catppuccin - Mocha", "addonCssUrl": "https://jellyfin.catppuccin.com/catppuccin-mocha.css", "previewIndexes": [3] }
+      ]
+    },
+    {
+      "sourceName": "ElegantFin",
+      "license": "GPL-2.0",
+      "baseCssUrl": "https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/ElegantFin-jellyfin-theme-build-latest-minified.css",
+      "variants": [
+        { "id": "elegantfin", "name": "ElegantFin" },
+        { "id": "elegantfin-media-bar", "name": "ElegantFin - Media Bar Support", "addonCssUrl": "https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/assets/add-ons/media-bar-plugin-support-latest-min.css" }
+      ]
+    },
+    {
+      "sourceName": "evergarden",
+      "license": "EUPL-1.2",
+      "variants": [
+        { "id": "evergarden-summer", "name": "Evergarden - Summer", "cssUrls": ["https://everviolet.github.io/jellyfin/evergarden-summer.css"], "previewIndexes": [0] },
+        { "id": "evergarden-spring", "name": "Evergarden - Spring", "cssUrls": ["https://everviolet.github.io/jellyfin/evergarden-spring.css"], "previewIndexes": [1] },
+        { "id": "evergarden-fall", "name": "Evergarden - Fall", "cssUrls": ["https://everviolet.github.io/jellyfin/evergarden-fall.css"], "previewIndexes": [2] },
+        { "id": "evergarden-winter", "name": "Evergarden - Winter", "cssUrls": ["https://everviolet.github.io/jellyfin/evergarden-winter.css"], "previewIndexes": [3] }
+      ]
+    },
+    {
+      "sourceName": "finimalism",
+      "license": "GPL-3.0",
+      "variants": [
+        { "id": "finimalism-v11", "name": "Finimalism - Jellyfin 11", "cssUrls": ["https://cdn.jsdelivr.net/gh/tedhinklater/finimalism@main/Finimalism11.css"] },
+        { "id": "finimalism-v12", "name": "Finimalism - Jellyfin 12", "cssUrls": ["https://cdn.jsdelivr.net/gh/tedhinklater/finimalism@main/Finimalism12.css"] }
+      ]
+    },
+    {
+      "sourceName": "Flow",
+      "license": "GPL-3.0",
+      "baseCssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner.css",
+      "variants": [
+        { "id": "flow", "name": "Flow" },
+        { "id": "flow-mobile", "name": "Flow - Mobile", "cssUrls": ["https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/ScyFlow-oneliner-mobile.css"] },
+        { "id": "flow-orange", "name": "Flow - Orange", "addonCssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-Orange.css" },
+        { "id": "flow-pink", "name": "Flow - Pink", "addonCssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-Pink.css" },
+        { "id": "flow-rainbow", "name": "Flow - Rainbow", "addonCssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-Rainbow.css" },
+        { "id": "flow-red", "name": "Flow - Red", "addonCssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-Red.css" },
+        { "id": "flow-white", "name": "Flow - White", "addonCssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-White.css" },
+        { "id": "flow-blue", "name": "Flow - Blue", "addonCssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-Blue.css" },
+        { "id": "flow-dark", "name": "Flow - Dark", "addonCssUrl": "https://cdn.jsdelivr.net/gh/LitCastVlog/Flow@main/CSS/Themes/ScyFlow-Dark.css" }
+      ]
+    },
+    {
+      "sourceName": "Finity",
+      "license": "GPL-3.0",
+      "variants": [
+        { "id": "finity-complete", "name": "Finity - Complete", "cssUrls": ["https://cdn.jsdelivr.net/gh/prism2001/finity@main/complete/finity-complete.css"] },
+        { "id": "finity-minimal", "name": "Finity - Minimal", "cssUrls": ["https://cdn.jsdelivr.net/gh/prism2001/finity@main/minimal/finity-minimal.css"] }
+      ]
+    },
+    {
+      "sourceName": "infinitv",
+      "license": "GPL-3.0",
+      "variants": [
+        { "id": "infinitv", "name": "InfiniTV", "cssUrls": ["https://buesche87.github.io/infinitv/infinitv.css"] }
+      ]
+    },
+    {
+      "sourceName": "Jamfin",
+      "license": "MIT",
+      "variants": [
+        { "id": "jamfin", "name": "Jamfin", "cssUrls": ["https://cdn.jsdelivr.net/gh/JamsRepos/Jamfin@latest/theme/complete.css"] }
+      ]
+    },
+    {
+      "sourceName": "JellySkin",
+      "license": "GPL-3.0",
+      "baseCssUrl": "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/main.css",
+      "variants": [
+        { "id": "jellyskin", "name": "JellySkin" },
+        { "id": "jellyskin-mauve", "name": "JellySkin - Mauve", "addonCssUrl": "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/addons/gradients/mauve.css" },
+        { "id": "jellyskin-night-sky", "name": "JellySkin - Night Sky", "addonCssUrl": "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/addons/gradients/nightSky.css" },
+        { "id": "jellyskin-sea", "name": "JellySkin - Sea", "addonCssUrl": "https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/addons/gradients/sea.css" }
+      ]
+    },
+    {
+      "sourceName": "Jellyfin Better Styles",
+      "license": "MIT",
+      "variants": [
+        { "id": "jellyfin-better-styles", "name": "Jellyfin Better Styles", "cssUrls": ["https://tetrax-10.github.io/jellyfin-better-styles/theme.css"] }
+      ]
+    },
+    {
+      "sourceName": "NetFin",
+      "license": "MIT",
+      "variants": [
+        { "id": "netfin", "name": "NetFin", "cssUrls": ["https://cdn.jsdelivr.net/gh/ya0903/NetFin@main/netfin.css"] }
+      ]
+    },
+    {
+      "sourceName": "NeutralFin",
+      "license": "GPL-2.0",
+      "variants": [
+        { "id": "neutralfin", "name": "NeutralFin", "cssUrls": ["https://cdn.jsdelivr.net/gh/KartoffelChipss/NeutralFin@latest/theme/neutralfin-minified.css"] }
+      ]
+    },
+    {
+      "sourceName": "Ultrachromic",
+      "license": "MIT",
+      "variants": [
+        { "id": "ultrachromic-monochromic", "name": "Ultrachromic - Monochromic", "cssUrls": ["https://cdn.jsdelivr.net/gh/CTalvio/Ultrachromic/presets/monochromic_preset.css"] },
+        { "id": "ultrachromic-kaleidochromic", "name": "Ultrachromic - Kaleidochromic", "cssUrls": ["https://cdn.jsdelivr.net/gh/CTalvio/Ultrachromic/presets/kaleidochromic_preset.css"] },
+        { "id": "ultrachromic-novachromic", "name": "Ultrachromic - Novachromic", "cssUrls": ["https://cdn.jsdelivr.net/gh/CTalvio/Ultrachromic/presets/novachromic_preset.css"] }
+      ]
+    },
+    {
+      "sourceName": "scyfin",
+      "license": "GPL-3.0",
+      "baseCssUrl": "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/scyfin-theme.css",
+      "variants": [
+        { "id": "scyfin", "name": "Scyfin" },
+        { "id": "scyfin-seafoam", "name": "Scyfin - Seafoam", "addonCssUrl": "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/theme-seafoam.css" },
+        { "id": "scyfin-coral", "name": "Scyfin - Coral", "addonCssUrl": "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/theme-coral.css" },
+        { "id": "scyfin-snow", "name": "Scyfin - Snow", "addonCssUrl": "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/theme-snow.css" },
+        { "id": "scyfin-oled", "name": "Scyfin - OLED", "addonCssUrl": "https://cdn.jsdelivr.net/gh/loof2736/scyfin@latest/CSS/theme-oled.css" }
+      ]
+    },
+    {
+      "sourceName": "ZestyTheme",
+      "license": "MIT",
+      "baseCssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
+      "variants": [
+        { "id": "zestytheme", "name": "ZestyTheme" },
+        { "id": "zestytheme-blue", "name": "ZestyTheme - Blue", "addonCssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/blue.css" },
+        { "id": "zestytheme-coral", "name": "ZestyTheme - Coral", "addonCssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/coral.css" },
+        { "id": "zestytheme-gray", "name": "ZestyTheme - Gray", "addonCssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/gray.css" },
+        { "id": "zestytheme-green", "name": "ZestyTheme - Green", "addonCssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/green.css" },
+        { "id": "zestytheme-purple", "name": "ZestyTheme - Purple", "addonCssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/purple.css" },
+        { "id": "zestytheme-red", "name": "ZestyTheme - Red", "addonCssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/red.css" },
+        { "id": "zestytheme-yellow", "name": "ZestyTheme - Yellow", "addonCssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/yellow.css" }
+      ]
+    },
+    {
+      "sourceName": "zombie-release",
+      "license": "Unlicensed upstream",
+      "tags": ["legacy", "Jellyfin 10.9"],
+      "baseCssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/zombie_revived.css",
+      "variants": [
+        { "id": "zombie-release", "name": "zombie-release" },
+        { "id": "zombie-release-amazon-prime", "name": "zombie-release - Amazon Prime", "addonCssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/amazon-prime.css" },
+        { "id": "zombie-release-apple-tv", "name": "zombie-release - Apple TV", "addonCssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/apple-tv.css" },
+        { "id": "zombie-release-disney", "name": "zombie-release - Disney", "addonCssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/disney.css" },
+        { "id": "zombie-release-hbo-max", "name": "zombie-release - HBO Max", "addonCssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/hbo-max.css" },
+        { "id": "zombie-release-hulu", "name": "zombie-release - Hulu", "addonCssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/hulu.css" },
+        { "id": "zombie-release-netflix", "name": "zombie-release - Netflix", "addonCssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/netflix.css" },
+        { "id": "zombie-release-youtube", "name": "zombie-release - YouTube", "addonCssUrl": "https://cdn.jsdelivr.net/gh/MakD/zombie-release@latest/color-schemes/youtube.css" }
+      ]
+    }
+  ]
+}

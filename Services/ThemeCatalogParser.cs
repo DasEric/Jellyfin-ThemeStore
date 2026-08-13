@@ -62,8 +62,7 @@ namespace Jellyfin.Plugin.ThemeStore.Services
                     continue;
                 }
 
-                string importLine = string.Empty;
-                int importLineNumber = headerLine;
+                var cssUrls = new List<string>();
                 while (++index < lines.Length)
                 {
                     string candidate = lines[index].Trim();
@@ -76,26 +75,29 @@ namespace Jellyfin.Plugin.ThemeStore.Services
                         break;
                     }
 
-                    importLine = candidate;
-                    importLineNumber = index + 1;
-                    break;
+                    Match match = ImportRegex.Match(candidate);
+                    if (!match.Success)
+                    {
+                        result.Warnings.Add($"Line {index + 1}: theme '{name}' needs valid @import URLs.");
+                        continue;
+                    }
+
+                    string resolved = ResolveWebUrl(sourceUri, match.Groups["url"].Value, result.Warnings, index + 1, "CSS");
+                    if (resolved.Length > 0 && !cssUrls.Contains(resolved, StringComparer.OrdinalIgnoreCase))
+                        cssUrls.Add(resolved);
                 }
 
-                Match match = ImportRegex.Match(importLine);
-                if (!match.Success)
+                if (cssUrls.Count == 0)
                 {
-                    result.Warnings.Add($"Line {importLineNumber}: theme '{name}' needs a valid @import URL.");
+                    result.Warnings.Add($"Line {headerLine}: theme '{name}' needs at least one valid @import URL.");
                     continue;
                 }
-
-                string cssUrl = ResolveWebUrl(sourceUri, match.Groups["url"].Value, result.Warnings, importLineNumber, "CSS");
-                if (cssUrl.Length == 0)
-                    continue;
 
                 var theme = new ThemeDefinition
                 {
                     Name = name,
-                    CssUrl = cssUrl,
+                    CssUrl = cssUrls[0],
+                    CssUrls = cssUrls,
                     Version = "1"
                 };
 
@@ -139,7 +141,12 @@ namespace Jellyfin.Plugin.ThemeStore.Services
 
                     string name = GetString(item, "name");
                     string rawCssUrl = GetString(item, "cssUrl");
-                    bool isDefault = string.Equals(name, "Default", StringComparison.OrdinalIgnoreCase) && string.IsNullOrWhiteSpace(rawCssUrl);
+                    bool hasCssUrlArray = item.TryGetProperty("cssUrls", out JsonElement cssUrlArray)
+                        && cssUrlArray.ValueKind == JsonValueKind.Array
+                        && cssUrlArray.GetArrayLength() > 0;
+                    bool isDefault = string.Equals(name, "Default", StringComparison.OrdinalIgnoreCase)
+                        && string.IsNullOrWhiteSpace(rawCssUrl)
+                        && !hasCssUrlArray;
                     if (string.IsNullOrWhiteSpace(name))
                     {
                         result.Warnings.Add($"JSON item {itemNumber}: theme name is missing.");
@@ -154,10 +161,29 @@ namespace Jellyfin.Plugin.ThemeStore.Services
                         Version = GetString(item, "version", "1"),
                         Jellyfin = GetString(item, "jellyfin"),
                         SourceUrl = ResolveOptionalWebUrl(sourceUri, GetString(item, "sourceUrl")),
-                        CssUrl = isDefault ? string.Empty : ResolveWebUrl(sourceUri, rawCssUrl, result.Warnings, itemNumber, "CSS")
+                        License = GetString(item, "license"),
+                        CssUrl = string.IsNullOrWhiteSpace(rawCssUrl)
+                            ? string.Empty
+                            : ResolveWebUrl(sourceUri, rawCssUrl, result.Warnings, itemNumber, "CSS")
                     };
 
-                    if (!isDefault && theme.CssUrl.Length == 0)
+                    AddResolvedUrls(item, "cssUrls", sourceUri, theme.CssUrls);
+                    int primaryIndex = theme.CssUrls.FindIndex(url => string.Equals(url, theme.CssUrl, StringComparison.OrdinalIgnoreCase));
+                    if (theme.CssUrl.Length > 0 && primaryIndex < 0)
+                    {
+                        theme.CssUrls.Insert(0, theme.CssUrl);
+                    }
+                    else if (primaryIndex > 0)
+                    {
+                        theme.CssUrls.RemoveAt(primaryIndex);
+                        theme.CssUrls.Insert(0, theme.CssUrl);
+                    }
+                    else if (theme.CssUrl.Length == 0 && theme.CssUrls.Count > 0)
+                    {
+                        theme.CssUrl = theme.CssUrls[0];
+                    }
+
+                    if (!isDefault && theme.CssUrls.Count == 0)
                         continue;
 
                     AddResolvedUrls(item, "previewUrls", sourceUri, theme.PreviewUrls);

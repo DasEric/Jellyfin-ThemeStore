@@ -97,7 +97,7 @@
       state.themes.forEach(function (theme) {
         var option = document.createElement('option');
         option.value = theme.Id;
-        option.textContent = theme.Name + ([theme.Author, theme.Version].filter(Boolean).length ? ' — ' + [theme.Author, theme.Version].filter(Boolean).join(' · ') : '');
+        option.textContent = theme.Name + ([theme.Author, theme.Version, theme.License].filter(Boolean).length ? ' — ' + [theme.Author, theme.Version, theme.License].filter(Boolean).join(' · ') : '');
         select.appendChild(option);
       });
       if (state.themeId && !state.themes.some(function (theme) { return theme.Id === state.themeId; })) {

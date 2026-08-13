@@ -1,6 +1,11 @@
 // One block per theme. Relative URLs are resolved against this catalog file.
 // #THEME NAME, PREVIEW 1, PREVIEW 2, ...
-// @import url('CSS URL');
+// One or more ordered imports may follow. Use multiple imports for a complete
+// base-theme plus variant/add-on combination.
 
 #ZestyTheme, https://i.imgur.com/9HUmwm9.jpeg
 @import url('https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css');
+
+#ZestyTheme - Blue, https://i.imgur.com/9HUmwm9.jpeg
+@import url('https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css');
+@import url('https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/colorschemes/blue.css');

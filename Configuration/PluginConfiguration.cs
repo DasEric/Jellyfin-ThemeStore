@@ -32,7 +32,7 @@ namespace Jellyfin.Plugin.ThemeStore.Configuration
         /// <summary>
         /// URL pointing to the skins repository JSON file.
         /// </summary>
-        public string ThemeCatalogUrl { get; set; } = "https://raw.githubusercontent.com/Jellyfin-PG/Skin-Manager-Themes/refs/heads/main/skins.json";
+        public string ThemeCatalogUrl { get; set; } = global::Jellyfin.Plugin.ThemeStore.Plugin.DefaultCatalogUrl;
 
         public string SkinUrl { get; set; } = string.Empty;
 

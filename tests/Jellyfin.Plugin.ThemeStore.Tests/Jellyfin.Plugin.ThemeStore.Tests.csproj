@@ -13,4 +13,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup><ProjectReference Include="..\..\Jellyfin.Plugin.ThemeStore.csproj" /></ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\themes\catalog.json" Link="themes\catalog.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>

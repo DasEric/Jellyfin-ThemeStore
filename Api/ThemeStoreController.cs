@@ -121,11 +121,23 @@ namespace Jellyfin.Plugin.ThemeStore.Api
             else
             {
                 ThemeDefinition theme = await _catalogService.FindThemeAsync(id, cancellationToken).ConfigureAwait(false);
-                if (theme == null || string.IsNullOrWhiteSpace(theme.CssUrl))
+                if (theme == null || (string.IsNullOrWhiteSpace(theme.CssUrl) && theme.CssUrls.Count == 0))
                     return NotFound();
 
-                css = await SkinResourceProxy.GetResourceAsync(theme.CssUrl, theme.Version ?? v, _logger, cancellationToken).ConfigureAwait(false);
-                css = CssUrlRewriter.Rewrite(css, new Uri(theme.CssUrl));
+                var sources = theme.CssUrls.Count > 0
+                    ? theme.CssUrls
+                    : new System.Collections.Generic.List<string> { theme.CssUrl };
+                var parts = new System.Collections.Generic.List<string>(sources.Count);
+                foreach (string source in sources)
+                {
+                    string part = await SkinResourceProxy.GetResourceAsync(source, theme.Version ?? v, _logger, cancellationToken).ConfigureAwait(false);
+                    if (string.IsNullOrWhiteSpace(part))
+                        return StatusCode(StatusCodes.Status502BadGateway, $"Could not load CSS source for theme '{theme.Name}'.");
+
+                    parts.Add(CssUrlRewriter.Rewrite(part, new Uri(source)));
+                }
+
+                css = string.Join("\n\n", parts);
             }
 
             Response.Headers.CacheControl = "private, max-age=300";

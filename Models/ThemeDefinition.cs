@@ -18,7 +18,17 @@ namespace Jellyfin.Plugin.ThemeStore.Models
 
         public string SourceUrl { get; set; } = string.Empty;
 
+        public string License { get; set; } = string.Empty;
+
         public string CssUrl { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Ordered CSS sources for a complete theme variant. The first item is
+        /// normally the base theme and later items are variants or add-ons.
+        /// CssUrl remains populated with the first source for compatibility
+        /// with older clients and catalogs.
+        /// </summary>
+        public List<string> CssUrls { get; set; } = new();
 
         public List<string> PreviewUrls { get; set; } = new();
 
