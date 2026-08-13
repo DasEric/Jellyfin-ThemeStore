@@ -44,6 +44,8 @@ public sealed class ThemeCatalogParserTests
         Assert.Contains("dataType: 'text'", script);
         Assert.Contains("dataType: 'json'", script);
         Assert.Contains("typeof value.text === 'function'", script);
+        Assert.Contains("function ensureThemeLast()", script);
+        Assert.Contains("priorityObserver", script);
         Assert.DoesNotContain(".lnkHomePreferences", script);
     }
 

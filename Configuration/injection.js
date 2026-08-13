@@ -10,6 +10,8 @@
   const VARS_ID = 'theme-store-user-vars';
   const SAFE_ROUTE = /^#\/(?:dashboard|configuration(?:page)?|metadata|wizard|mypreferences[^/?#]*|login[^/?#]*|selectserver[^/?#]*|selectuser[^/?#]*|addserver[^/?#]*|signout[^/?#]*)(?:\/|[?]|$)/;
   let runId = 0;
+  let priorityFrame = 0;
+  let priorityObserver;
 
   function api() {
     return typeof ApiClient !== 'undefined' ? ApiClient : window.ApiClient;
@@ -66,6 +68,35 @@
     });
   }
 
+  function ensureThemeLast() {
+    if (priorityFrame) {
+      cancelAnimationFrame(priorityFrame);
+      priorityFrame = 0;
+    }
+    if (SAFE_ROUTE.test(window.location.hash) || document.getElementById(MODAL_ID) || !document.body) return;
+
+    const nodes = [document.getElementById(VARS_ID), document.getElementById(STYLE_ID)].filter(Boolean);
+    if (!nodes.length) return;
+    const children = document.body.children;
+    const offset = children.length - nodes.length;
+    const alreadyLast = offset >= 0 && nodes.every(function (node, index) {
+      return children[offset + index] === node;
+    });
+    if (alreadyLast) return;
+
+    if (priorityObserver) priorityObserver.disconnect();
+    nodes.forEach(function (node) { document.body.appendChild(node); });
+    if (priorityObserver) priorityObserver.observe(document.documentElement, { childList: true, subtree: true });
+  }
+
+  function scheduleThemePriority() {
+    if (priorityFrame) return;
+    priorityFrame = requestAnimationFrame(function () {
+      priorityFrame = 0;
+      ensureThemeLast();
+    });
+  }
+
   function kebab(value) {
     return String(value || '')
       .replace(/^-+/, '')
@@ -106,6 +137,7 @@
         link.rel = 'stylesheet';
         link.href = URL.createObjectURL(blob);
         (document.body || document.head).appendChild(link);
+        scheduleThemePriority();
       })
       .catch(function (error) {
         console.warn('[ThemeStore] Could not apply theme:', error);
@@ -206,11 +238,22 @@
   function navigation() {
     injectMenuItem();
     refreshTheme();
+    scheduleThemePriority();
   }
 
   function start() {
-    const observer = new MutationObserver(injectMenuItem);
-    observer.observe(document.body, { childList: true, subtree: true });
+    const menuObserver = new MutationObserver(injectMenuItem);
+    menuObserver.observe(document.body, { childList: true, subtree: true });
+    priorityObserver = new MutationObserver(function (mutations) {
+      if (SAFE_ROUTE.test(window.location.hash) || document.getElementById(MODAL_ID)) return;
+      const styleWasAdded = mutations.some(function (mutation) {
+        return Array.from(mutation.addedNodes).some(function (node) {
+          return (node.nodeName === 'STYLE' || node.nodeName === 'LINK') && node.id !== STYLE_ID && node.id !== VARS_ID;
+        });
+      });
+      if (styleWasAdded) scheduleThemePriority();
+    });
+    priorityObserver.observe(document.documentElement, { childList: true, subtree: true });
     window.addEventListener('hashchange', navigation);
     window.addEventListener('popstate', navigation);
     window.addEventListener('theme-store:changed', refreshTheme);
