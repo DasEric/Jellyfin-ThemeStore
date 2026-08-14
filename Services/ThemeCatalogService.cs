@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -58,7 +59,7 @@ namespace Jellyfin.Plugin.ThemeStore.Services
                 _cachedAt = DateTimeOffset.UtcNow;
                 return parsed;
             }
-            catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException || ex is InvalidOperationException)
+            catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException || ex is InvalidOperationException || ex is IOException || ex is SocketException)
             {
                 _logger.LogWarning(ex, "[ThemeStore] Failed to load theme catalog {CatalogUrl}.", source);
                 if (_cachedCatalog != null && string.Equals(_cachedUrl, source, StringComparison.Ordinal))

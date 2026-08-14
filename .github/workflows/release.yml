@@ -22,14 +22,22 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.0.x
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - name: Test
-        run: dotnet test Jellyfin.Plugin.ThemeStore.sln --configuration Release
+        run: |
+          dotnet test Jellyfin.Plugin.ThemeStore.sln --configuration Release
+          node --test tests/injection.lifecycle.test.mjs
+          node --check Configuration/injection.js
+          node --check Configuration/userThemePage.js
       - name: Package
         id: package
         shell: bash
         run: |
           version="${GITHUB_REF_NAME#v}"
-          dotnet publish Jellyfin.Plugin.ThemeStore.csproj --configuration Release --no-restore --output publish -p:Version="${version}" -p:RepositoryUrl="https://github.com/${GITHUB_REPOSITORY}"
+          [[ "${version}" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Release tags must use vMAJOR.MINOR.PATCH.BUILD." >&2; exit 1; }
+          dotnet publish Jellyfin.Plugin.ThemeStore.csproj --configuration Release --no-restore --output publish -p:Version="${version}" -p:AssemblyVersion="${version}" -p:FileVersion="${version}" -p:RepositoryUrl="https://github.com/${GITHUB_REPOSITORY}"
           archive="ThemeStore_${version}.zip"
           (cd publish && zip -j "../${archive}" Jellyfin.Plugin.ThemeStore.dll)
           echo "version=${version}" >> "$GITHUB_OUTPUT"

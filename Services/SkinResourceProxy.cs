@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,13 @@ namespace Jellyfin.Plugin.ThemeStore.Services
     public static class SkinResourceProxy
     {
         private const int MaxCssBytes = 5 * 1024 * 1024;
+        private const string CacheFormatVersion = "2";
         private static readonly TimeSpan CacheLifetime = TimeSpan.FromHours(6);
         private static readonly HttpClient HttpClient = CreateHttpClient();
         private static readonly SemaphoreSlim Semaphore = new(1, 1);
+        private static long _cacheGeneration;
+
+        public static long CacheGeneration => Interlocked.Read(ref _cacheGeneration);
 
         public static async Task<string> GetResourceAsync(string url, string version = null, ILogger logger = null, CancellationToken cancellationToken = default)
         {
@@ -30,7 +35,7 @@ namespace Jellyfin.Plugin.ThemeStore.Services
             {
                 string cacheDir = Path.Combine(Plugin.Instance.DataFolderPath, "Cache");
                 Directory.CreateDirectory(cacheDir);
-                string hash = GetHashString(url + "|" + (version ?? "0"));
+                string hash = GetHashString(CacheFormatVersion + "|" + url + "|" + (version ?? "0"));
                 string filePath = Path.Combine(cacheDir, hash + ".css");
                 if (IsFresh(filePath))
                     return await File.ReadAllTextAsync(filePath, cancellationToken).ConfigureAwait(false);
@@ -52,22 +57,27 @@ namespace Jellyfin.Plugin.ThemeStore.Services
                     Semaphore.Release();
                 }
             }
-            catch (Exception ex) when (ex is HttpRequestException || ex is IOException || ex is TaskCanceledException || ex is InvalidOperationException || ex is UnauthorizedAccessException)
+            catch (Exception ex) when (ex is HttpRequestException || ex is IOException || ex is TaskCanceledException || ex is InvalidOperationException || ex is UnauthorizedAccessException || ex is SocketException)
             {
                 logger?.LogError(ex, "[ThemeStore] Could not fetch CSS resource {Url}.", url);
                 return string.Empty;
             }
         }
 
-        public static void ClearCache()
+        public static async Task ClearCacheAsync(ILogger logger = null, CancellationToken cancellationToken = default)
         {
+            await Semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                string cacheDir = Path.Combine(Plugin.Instance.DataFolderPath, "Cache");
+                string dataFolder = Plugin.Instance?.DataFolderPath;
+                if (string.IsNullOrWhiteSpace(dataFolder))
+                    return;
+
+                string cacheDir = Path.Combine(dataFolder, "Cache");
                 if (!Directory.Exists(cacheDir))
                     return;
 
-                foreach (string file in Directory.GetFiles(cacheDir, "*.css", SearchOption.TopDirectoryOnly))
+                foreach (string file in Directory.EnumerateFiles(cacheDir, "*.css*", SearchOption.TopDirectoryOnly))
                 {
                     try
                     {
@@ -79,9 +89,14 @@ namespace Jellyfin.Plugin.ThemeStore.Services
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
             {
-                // Cache clearing is best effort and must never crash Jellyfin.
+                logger?.LogWarning(ex, "[ThemeStore] Could not completely clear the CSS cache.");
+            }
+            finally
+            {
+                Interlocked.Increment(ref _cacheGeneration);
+                Semaphore.Release();
             }
         }
 
@@ -126,7 +141,7 @@ namespace Jellyfin.Plugin.ThemeStore.Services
                 if (bytes.Length > MaxCssBytes)
                     throw new InvalidOperationException("The CSS file is larger than 5 MiB.");
 
-                return Encoding.UTF8.GetString(bytes);
+                return CssUrlRewriter.Rewrite(Encoding.UTF8.GetString(bytes), current);
             }
 
             throw new InvalidOperationException("The CSS URL redirected too many times.");

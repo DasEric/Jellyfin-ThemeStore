@@ -55,11 +55,14 @@ namespace Jellyfin.Plugin.ThemeStore.Api
 
         [HttpGet("Catalog")]
         [Authorize]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<ActionResult<ThemeCatalogResponse>> GetCatalog(CancellationToken cancellationToken)
         {
             ThemeCatalogResult catalog = await _catalogService.GetCatalogAsync(false, cancellationToken).ConfigureAwait(false);
             var config = Plugin.Instance.Configuration;
             UserThemePreference preference = await _userThemeStore.GetAsync(GetUserId(), cancellationToken).ConfigureAwait(false);
+            ResolvedThemeSelection active = ThemeSelectionResolver.Resolve(config, preference, catalog.Themes);
+            SetNoStoreHeaders();
             return Ok(new ThemeCatalogResponse
             {
                 AllowUserThemes = config.AllowUserThemes,
@@ -69,8 +72,44 @@ namespace Jellyfin.Plugin.ThemeStore.Api
                 DefaultVariables = ParseVariables(config.DefaultThemeVariablesJson),
                 SelectedThemeId = preference.ThemeId,
                 Variables = preference.Variables,
+                ActiveThemeId = active.ThemeId,
+                ActiveThemeVersion = active.Version,
+                ActiveVariables = active.Variables,
+                ThemeStateToken = active.StateToken,
                 Themes = catalog.Themes,
                 Warnings = catalog.Warnings
+            });
+        }
+
+        [HttpGet("State")]
+        [Authorize]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        public async Task<ActionResult<ThemeStateResponse>> GetState(CancellationToken cancellationToken)
+        {
+            var config = Plugin.Instance.Configuration;
+            UserThemePreference preference = await _userThemeStore.GetAsync(GetUserId(), cancellationToken).ConfigureAwait(false);
+            var catalog = new ThemeCatalogResult();
+            if (ThemeSelectionResolver.RequiresCatalog(config, preference))
+            {
+                catalog = await _catalogService.GetCatalogAsync(false, cancellationToken).ConfigureAwait(false);
+                if (catalog.Themes.Count == 0 && catalog.Warnings.Count > 0)
+                {
+                    SetNoStoreHeaders();
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, new
+                    {
+                        Message = "The configured theme catalog is temporarily unavailable. The client should keep the current theme and retry."
+                    });
+                }
+            }
+
+            ResolvedThemeSelection active = ThemeSelectionResolver.Resolve(config, preference, catalog.Themes);
+            SetNoStoreHeaders();
+            return Ok(new ThemeStateResponse
+            {
+                ThemeId = active.ThemeId,
+                Version = active.Version,
+                Variables = active.Variables,
+                StateToken = active.StateToken
             });
         }
 
@@ -134,7 +173,7 @@ namespace Jellyfin.Plugin.ThemeStore.Api
                     if (string.IsNullOrWhiteSpace(part))
                         return StatusCode(StatusCodes.Status502BadGateway, $"Could not load CSS source for theme '{theme.Name}'.");
 
-                    parts.Add(CssUrlRewriter.Rewrite(part, new Uri(source)));
+                    parts.Add(part);
                 }
 
                 css = string.Join("\n\n", parts);
@@ -146,9 +185,9 @@ namespace Jellyfin.Plugin.ThemeStore.Api
 
         [HttpPost("ClearCache")]
         [Authorize(Policy = Policies.RequiresElevation)]
-        public IActionResult ClearCache()
+        public async Task<IActionResult> ClearCache(CancellationToken cancellationToken)
         {
-            SkinResourceProxy.ClearCache();
+            await SkinResourceProxy.ClearCacheAsync(_logger, cancellationToken).ConfigureAwait(false);
             return NoContent();
         }
 
@@ -167,6 +206,13 @@ namespace Jellyfin.Plugin.ThemeStore.Api
             }
 
             throw new InvalidOperationException("The authenticated Jellyfin user id is missing.");
+        }
+
+        private void SetNoStoreHeaders()
+        {
+            Response.Headers.CacheControl = "private, no-store, no-cache, max-age=0";
+            Response.Headers.Pragma = "no-cache";
+            Response.Headers.Expires = "0";
         }
 
         private static Dictionary<string, string> SanitizeVariables(IDictionary<string, string> variables)
@@ -249,8 +295,27 @@ namespace Jellyfin.Plugin.ThemeStore.Api
 
         public Dictionary<string, string> DefaultVariables { get; set; } = new();
 
+        public string ActiveThemeId { get; set; } = string.Empty;
+
+        public string ActiveThemeVersion { get; set; } = "1";
+
+        public Dictionary<string, string> ActiveVariables { get; set; } = new();
+
+        public string ThemeStateToken { get; set; } = string.Empty;
+
         public List<ThemeDefinition> Themes { get; set; } = new();
 
         public List<string> Warnings { get; set; } = new();
+    }
+
+    public sealed class ThemeStateResponse
+    {
+        public string ThemeId { get; set; } = string.Empty;
+
+        public string Version { get; set; } = "1";
+
+        public Dictionary<string, string> Variables { get; set; } = new();
+
+        public string StateToken { get; set; } = string.Empty;
     }
 }

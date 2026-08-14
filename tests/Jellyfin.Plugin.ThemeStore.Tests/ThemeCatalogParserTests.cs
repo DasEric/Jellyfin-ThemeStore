@@ -6,6 +6,8 @@ using System.IO;
 using Jellyfin.Plugin.ThemeStore;
 using Jellyfin.Plugin.ThemeStore.Services;
 using Jellyfin.Plugin.ThemeStore.Api;
+using Jellyfin.Plugin.ThemeStore.Configuration;
+using Jellyfin.Plugin.ThemeStore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +25,7 @@ public sealed class ThemeCatalogParserTests
         Assert.Contains("Jellyfin.Plugin.ThemeStore.Configuration.injection.js", resources);
         Assert.Contains("Jellyfin.Plugin.ThemeStore.Configuration.userThemePage.html", resources);
         Assert.Contains("Jellyfin.Plugin.ThemeStore.Configuration.userThemePage.js", resources);
+        Assert.Contains("state.config.SelectedCssUrl", ReadEmbeddedText("Jellyfin.Plugin.ThemeStore.Configuration.configPage.html"));
     }
 
     [Fact]
@@ -64,7 +67,15 @@ public sealed class ThemeCatalogParserTests
         Assert.Contains("typeof value.text === 'function'", script);
         Assert.Contains("function ensureThemeLast()", script);
         Assert.Contains("priorityObserver", script);
+        Assert.Contains("ThemeStore/State", script);
+        Assert.Contains("visibilitychange", script);
+        Assert.Contains("window.addEventListener('pageshow'", script);
+        Assert.Contains("window.addEventListener('online'", script);
+        Assert.Contains("document.addEventListener('resume'", script);
+        Assert.Contains("keeping current theme and retrying", script);
         Assert.Contains("theme.License", ReadEmbeddedText("Jellyfin.Plugin.ThemeStore.Configuration.userThemePage.js"));
+        Assert.Contains("state.active = data.ActiveThemeId", ReadEmbeddedText("Jellyfin.Plugin.ThemeStore.Configuration.userThemePage.js"));
+        Assert.Contains("event.stopPropagation()", ReadEmbeddedText("Jellyfin.Plugin.ThemeStore.Configuration.userThemePage.js"));
         Assert.DoesNotContain(".lnkHomePreferences", script);
     }
 
@@ -78,6 +89,7 @@ public sealed class ThemeCatalogParserTests
         string second = SkinInjector.InjectTheme(new PatchRequestPayload { Contents = first });
 
         Assert.Contains("../ThemeStore/InjectionScript", second);
+        Assert.Contains("InjectionScript?v=", second);
         Assert.Equal(1, second.Split("../ThemeStore/InjectionScript", StringSplitOptions.None).Length - 1);
         Assert.Equal(1, second.Split("<!-- ThemeStore-Start -->", StringSplitOptions.None).Length - 1);
     }
@@ -209,6 +221,7 @@ public sealed class ThemeCatalogParserTests
     {
         var controller = typeof(ThemeStoreController);
         Assert.NotEmpty(controller.GetMethod(nameof(ThemeStoreController.GetCatalog))!.GetCustomAttributes(typeof(AuthorizeAttribute), true));
+        Assert.NotEmpty(controller.GetMethod(nameof(ThemeStoreController.GetState))!.GetCustomAttributes(typeof(AuthorizeAttribute), true));
         Assert.NotEmpty(controller.GetMethod(nameof(ThemeStoreController.GetAdminCatalog))!.GetCustomAttributes(typeof(AuthorizeAttribute), true));
         Assert.NotEmpty(controller.GetMethod(nameof(ThemeStoreController.SavePreference))!.GetCustomAttributes(typeof(AuthorizeAttribute), true));
         Assert.NotEmpty(controller.GetMethod(nameof(ThemeStoreController.DeletePreference))!.GetCustomAttributes(typeof(AuthorizeAttribute), true));
@@ -227,6 +240,149 @@ public sealed class ThemeCatalogParserTests
         Assert.DoesNotContain(
             controller.GetMethod(nameof(ThemeStoreController.DeletePreference))!.GetCustomAttributes(typeof(AuthorizeAttribute), true).Cast<AuthorizeAttribute>(),
             attribute => attribute.Policy == MediaBrowser.Common.Api.Policies.RequiresElevation);
+    }
+
+    [Theory]
+    [InlineData(nameof(ThemeStoreController.GetCatalog))]
+    [InlineData(nameof(ThemeStoreController.GetState))]
+    public void ActiveThemeResponsesCannotBeBrowserCached(string methodName)
+    {
+        ResponseCacheAttribute attribute = Assert.Single(
+            typeof(ThemeStoreController).GetMethod(methodName)!
+                .GetCustomAttributes(typeof(ResponseCacheAttribute), true)
+                .Cast<ResponseCacheAttribute>());
+
+        Assert.True(attribute.NoStore);
+        Assert.Equal(ResponseCacheLocation.None, attribute.Location);
+    }
+
+    [Fact]
+    public void PersonalThemeWinsOverServerDefaultWhenAllowed()
+    {
+        var config = new PluginConfiguration
+        {
+            AllowUserThemes = true,
+            DefaultThemeMode = "Catalog",
+            DefaultThemeId = "server"
+        };
+        var preference = new UserThemePreference
+        {
+            ThemeId = "personal",
+            Variables = new() { ["accent"] = "blue" }
+        };
+
+        ResolvedThemeSelection result = ThemeSelectionResolver.Resolve(config, preference, ThemeFixtures());
+
+        Assert.Equal("personal", result.ThemeId);
+        Assert.Equal("blue", result.Variables["accent"]);
+        Assert.NotEmpty(result.StateToken);
+    }
+
+    [Fact]
+    public void DisabledPersonalThemesAlwaysUseServerDefault()
+    {
+        var config = new PluginConfiguration
+        {
+            AllowUserThemes = false,
+            DefaultThemeMode = "Catalog",
+            DefaultThemeId = "server",
+            DefaultThemeVariablesJson = "{\"rounding\":\"12px\"}"
+        };
+        var preference = new UserThemePreference { ThemeId = "personal" };
+
+        ResolvedThemeSelection result = ThemeSelectionResolver.Resolve(config, preference, ThemeFixtures());
+
+        Assert.Equal("server", result.ThemeId);
+        Assert.Equal("12px", result.Variables["rounding"]);
+    }
+
+    [Fact]
+    public void MissingPersonalThemeFallsBackToServerDefault()
+    {
+        var config = new PluginConfiguration
+        {
+            AllowUserThemes = true,
+            DefaultThemeMode = "Catalog",
+            DefaultThemeId = "server"
+        };
+
+        ResolvedThemeSelection result = ThemeSelectionResolver.Resolve(
+            config,
+            new UserThemePreference { ThemeId = "removed-theme" },
+            ThemeFixtures());
+
+        Assert.Equal("server", result.ThemeId);
+    }
+
+    [Fact]
+    public void InvalidServerDefaultFallsBackToJellyfinDefault()
+    {
+        var config = new PluginConfiguration
+        {
+            AllowUserThemes = false,
+            DefaultThemeMode = "Catalog",
+            DefaultThemeId = "removed-theme"
+        };
+
+        ResolvedThemeSelection result = ThemeSelectionResolver.Resolve(config, new UserThemePreference(), ThemeFixtures());
+
+        Assert.Empty(result.ThemeId);
+    }
+
+    [Theory]
+    [InlineData("https://example.org/server.css", "Imported theme")]
+    [InlineData("", "Server")]
+    public void LegacyServerDefaultWithoutIdStillResolves(string legacyCssUrl, string legacyName)
+    {
+        var config = new PluginConfiguration
+        {
+            AllowUserThemes = false,
+            DefaultThemeMode = "Catalog",
+            DefaultThemeId = string.Empty,
+            SelectedCssUrl = legacyCssUrl,
+            DefaultThemeName = legacyName
+        };
+
+        ResolvedThemeSelection result = ThemeSelectionResolver.Resolve(config, new UserThemePreference(), ThemeFixtures());
+
+        Assert.Equal("server", result.ThemeId);
+    }
+
+    [Fact]
+    public void CustomCssChangesTheThemeStateToken()
+    {
+        var config = new PluginConfiguration { DefaultThemeMode = "CustomCss", CustomCss = "body{color:red}" };
+        ResolvedThemeSelection first = ThemeSelectionResolver.Resolve(config, new UserThemePreference(), ThemeFixtures());
+        config.CustomCss = "body{color:blue}";
+        ResolvedThemeSelection second = ThemeSelectionResolver.Resolve(config, new UserThemePreference(), ThemeFixtures());
+
+        Assert.Equal("custom", first.ThemeId);
+        Assert.NotEqual(first.StateToken, second.StateToken);
+    }
+
+    [Fact]
+    public async System.Threading.Tasks.Task ClearingCssCacheInvalidatesActiveBrowserState()
+    {
+        var config = new PluginConfiguration { DefaultThemeMode = "Catalog", DefaultThemeId = "server" };
+        ResolvedThemeSelection first = ThemeSelectionResolver.Resolve(config, new UserThemePreference(), ThemeFixtures());
+
+        await SkinResourceProxy.ClearCacheAsync();
+        ResolvedThemeSelection second = ThemeSelectionResolver.Resolve(config, new UserThemePreference(), ThemeFixtures());
+
+        Assert.NotEqual(first.StateToken, second.StateToken);
+    }
+
+    [Theory]
+    [InlineData("CustomCss", false, "", false)]
+    [InlineData("Jellyfin", true, "", false)]
+    [InlineData("Catalog", false, "", true)]
+    [InlineData("CustomCss", true, "personal", true)]
+    public void LoadsCatalogOnlyWhenTheResolvedSelectionCanNeedIt(string mode, bool allowUsers, string personalId, bool expected)
+    {
+        var config = new PluginConfiguration { DefaultThemeMode = mode, AllowUserThemes = allowUsers };
+        var preference = new UserThemePreference { ThemeId = personalId };
+
+        Assert.Equal(expected, ThemeSelectionResolver.RequiresCatalog(config, preference));
     }
 
     [Fact]
@@ -257,4 +413,11 @@ public sealed class ThemeCatalogParserTests
         using var reader = new System.IO.StreamReader(stream!);
         return reader.ReadToEnd();
     }
+
+    private static ThemeDefinition[] ThemeFixtures()
+        =>
+        [
+            new ThemeDefinition { Id = "personal", Name = "Personal", Version = "1", CssUrl = "https://example.org/personal.css" },
+            new ThemeDefinition { Id = "server", Name = "Server", Version = "2", CssUrl = "https://example.org/server.css" }
+        ];
 }

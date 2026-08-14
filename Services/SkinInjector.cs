@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace Jellyfin.Plugin.ThemeStore.Services
@@ -11,7 +12,6 @@ namespace Jellyfin.Plugin.ThemeStore.Services
     {
         private const string StartMarker = "<!-- ThemeStore-Start -->";
         private const string EndMarker = "<!-- ThemeStore-End -->";
-        private const string Injection = "<script plugin=\"Theme Store\" src=\"../ThemeStore/InjectionScript\" defer></script>\n";
         private static readonly Regex StripPreviousInjection = new(
             Regex.Escape(StartMarker) + @"[\s\S]*?" + Regex.Escape(EndMarker) + @"\n?",
             RegexOptions.Compiled);
@@ -29,7 +29,13 @@ namespace Jellyfin.Plugin.ThemeStore.Services
                     return html ?? string.Empty;
 
                 html = StripLegacyInjection.Replace(StripPreviousInjection.Replace(html, string.Empty), string.Empty);
-                string block = "\n" + StartMarker + "\n" + Injection + EndMarker + "\n";
+                string version = typeof(Plugin).Assembly
+                    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                    ?.InformationalVersion
+                    ?? typeof(Plugin).Assembly.GetName().Version?.ToString()
+                    ?? "1";
+                string injection = $"<script plugin=\"Theme Store\" src=\"../ThemeStore/InjectionScript?v={Uri.EscapeDataString(version)}\" defer></script>\n";
+                string block = "\n" + StartMarker + "\n" + injection + EndMarker + "\n";
                 return HeadCloseTag.Replace(html, match => block + match.Value, 1);
             }
             catch (Exception ex)

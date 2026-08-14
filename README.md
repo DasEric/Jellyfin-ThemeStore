@@ -16,6 +16,8 @@ This project is based on [Jellyfin-PG/Skin-Manager](https://github.com/Jellyfin-
 - A maintained catalog sourced from Awesome Jellyfin with complete theme variants and add-on combinations
 - A simple human-readable catalog format plus compatibility with the existing JSON format
 - Local CSS caching on the Jellyfin server
+- Automatic recovery after delayed login, SPA navigation, mobile resume, or Jellyfin replacing the active style element
+- Deterministic selection order with safe fallback from missing personal themes to the administrator default
 - Authenticated user APIs with separate administrator permissions
 - Protection against arbitrary proxy URLs, private network targets, excessive redirects, and oversized downloads
 - Support for Jellyfin installations hosted under a base URL
@@ -156,6 +158,8 @@ The following options are available under `Dashboard → Plugins → Theme Store
 
 When personal themes are enabled, users without a personal selection continue to use the configured server default. When personal themes are disabled, the server default is enforced for everyone.
 
+The lightweight active-theme state is never browser-cached. Jellyfin Web retries automatically while authentication is still starting, restores cached CSS after returning from the background, and rechecks the server state after navigation, reconnect, focus, or account changes. Existing CSS remains active while a replacement is downloaded, avoiding unnecessary flashes of the Jellyfin default interface.
+
 ### Users
 
 A **Theme Store** entry appears directly in Jellyfin's hamburger menu for every signed-in user. It opens the preview gallery and personal theme picker without entering the administrator dashboard. The selection is saved on the Jellyfin server under the authenticated user ID. Choosing **Use server default** removes only the current user's personal selection.
@@ -173,6 +177,7 @@ The HTML shell for the user-facing store is publicly retrievable because ordinar
 ```bash
 dotnet restore
 dotnet test Jellyfin.Plugin.ThemeStore.sln --configuration Release
+node --test tests/injection.lifecycle.test.mjs
 dotnet publish Jellyfin.Plugin.ThemeStore.csproj --configuration Release --output publish
 ```
 

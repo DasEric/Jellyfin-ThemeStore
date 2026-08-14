@@ -49,10 +49,10 @@
       "sourceName": "evergarden",
       "license": "EUPL-1.2",
       "variants": [
-        { "id": "evergarden-summer", "name": "Evergarden - Summer", "cssUrls": ["https://everviolet.github.io/jellyfin/evergarden-summer.css"], "previewIndexes": [0] },
-        { "id": "evergarden-spring", "name": "Evergarden - Spring", "cssUrls": ["https://everviolet.github.io/jellyfin/evergarden-spring.css"], "previewIndexes": [1] },
-        { "id": "evergarden-fall", "name": "Evergarden - Fall", "cssUrls": ["https://everviolet.github.io/jellyfin/evergarden-fall.css"], "previewIndexes": [2] },
-        { "id": "evergarden-winter", "name": "Evergarden - Winter", "cssUrls": ["https://everviolet.github.io/jellyfin/evergarden-winter.css"], "previewIndexes": [3] }
+        { "id": "evergarden-summer", "name": "Evergarden - Summer", "cssUrls": ["https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-summer.css"], "previewIndexes": [0] },
+        { "id": "evergarden-spring", "name": "Evergarden - Spring", "cssUrls": ["https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-spring.css"], "previewIndexes": [1] },
+        { "id": "evergarden-fall", "name": "Evergarden - Fall", "cssUrls": ["https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-fall.css"], "previewIndexes": [2] },
+        { "id": "evergarden-winter", "name": "Evergarden - Winter", "cssUrls": ["https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-winter.css"], "previewIndexes": [3] }
       ]
     },
     {

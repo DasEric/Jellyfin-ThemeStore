@@ -399,9 +399,9 @@
     "description": "A Jellyfin theme by everviolet. Variant: Evergarden - Summer.",
     "version": "awesome-main",
     "sourceUrl": "https://github.com/everviolet/jellyfin",
-    "cssUrl": "https://everviolet.github.io/jellyfin/evergarden-summer.css",
+    "cssUrl": "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-summer.css",
     "cssUrls": [
-      "https://everviolet.github.io/jellyfin/evergarden-summer.css"
+      "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-summer.css"
     ],
     "previewUrls": [
       "https://raw.githubusercontent.com/everviolet/jellyfin/main/assets/summer.webp"
@@ -418,9 +418,9 @@
     "description": "A Jellyfin theme by everviolet. Variant: Evergarden - Spring.",
     "version": "awesome-main",
     "sourceUrl": "https://github.com/everviolet/jellyfin",
-    "cssUrl": "https://everviolet.github.io/jellyfin/evergarden-spring.css",
+    "cssUrl": "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-spring.css",
     "cssUrls": [
-      "https://everviolet.github.io/jellyfin/evergarden-spring.css"
+      "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-spring.css"
     ],
     "previewUrls": [
       "https://raw.githubusercontent.com/everviolet/jellyfin/main/assets/spring.webp"
@@ -437,9 +437,9 @@
     "description": "A Jellyfin theme by everviolet. Variant: Evergarden - Fall.",
     "version": "awesome-main",
     "sourceUrl": "https://github.com/everviolet/jellyfin",
-    "cssUrl": "https://everviolet.github.io/jellyfin/evergarden-fall.css",
+    "cssUrl": "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-fall.css",
     "cssUrls": [
-      "https://everviolet.github.io/jellyfin/evergarden-fall.css"
+      "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-fall.css"
     ],
     "previewUrls": [
       "https://raw.githubusercontent.com/everviolet/jellyfin/main/assets/fall.webp"
@@ -456,9 +456,9 @@
     "description": "A Jellyfin theme by everviolet. Variant: Evergarden - Winter.",
     "version": "awesome-main",
     "sourceUrl": "https://github.com/everviolet/jellyfin",
-    "cssUrl": "https://everviolet.github.io/jellyfin/evergarden-winter.css",
+    "cssUrl": "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-winter.css",
     "cssUrls": [
-      "https://everviolet.github.io/jellyfin/evergarden-winter.css"
+      "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-winter.css"
     ],
     "previewUrls": [
       "https://raw.githubusercontent.com/everviolet/jellyfin/main/assets/winter.webp"

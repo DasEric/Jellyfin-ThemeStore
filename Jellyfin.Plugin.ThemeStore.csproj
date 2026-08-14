@@ -9,8 +9,6 @@
     <AssemblyName>Jellyfin.Plugin.ThemeStore</AssemblyName>
     <RootNamespace>Jellyfin.Plugin.ThemeStore</RootNamespace>
     <Version>1.0.0.0</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
     <Authors>Jellyfin Theme Store contributors; based on work by Jellyfin Plugin Group</Authors>
     <RepositoryUrl>https://github.com/DasEric/Jellyfin-ThemeStore</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

@@ -117,6 +117,17 @@
         .then(function (response) { if (!response.ok) throw new Error('HTTP ' + response.status); return response.json(); })
         .then(function (data) {
           state.themes = data.Themes || [];
+          if (!state.themeId && state.mode === 'Catalog' && state.config) {
+            var legacyUrl = (state.config.SelectedCssUrl || '').trim();
+            var legacy = state.themes.find(function (theme) {
+              return (legacyUrl && legacyUrl !== 'Default' && (theme.CssUrl === legacyUrl || (theme.CssUrls || []).indexOf(legacyUrl) >= 0))
+                || (state.themeName && state.themeName !== 'Jellyfin Default' && theme.Name === state.themeName);
+            });
+            if (legacy) {
+              state.themeId = legacy.Id;
+              state.themeName = legacy.Name;
+            }
+          }
           (data.Warnings || []).forEach(warning);
           renderThemeOptions();
         })

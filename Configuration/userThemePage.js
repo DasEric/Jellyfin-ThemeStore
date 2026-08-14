@@ -8,6 +8,7 @@ export default function (view) {
     data: {},
     themes: [],
     selected: '',
+    active: '',
     variables: {},
     query: '',
     gallery: [],
@@ -58,10 +59,12 @@ export default function (view) {
 
   async function load() {
     try {
+      q('warnings').innerHTML = '';
       const data = await call('Catalog');
       state.data = data;
       state.themes = data.Themes || [];
       state.selected = data.SelectedThemeId || '';
+      state.active = data.ActiveThemeId || '';
       state.variables = data.Variables || {};
       state.allowed = !!data.AllowUserThemes;
       q('disabled').hidden = state.allowed;
@@ -76,8 +79,10 @@ export default function (view) {
   }
 
   function updateActive() {
-    const current = state.themes.find((theme) => theme.Id === state.selected);
-    q('active-name').textContent = current ? current.Name : defaultLabel(state.data);
+    const current = state.themes.find((theme) => theme.Id === state.active);
+    q('active-name').textContent = current
+      ? current.Name
+      : (state.active === 'custom' ? 'Eigenes Server-CSS' : 'Jellyfin Standard');
     q('active').hidden = false;
     q('reset').hidden = !state.selected || !state.allowed;
   }
@@ -149,6 +154,7 @@ export default function (view) {
     try {
       await call('Preference', { method: 'PUT', body: { ThemeId: id, Variables: variables || {} }, json: false });
       state.selected = id;
+      state.active = id;
       state.variables = variables || {};
       q('warnings').innerHTML = '';
       updateActive();
@@ -164,11 +170,7 @@ export default function (view) {
   async function reset() {
     try {
       await call('Preference', { method: 'DELETE', json: false });
-      state.selected = '';
-      state.variables = {};
-      q('warnings').innerHTML = '';
-      updateActive();
-      render();
+      await load();
       window.dispatchEvent(new Event('theme-store:changed'));
     } catch (error) {
       showError(error.message);
@@ -208,7 +210,11 @@ export default function (view) {
   q('gallery').addEventListener('click', function (event) { if (event.target === q('gallery')) closeGallery(); });
   view.addEventListener('keydown', function (event) {
     if (q('gallery').hidden) return;
-    if (event.key === 'Escape') closeGallery();
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
+      closeGallery();
+    }
     if (event.key === 'ArrowLeft') move(-1);
     if (event.key === 'ArrowRight') move(1);
   });

@@ -9,9 +9,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Jellyfin.Plugin.ThemeStore.Services
 {
-    public class FileTransformationRegistrar : IHostedService
+    public class FileTransformationRegistrar : BackgroundService
     {
         private static readonly Guid TransformationId = Guid.Parse("38e6e634-af18-454d-aad1-bbe3d9475735");
+        private const int RegistrationAttempts = 30;
 
         private readonly ILogger<FileTransformationRegistrar> _logger;
 
@@ -20,83 +21,75 @@ namespace Jellyfin.Plugin.ThemeStore.Services
             _logger = logger;
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            RegisterWithFileTransformation();
-            return Task.CompletedTask;
+            for (int attempt = 1; attempt <= RegistrationAttempts && !stoppingToken.IsCancellationRequested; attempt++)
+            {
+                try
+                {
+                    if (TryRegisterWithFileTransformation())
+                    {
+                        _logger.LogInformation("[ThemeStore] Successfully registered frontend injection with File Transformation.");
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (attempt < RegistrationAttempts)
+                        _logger.LogDebug(ex, "[ThemeStore] File Transformation is not ready yet (attempt {Attempt}/{Attempts}).", attempt, RegistrationAttempts);
+                    else
+                    {
+                        _logger.LogWarning(ex, "[ThemeStore] File Transformation registration failed after {Attempts} attempts.", RegistrationAttempts);
+                        return;
+                    }
+                }
+
+                if (attempt < RegistrationAttempts)
+                    await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken).ConfigureAwait(false);
+            }
+
+            if (!stoppingToken.IsCancellationRequested)
+                _logger.LogWarning("[ThemeStore] File Transformation was not available after {Attempts} registration attempts. Install or enable it, then restart Jellyfin.", RegistrationAttempts);
         }
 
-        public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-        private void RegisterWithFileTransformation()
+        private static bool TryRegisterWithFileTransformation()
         {
-            try
-            {
-                var ftAssembly = AssemblyLoadContext.All
+            var ftAssembly = AssemblyLoadContext.All
+                .SelectMany(x => x.Assemblies)
+                .FirstOrDefault(x => x.FullName?.Contains(".FileTransformation") ?? false);
+            var pluginInterfaceType = ftAssembly?.GetType("Jellyfin.Plugin.FileTransformation.PluginInterface");
+            var registerMethod = pluginInterfaceType?.GetMethod("RegisterTransformation");
+            if (registerMethod == null)
+                return false;
+
+            var newtonsoftAssembly = AssemblyLoadContext.All
+                .SelectMany(x => x.Assemblies)
+                .FirstOrDefault(x => x.GetName().Name == "Newtonsoft.Json"
+                                  && x != typeof(FileTransformationRegistrar).Assembly)
+                ?? AssemblyLoadContext.All
                     .SelectMany(x => x.Assemblies)
-                    .FirstOrDefault(x => x.FullName?.Contains(".FileTransformation") ?? false);
+                    .FirstOrDefault(x => x.GetName().Name == "Newtonsoft.Json");
+            var jobjectType = newtonsoftAssembly?.GetType("Newtonsoft.Json.Linq.JObject");
+            var jtokenType = newtonsoftAssembly?.GetType("Newtonsoft.Json.Linq.JToken");
+            var fromObject = jtokenType?.GetMethod("FromObject", new[] { typeof(object) });
+            var indexerSetter = jobjectType?.GetProperty("Item", new[] { typeof(string) })?.GetSetMethod();
+            if (jobjectType == null || fromObject == null || indexerSetter == null)
+                return false;
 
-                if (ftAssembly == null)
-                {
-                    _logger.LogWarning("[ThemeStore] File Transformation plugin not found.");
-                    return;
-                }
-
-                var pluginInterfaceType = ftAssembly.GetType("Jellyfin.Plugin.FileTransformation.PluginInterface");
-                if (pluginInterfaceType == null)
-                {
-                    _logger.LogWarning("[ThemeStore] Could not find PluginInterface in File Transformation assembly.");
-                    return;
-                }
-
-                var newtonsoftAssembly = AssemblyLoadContext.All
-                    .SelectMany(x => x.Assemblies)
-                    .FirstOrDefault(x => x.GetName().Name == "Newtonsoft.Json"
-                                      && x != typeof(FileTransformationRegistrar).Assembly);
-
-                if (newtonsoftAssembly == null)
-                {
-                    newtonsoftAssembly = AssemblyLoadContext.All
-                        .SelectMany(x => x.Assemblies)
-                        .FirstOrDefault(x => x.GetName().Name == "Newtonsoft.Json");
-                }
-
-                if (newtonsoftAssembly == null)
-                {
-                    _logger.LogWarning("[ThemeStore] Could not find Newtonsoft.Json assembly.");
-                    return;
-                }
-
-                var jobjectType = newtonsoftAssembly.GetType("Newtonsoft.Json.Linq.JObject");
-                var payload = Activator.CreateInstance(jobjectType);
-
-                var jtokenType = newtonsoftAssembly.GetType("Newtonsoft.Json.Linq.JToken");
-                var fromObject = jtokenType.GetMethod("FromObject", new[] { typeof(object) });
-
-                var indexerSetter = jobjectType.GetProperty("Item", new[] { typeof(string) })
-                                               ?.GetSetMethod();
-
-                void Set(string key, object value)
-                {
-                    var token = fromObject.Invoke(null, new[] { value });
-                    indexerSetter.Invoke(payload, new[] { key, token });
-                }
-
-                Set("id", TransformationId.ToString());
-                Set("fileNamePattern", "index.html");
-                Set("callbackAssembly", typeof(SkinInjector).Assembly.FullName);
-                Set("callbackClass", typeof(SkinInjector).FullName);
-                Set("callbackMethod", nameof(SkinInjector.InjectTheme));
-
-                pluginInterfaceType.GetMethod("RegisterTransformation")
-                    ?.Invoke(null, new[] { payload });
-
-                _logger.LogInformation("[ThemeStore] Successfully registered frontend injection with File Transformation.");
-            }
-            catch (Exception ex)
+            var payload = Activator.CreateInstance(jobjectType);
+            void Set(string key, object value)
             {
-                _logger.LogError(ex, "[ThemeStore] Failed to register with File Transformation.");
+                var token = fromObject.Invoke(null, new[] { value });
+                indexerSetter.Invoke(payload, new[] { key, token });
             }
+
+            Set("id", TransformationId.ToString());
+            Set("fileNamePattern", "index.html");
+            Set("callbackAssembly", typeof(SkinInjector).Assembly.FullName);
+            Set("callbackClass", typeof(SkinInjector).FullName);
+            Set("callbackMethod", nameof(SkinInjector.InjectTheme));
+            registerMethod.Invoke(null, new[] { payload });
+            return true;
         }
     }
 }
