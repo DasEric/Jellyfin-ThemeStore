@@ -269,7 +269,7 @@ test('keeps theme and skip-button protection after dynamically loaded Jellyfin s
   const runtime = createRuntime({ state: selectedState });
   await wait(400);
   const lateStyle = runtime.document.createElement('style');
-  lateStyle.textContent = '.skip-button { display: none !important; }';
+  lateStyle.textContent = '.some-jellyfin-style { display: none !important; }';
   runtime.document.body.appendChild(lateStyle);
 
   for (const observer of runtime.observers) observer.callback([{ addedNodes: [lateStyle], removedNodes: [] }]);
