@@ -437,7 +437,7 @@
           break;
         }
         lastSeenIndex = nodeIndex;
-      } else if (lastSeenIndex !== -1 && (child.tagName === 'STYLE' || child.tagName === 'LINK')) {
+      } else if (lastSeenIndex !== -1 && (child.nodeName === 'STYLE' || child.nodeName === 'LINK')) {
         alreadyLast = false;
         break;
       }
