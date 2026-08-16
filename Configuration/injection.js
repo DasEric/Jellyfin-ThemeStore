@@ -55,6 +55,8 @@
   const cssCache = new Map();
   let cssCacheChars = 0;
   let mutatingDom = false;
+  let domWarMoves = 0;
+  let domWarBackoffUntil = 0;
   let menuDebounce = 0;
 
   function emptyDesired() {
@@ -438,13 +440,25 @@
         }
         lastSeenIndex = nodeIndex;
       } else if (lastSeenIndex !== -1 && (child.nodeName === 'STYLE' || child.nodeName === 'LINK')) {
+        const text = child.textContent || '';
+        const id = (child.id || '').toLowerCase();
+        if (id.includes('skip') || text.includes('.skip-button')) continue;
         alreadyLast = false;
         break;
       }
     }
     if (lastSeenIndex !== nodes.length - 1) alreadyLast = false;
     if (!alreadyLast) {
+      if (Date.now() < domWarBackoffUntil) return;
+      domWarMoves++;
+      if (domWarMoves > 10) {
+        domWarMoves = 0;
+        domWarBackoffUntil = Date.now() + 15000;
+        return;
+      }
       nodes.forEach(function (node) { target.appendChild(node); });
+    } else {
+      domWarMoves = 0;
     }
 
     if (priorityObserver) priorityObserver.observe(document.documentElement, { childList: true, subtree: true });
