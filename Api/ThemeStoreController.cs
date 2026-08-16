@@ -95,6 +95,7 @@ namespace Jellyfin.Plugin.ThemeStore.Api
                 if (catalog.Themes.Count == 0 && catalog.Warnings.Count > 0)
                 {
                     SetNoStoreHeaders();
+                    Response.Headers["Retry-After"] = "10";
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, new
                     {
                         Message = "The configured theme catalog is temporarily unavailable. The client should keep the current theme and retry."
