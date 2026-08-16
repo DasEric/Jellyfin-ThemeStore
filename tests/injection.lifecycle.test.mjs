@@ -230,6 +230,51 @@ test('restores cached CSS when Jellyfin removes the active style node', async ()
   assert.equal(runtime.cssCalls, originalCssCalls);
 });
 
+test('keeps the native Jellyfin skip button visible without defeating its hidden states', async () => {
+  const runtime = createRuntime({ state: selectedState });
+  await wait(100);
+
+  const theme = runtime.document.getElementById('theme-store-user-theme');
+  const compatibility = runtime.document.getElementById('theme-store-compatibility');
+  assert.ok(compatibility);
+  assert.ok(compatibility.textContent.includes('body > .skip-button-container'));
+  assert.ok(compatibility.textContent.includes('.skip-button:not(.hide):not(.skip-button-hidden)'));
+  assert.ok(compatibility.textContent.includes('display: flex !important'));
+  assert.ok(compatibility.textContent.includes('pointer-events: auto !important'));
+  assert.ok(runtime.document.body.children.indexOf(compatibility) > runtime.document.body.children.indexOf(theme));
+});
+
+test('restores the Intro Skipper compatibility layer after Jellyfin replaces styles', async () => {
+  const runtime = createRuntime({ state: selectedState });
+  await wait(100);
+  const compatibility = runtime.document.getElementById('theme-store-compatibility');
+  compatibility.remove();
+
+  for (const observer of runtime.observers) observer.callback([{ addedNodes: [], removedNodes: [compatibility] }]);
+  await wait(30);
+
+  const restored = runtime.document.getElementById('theme-store-compatibility');
+  assert.ok(restored);
+  assert.equal(restored.getAttribute('data-theme-store-signature'), selectedState.StateToken);
+  assert.equal(runtime.document.body.children.at(-1), restored);
+});
+
+test('keeps theme and skip-button protection after dynamically loaded Jellyfin styles', async () => {
+  const runtime = createRuntime({ state: selectedState });
+  await wait(100);
+  const lateStyle = runtime.document.createElement('style');
+  lateStyle.textContent = '.skip-button { display: none !important; }';
+  runtime.document.body.appendChild(lateStyle);
+
+  for (const observer of runtime.observers) observer.callback([{ addedNodes: [lateStyle], removedNodes: [] }]);
+  await wait(30);
+
+  const theme = runtime.document.getElementById('theme-store-user-theme');
+  const compatibility = runtime.document.getElementById('theme-store-compatibility');
+  assert.ok(runtime.document.body.children.indexOf(theme) > runtime.document.body.children.indexOf(lateStyle));
+  assert.equal(runtime.document.body.children.at(-1), compatibility);
+});
+
 test('refreshes an existing theme atomically when the server state changes', async () => {
   let current = selectedState;
   let currentCss = 'body { color: red; }';
@@ -276,6 +321,7 @@ test('removes custom CSS when the resolved state returns to Jellyfin default', a
   await wait(30);
 
   assert.equal(runtime.document.getElementById('theme-store-user-theme'), null);
+  assert.equal(runtime.document.getElementById('theme-store-compatibility'), null);
 });
 
 test('restores the cached theme immediately after leaving a safe route', async () => {

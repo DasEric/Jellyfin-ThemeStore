@@ -17,6 +17,7 @@ This project is based on [Jellyfin-PG/Skin-Manager](https://github.com/Jellyfin-
 - A simple human-readable catalog format plus compatibility with the existing JSON format
 - Local CSS caching on the Jellyfin server
 - Automatic recovery after delayed login, SPA navigation, mobile resume, or Jellyfin replacing the active style element
+- Compatibility protection for Jellyfin's native Intro Skipper button, even when a selected theme overrides broad player or button styles
 - Deterministic selection order with safe fallback from missing personal themes to the administrator default
 - Authenticated user APIs with separate administrator permissions
 - Protection against arbitrary proxy URLs, private network targets, excessive redirects, and oversized downloads
@@ -31,6 +32,14 @@ This project is based on [Jellyfin-PG/Skin-Manager](https://github.com/Jellyfin-
 Supported clients include regular web browsers and many Jellyfin applications that embed Jellyfin Web. Fully native clients such as Android TV do not load the server's web frontend, so the plugin cannot display the store or apply CSS in those clients.
 
 Custom themes are intentionally disabled on login, setup, administrator, and Theme Store pages. This keeps a safe recovery interface available if a theme is broken.
+
+### Intro Skipper compatibility
+
+Jellyfin 10.11 renders the skip prompt in Jellyfin Web from media segments supplied by plugins such as [Intro Skipper](https://github.com/intro-skipper/intro-skipper). Because Theme Store themes are deliberately loaded after Jellyfin's normal styles, a broad theme rule could otherwise hide or block that native button. Theme Store therefore adds a narrowly scoped compatibility layer for Jellyfin's direct `body > .skip-button-container` element. It restores only the visible button's layout, stacking, opacity, and pointer handling; Jellyfin's intentional `hide` and `skip-button-hidden` states remain untouched.
+
+Theme Store does not generate intro segments or force Jellyfin to offer a skip action. If no button is created at all, finish Intro Skipper's analysis task, clear the client cache, and confirm that the client's Jellyfin skip option is set to **Ask to Skip**. Near the end of an item, Jellyfin may use **Up Next** instead of displaying a separate outro skip button. See Intro Skipper's [troubleshooting guide](https://github.com/intro-skipper/intro-skipper/wiki/Troubleshooting) and Jellyfin [skip options](https://github.com/intro-skipper/intro-skipper/wiki/Jellyfin-Skip-Options).
+
+No Intro Skipper source code or optional GPL CSS is bundled with Theme Store. If you use Intro Skipper's **Inject CSS** option, that upstream stylesheet remains separately loaded through Jellyfin's Branding CSS and retains its upstream license.
 
 ## Install through Jellyfin
 

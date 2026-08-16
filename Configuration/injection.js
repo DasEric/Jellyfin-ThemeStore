@@ -8,6 +8,28 @@
   const MODAL_ID = 'theme-store-modal';
   const STYLE_ID = 'theme-store-user-theme';
   const VARS_ID = 'theme-store-user-vars';
+  const COMPATIBILITY_ID = 'theme-store-compatibility';
+  const COMPATIBILITY_CSS = [
+    'body > .skip-button-container {',
+    '  position: fixed !important;',
+    '  left: 0 !important;',
+    '  right: 0 !important;',
+    '  pointer-events: none !important;',
+    '  z-index: 10000 !important;',
+    '}',
+    'body > .skip-button-container:has(> .skip-button:not(.hide):not(.skip-button-hidden)) {',
+    '  display: block !important;',
+    '  visibility: visible !important;',
+    '  opacity: 1 !important;',
+    '}',
+    'body > .skip-button-container > .skip-button:not(.hide):not(.skip-button-hidden) {',
+    '  display: flex !important;',
+    '  visibility: visible !important;',
+    '  opacity: 1 !important;',
+    '  pointer-events: auto !important;',
+    '  z-index: 10000 !important;',
+    '}'
+  ].join('\n');
   const SAFE_ROUTE = /^#\/(?:dashboard[^/?#]*|configuration(?:page)?[^/?#]*|metadata[^/?#]*|wizard[^/?#]*|mypreferences[^/?#]*|login[^/?#]*|selectserver[^/?#]*|selectuser[^/?#]*|addserver[^/?#]*|signout[^/?#]*)(?:\/|[?]|$)/;
   const RETRY_DELAYS = [250, 500, 1000, 2000, 5000, 10000, 15000];
   const CSS_CACHE_LIMIT = 4;
@@ -97,6 +119,7 @@
     }
     removeElement(STYLE_ID);
     removeElement(VARS_ID);
+    removeElement(COMPATIBILITY_ID);
     appliedSignature = '';
   }
 
@@ -133,6 +156,14 @@
     return document.body || document.head || document.documentElement;
   }
 
+  function createCompatibilityStyle(id) {
+    const style = document.createElement('style');
+    style.id = id;
+    style.setAttribute('data-theme-store-signature', desired.signature);
+    style.textContent = COMPATIBILITY_CSS;
+    return style;
+  }
+
   function installCss(rawCss) {
     if (isSuspended() || !desired.id || desired.id === 'jellyfin-default') return;
     const target = styleTarget();
@@ -150,14 +181,18 @@
       variableStyle.setAttribute('data-theme-store-signature', desired.signature);
       variableStyle.textContent = variableText;
     }
+    const compatibilityStyle = createCompatibilityStyle(COMPATIBILITY_ID + '-pending');
 
     if (priorityObserver) priorityObserver.disconnect();
     target.appendChild(themeStyle);
     if (variableStyle) target.appendChild(variableStyle);
+    target.appendChild(compatibilityStyle);
     removeElement(STYLE_ID);
     removeElement(VARS_ID);
+    removeElement(COMPATIBILITY_ID);
     themeStyle.id = STYLE_ID;
     if (variableStyle) variableStyle.id = VARS_ID;
+    compatibilityStyle.id = COMPATIBILITY_ID;
     appliedSignature = desired.signature;
     if (priorityObserver) priorityObserver.observe(document.documentElement, { childList: true, subtree: true });
     scheduleThemePriority();
@@ -345,7 +380,15 @@
 
     const target = styleTarget();
     if (!target) return;
-    const nodes = [themeStyle, document.getElementById(VARS_ID)].filter(Boolean);
+    let compatibilityStyle = document.getElementById(COMPATIBILITY_ID);
+    if (!compatibilityStyle || compatibilityStyle.getAttribute('data-theme-store-signature') !== desired.signature) {
+      if (priorityObserver) priorityObserver.disconnect();
+      if (compatibilityStyle) compatibilityStyle.remove();
+      compatibilityStyle = createCompatibilityStyle(COMPATIBILITY_ID);
+      target.appendChild(compatibilityStyle);
+      if (priorityObserver) priorityObserver.observe(document.documentElement, { childList: true, subtree: true });
+    }
+    const nodes = [themeStyle, document.getElementById(VARS_ID), compatibilityStyle].filter(Boolean);
     const children = target.children;
     const offset = children.length - nodes.length;
     const alreadyLast = offset >= 0 && nodes.every(function (node, index) {
@@ -469,7 +512,7 @@
       const relevant = mutations.some(function (mutation) {
         const changedNodes = Array.from(mutation.addedNodes).concat(Array.from(mutation.removedNodes));
         return changedNodes.some(function (node) {
-          return node.id === STYLE_ID || node.id === VARS_ID || node.nodeName === 'STYLE' || node.nodeName === 'LINK' || node.nodeName === 'BODY';
+          return node.id === STYLE_ID || node.id === VARS_ID || node.id === COMPATIBILITY_ID || node.nodeName === 'STYLE' || node.nodeName === 'LINK' || node.nodeName === 'BODY';
         });
       });
       if (relevant) scheduleThemePriority();
