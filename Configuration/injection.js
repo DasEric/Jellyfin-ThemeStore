@@ -34,6 +34,8 @@
   const RETRY_DELAYS = [250, 500, 1000, 2000, 5000, 10000, 15000];
   const CSS_CACHE_LIMIT = 4;
   const CSS_CACHE_MAX_CHARS = 8 * 1024 * 1024;
+  const OWN_IDS = [STYLE_ID, VARS_ID, COMPATIBILITY_ID];
+  const PENDING_SUFFIX = '-pending';
 
   let started = false;
   let refreshTimer = 0;
@@ -52,6 +54,8 @@
   let appliedSignature = '';
   const cssCache = new Map();
   let cssCacheChars = 0;
+  let mutatingDom = false;
+  let menuDebounce = 0;
 
   function emptyDesired() {
     return { id: '', version: '1', variables: {}, token: '', signature: '', cacheKey: '' };
@@ -59,6 +63,17 @@
 
   function api() {
     return typeof ApiClient !== 'undefined' ? ApiClient : window.ApiClient;
+  }
+
+  function isAuthenticated() {
+    var client = api();
+    if (!client || !client.fetch) return false;
+    if (typeof client.getCurrentUserId !== 'function') return true;
+    try {
+      return !!client.getCurrentUserId();
+    } catch (_) {
+      return false;
+    }
   }
 
   function apiUrl(path, query) {
@@ -85,25 +100,41 @@
   }
 
   function readText(value) {
-    if (typeof value === 'string') return Promise.resolve(value);
-    if (value && typeof value.text === 'function') {
-      if (value.ok === false) throw new Error('HTTP ' + value.status);
-      return value.text();
+    try {
+      if (typeof value === 'string') return Promise.resolve(value);
+      if (value && typeof value.text === 'function') {
+        if (value.ok === false) return Promise.reject(new Error('HTTP ' + value.status));
+        return value.text();
+      }
+      return Promise.reject(new Error('Theme CSS response is not text.'));
+    } catch (error) {
+      return Promise.reject(error);
     }
-    throw new Error('Theme CSS response is not text.');
   }
 
   function readJson(value) {
-    if (value && typeof value.json === 'function') {
-      if (value.ok === false) throw new Error('HTTP ' + value.status);
-      return value.json();
+    try {
+      if (value && typeof value.json === 'function') {
+        if (value.ok === false) return Promise.reject(new Error('HTTP ' + value.status));
+        return value.json();
+      }
+      if (value && typeof value === 'object') return Promise.resolve(value);
+      return Promise.reject(new Error('Theme state response is not JSON.'));
+    } catch (error) {
+      return Promise.reject(error);
     }
-    if (value && typeof value === 'object') return Promise.resolve(value);
-    throw new Error('Theme state response is not JSON.');
   }
 
   function isSuspended() {
     return SAFE_ROUTE.test(window.location.hash) || !!document.getElementById(MODAL_ID);
+  }
+
+  function isOwnElement(id) {
+    if (!id) return false;
+    for (var i = 0; i < OWN_IDS.length; i++) {
+      if (id === OWN_IDS[i] || id === OWN_IDS[i] + PENDING_SUFFIX) return true;
+    }
+    return false;
   }
 
   function removeElement(id) {
@@ -117,9 +148,11 @@
       clearTimeout(applyTimer);
       applyTimer = 0;
     }
+    mutatingDom = true;
     removeElement(STYLE_ID);
     removeElement(VARS_ID);
     removeElement(COMPATIBILITY_ID);
+    mutatingDom = false;
     appliedSignature = '';
   }
 
@@ -170,19 +203,20 @@
     if (!target) return;
 
     const themeStyle = document.createElement('style');
-    themeStyle.id = STYLE_ID + '-pending';
+    themeStyle.id = STYLE_ID + PENDING_SUFFIX;
     themeStyle.setAttribute('data-theme-store-signature', desired.signature);
     themeStyle.textContent = substituteVariables(rawCss || '', desired.variables);
 
     const variableText = variablesCss(desired.variables);
     const variableStyle = variableText ? document.createElement('style') : null;
     if (variableStyle) {
-      variableStyle.id = VARS_ID + '-pending';
+      variableStyle.id = VARS_ID + PENDING_SUFFIX;
       variableStyle.setAttribute('data-theme-store-signature', desired.signature);
       variableStyle.textContent = variableText;
     }
-    const compatibilityStyle = createCompatibilityStyle(COMPATIBILITY_ID + '-pending');
+    const compatibilityStyle = createCompatibilityStyle(COMPATIBILITY_ID + PENDING_SUFFIX);
 
+    mutatingDom = true;
     if (priorityObserver) priorityObserver.disconnect();
     target.appendChild(themeStyle);
     if (variableStyle) target.appendChild(variableStyle);
@@ -195,6 +229,7 @@
     compatibilityStyle.id = COMPATIBILITY_ID;
     appliedSignature = desired.signature;
     if (priorityObserver) priorityObserver.observe(document.documentElement, { childList: true, subtree: true });
+    mutatingDom = false;
     scheduleThemePriority();
   }
 
@@ -242,7 +277,7 @@
       return;
     }
     if (applyRequestSignature === desired.signature) return;
-    if (!api()) {
+    if (!api() || !isAuthenticated()) {
       applyFailures++;
       scheduleApplyRetry();
       return;
@@ -323,7 +358,7 @@
       suspendTheme();
       return Promise.resolve();
     }
-    if (!api()) {
+    if (!api() || !isAuthenticated()) {
       refreshFailures++;
       scheduleRefresh(retryDelay(refreshFailures));
       return Promise.resolve();
@@ -380,13 +415,15 @@
 
     const target = styleTarget();
     if (!target) return;
+
+    mutatingDom = true;
+    if (priorityObserver) priorityObserver.disconnect();
+
     let compatibilityStyle = document.getElementById(COMPATIBILITY_ID);
     if (!compatibilityStyle || compatibilityStyle.getAttribute('data-theme-store-signature') !== desired.signature) {
-      if (priorityObserver) priorityObserver.disconnect();
       if (compatibilityStyle) compatibilityStyle.remove();
       compatibilityStyle = createCompatibilityStyle(COMPATIBILITY_ID);
       target.appendChild(compatibilityStyle);
-      if (priorityObserver) priorityObserver.observe(document.documentElement, { childList: true, subtree: true });
     }
     const nodes = [themeStyle, document.getElementById(VARS_ID), compatibilityStyle].filter(Boolean);
     const children = target.children;
@@ -394,11 +431,12 @@
     const alreadyLast = offset >= 0 && nodes.every(function (node, index) {
       return node.parentNode === target && children[offset + index] === node;
     });
-    if (alreadyLast) return;
+    if (!alreadyLast) {
+      nodes.forEach(function (node) { target.appendChild(node); });
+    }
 
-    if (priorityObserver) priorityObserver.disconnect();
-    nodes.forEach(function (node) { target.appendChild(node); });
     if (priorityObserver) priorityObserver.observe(document.documentElement, { childList: true, subtree: true });
+    mutatingDom = false;
   }
 
   function scheduleThemePriority() {
@@ -479,10 +517,22 @@
     else sidebar.appendChild(entry);
   }
 
+  function debouncedInjectMenuItem() {
+    if (menuDebounce) return;
+    menuDebounce = setTimeout(function () {
+      menuDebounce = 0;
+      injectMenuItem();
+    }, 150);
+  }
+
   function navigation() {
     injectMenuItem();
     if (isSuspended()) {
       suspendTheme();
+      return;
+    }
+    if (!isAuthenticated()) {
+      scheduleRefresh(retryDelay(refreshFailures + 1));
       return;
     }
     applyDesiredTheme(false);
@@ -497,6 +547,10 @@
       suspendTheme();
       return;
     }
+    if (!isAuthenticated()) {
+      scheduleRefresh(retryDelay(refreshFailures + 1));
+      return;
+    }
     applyDesiredTheme(false);
     scheduleThemePriority();
     scheduleRefresh(0);
@@ -505,14 +559,14 @@
   function start() {
     if (started) return;
     started = true;
-    const menuObserver = new MutationObserver(injectMenuItem);
+    const menuObserver = new MutationObserver(debouncedInjectMenuItem);
     menuObserver.observe(document.documentElement, { childList: true, subtree: true });
     priorityObserver = new MutationObserver(function (mutations) {
-      if (isSuspended()) return;
+      if (mutatingDom || isSuspended()) return;
       const relevant = mutations.some(function (mutation) {
         const changedNodes = Array.from(mutation.addedNodes).concat(Array.from(mutation.removedNodes));
         return changedNodes.some(function (node) {
-          return node.id === STYLE_ID || node.id === VARS_ID || node.id === COMPATIBILITY_ID || node.nodeName === 'STYLE' || node.nodeName === 'LINK' || node.nodeName === 'BODY';
+          return node.nodeName === 'STYLE' || node.nodeName === 'LINK' || node.nodeName === 'BODY';
         });
       });
       if (relevant) scheduleThemePriority();
@@ -537,10 +591,16 @@
     setInterval(function () {
       injectMenuItem();
       if (document.visibilityState === 'hidden' || isSuspended()) return;
+      if (!isAuthenticated()) return;
       scheduleThemePriority();
       if (!lastRefreshSuccess || Date.now() - lastRefreshSuccess > 30000) scheduleRefresh(0);
-    }, 5000);
-    navigation();
+    }, 15000);
+
+    if (window.location.hash) {
+      navigation();
+    } else {
+      setTimeout(navigation, 200);
+    }
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });

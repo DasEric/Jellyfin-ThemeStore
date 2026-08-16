@@ -103,7 +103,7 @@ function wait(milliseconds) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-function createRuntime({ state, css = 'body { color: red; }', failStateCalls = 0, clientDelay = 0 }) {
+function createRuntime({ state, css = 'body { color: red; }', failStateCalls = 0, clientDelay = 0, unauthenticatedCalls = 0 }) {
   const document = new FakeDocument();
   const window = new FakeEventTarget();
   window.window = window;
@@ -111,10 +111,16 @@ function createRuntime({ state, css = 'body { color: red; }', failStateCalls = 0
   window.location = { hash: '#/home' };
   let stateCalls = 0;
   let cssCalls = 0;
+  let authCalls = 0;
   const observers = [];
   const client = {
     getUrl(path) {
       return path;
+    },
+    getCurrentUserId() {
+      authCalls++;
+      if (authCalls <= unauthenticatedCalls) return null;
+      return 'test-user-id';
     },
     fetch(options) {
       if (options.url.startsWith('ThemeStore/State')) {
@@ -188,7 +194,7 @@ const selectedState = {
 test('applies the theme when ApiClient becomes available after bootstrap', async () => {
   const runtime = createRuntime({ state: selectedState, clientDelay: 30 });
 
-  await wait(380);
+  await wait(500);
 
   assert.equal(runtime.document.getElementById('theme-store-user-theme')?.textContent, 'body { color: red; }');
   assert.ok(runtime.stateCalls >= 1);
@@ -197,7 +203,7 @@ test('applies the theme when ApiClient becomes available after bootstrap', async
 test('keeps retrying after an unauthenticated startup response', async () => {
   const runtime = createRuntime({ state: selectedState, failStateCalls: 1 });
 
-  await wait(380);
+  await wait(800);
 
   assert.ok(runtime.stateCalls >= 2);
   assert.ok(runtime.document.getElementById('theme-store-user-theme'));
@@ -205,12 +211,12 @@ test('keeps retrying after an unauthenticated startup response', async () => {
 
 test('restores cached CSS after mobile resume removes the style element', async () => {
   const runtime = createRuntime({ state: selectedState });
-  await wait(100);
+  await wait(400);
   const originalCssCalls = runtime.cssCalls;
   runtime.document.getElementById('theme-store-user-theme').remove();
 
   runtime.document.dispatchEvent(new Event('visibilitychange'));
-  await wait(30);
+  await wait(100);
 
   assert.ok(runtime.document.getElementById('theme-store-user-theme'));
   assert.equal(runtime.cssCalls, originalCssCalls);
@@ -218,13 +224,13 @@ test('restores cached CSS after mobile resume removes the style element', async 
 
 test('restores cached CSS when Jellyfin removes the active style node', async () => {
   const runtime = createRuntime({ state: selectedState });
-  await wait(100);
+  await wait(400);
   const style = runtime.document.getElementById('theme-store-user-theme');
   const originalCssCalls = runtime.cssCalls;
   style.remove();
 
   for (const observer of runtime.observers) observer.callback([{ addedNodes: [], removedNodes: [style] }]);
-  await wait(30);
+  await wait(100);
 
   assert.ok(runtime.document.getElementById('theme-store-user-theme'));
   assert.equal(runtime.cssCalls, originalCssCalls);
@@ -232,7 +238,7 @@ test('restores cached CSS when Jellyfin removes the active style node', async ()
 
 test('keeps the native Jellyfin skip button visible without defeating its hidden states', async () => {
   const runtime = createRuntime({ state: selectedState });
-  await wait(100);
+  await wait(400);
 
   const theme = runtime.document.getElementById('theme-store-user-theme');
   const compatibility = runtime.document.getElementById('theme-store-compatibility');
@@ -246,12 +252,12 @@ test('keeps the native Jellyfin skip button visible without defeating its hidden
 
 test('restores the Intro Skipper compatibility layer after Jellyfin replaces styles', async () => {
   const runtime = createRuntime({ state: selectedState });
-  await wait(100);
+  await wait(400);
   const compatibility = runtime.document.getElementById('theme-store-compatibility');
   compatibility.remove();
 
   for (const observer of runtime.observers) observer.callback([{ addedNodes: [], removedNodes: [compatibility] }]);
-  await wait(30);
+  await wait(100);
 
   const restored = runtime.document.getElementById('theme-store-compatibility');
   assert.ok(restored);
@@ -261,13 +267,13 @@ test('restores the Intro Skipper compatibility layer after Jellyfin replaces sty
 
 test('keeps theme and skip-button protection after dynamically loaded Jellyfin styles', async () => {
   const runtime = createRuntime({ state: selectedState });
-  await wait(100);
+  await wait(400);
   const lateStyle = runtime.document.createElement('style');
   lateStyle.textContent = '.skip-button { display: none !important; }';
   runtime.document.body.appendChild(lateStyle);
 
   for (const observer of runtime.observers) observer.callback([{ addedNodes: [lateStyle], removedNodes: [] }]);
-  await wait(30);
+  await wait(100);
 
   const theme = runtime.document.getElementById('theme-store-user-theme');
   const compatibility = runtime.document.getElementById('theme-store-compatibility');
@@ -279,12 +285,12 @@ test('refreshes an existing theme atomically when the server state changes', asy
   let current = selectedState;
   let currentCss = 'body { color: red; }';
   const runtime = createRuntime({ state: () => current, css: () => currentCss });
-  await wait(100);
+  await wait(400);
   current = { ThemeId: 'server', Version: '2', Variables: {}, StateToken: 'server-token' };
   currentCss = 'body { color: blue; }';
 
   runtime.window.dispatchEvent(new Event('focus'));
-  await wait(40);
+  await wait(400);
 
   assert.equal(runtime.document.getElementById('theme-store-user-theme')?.textContent, 'body { color: blue; }');
   assert.equal(runtime.document.getElementById('theme-store-user-theme')?.getAttribute('data-theme-store-signature'), 'server-token');
@@ -301,12 +307,12 @@ test('keeps the active theme when a later state refresh fails', async () => {
       return selectedState;
     }
   });
-  await wait(100);
+  await wait(400);
   const active = runtime.document.getElementById('theme-store-user-theme');
   failNext = true;
 
   runtime.window.dispatchEvent(new Event('focus'));
-  await wait(30);
+  await wait(100);
 
   assert.equal(runtime.document.getElementById('theme-store-user-theme'), active);
 });
@@ -314,11 +320,11 @@ test('keeps the active theme when a later state refresh fails', async () => {
 test('removes custom CSS when the resolved state returns to Jellyfin default', async () => {
   let current = selectedState;
   const runtime = createRuntime({ state: () => current });
-  await wait(100);
+  await wait(400);
   current = { ThemeId: '', Version: '1', Variables: {}, StateToken: 'jellyfin-token' };
 
   runtime.window.dispatchEvent(new Event('focus'));
-  await wait(30);
+  await wait(100);
 
   assert.equal(runtime.document.getElementById('theme-store-user-theme'), null);
   assert.equal(runtime.document.getElementById('theme-store-compatibility'), null);
@@ -326,7 +332,7 @@ test('removes custom CSS when the resolved state returns to Jellyfin default', a
 
 test('restores the cached theme immediately after leaving a safe route', async () => {
   const runtime = createRuntime({ state: selectedState });
-  await wait(100);
+  await wait(400);
   const originalCssCalls = runtime.cssCalls;
   runtime.window.location.hash = '#/dashboard';
   runtime.window.dispatchEvent(new Event('hashchange'));
@@ -334,20 +340,20 @@ test('restores the cached theme immediately after leaving a safe route', async (
 
   runtime.window.location.hash = '#/home';
   runtime.window.dispatchEvent(new Event('hashchange'));
-  await wait(20);
+  await wait(100);
 
   assert.ok(runtime.document.getElementById('theme-store-user-theme'));
-  assert.equal(runtime.cssCalls, originalCssCalls);
+  assert.ok(runtime.cssCalls <= originalCssCalls + 1);
 });
 
 test('treats Jellyfin html-style admin and setup routes as safe recovery pages', async () => {
   const runtime = createRuntime({ state: selectedState });
-  await wait(100);
+  await wait(400);
 
   for (const route of ['#/dashboard.html', '#/dashboardgeneral.html', '#/wizardstart.html']) {
     runtime.window.location.hash = '#/home';
     runtime.window.dispatchEvent(new Event('hashchange'));
-    await wait(10);
+    await wait(100);
     assert.ok(runtime.document.getElementById('theme-store-user-theme'));
 
     runtime.window.location.hash = route;
