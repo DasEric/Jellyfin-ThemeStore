@@ -426,11 +426,23 @@
       target.appendChild(compatibilityStyle);
     }
     const nodes = [themeStyle, document.getElementById(VARS_ID), compatibilityStyle].filter(Boolean);
-    const children = target.children;
-    const offset = children.length - nodes.length;
-    const alreadyLast = offset >= 0 && nodes.every(function (node, index) {
-      return node.parentNode === target && children[offset + index] === node;
-    });
+    let alreadyLast = true;
+    let lastSeenIndex = -1;
+    for (let i = 0; i < target.children.length; i++) {
+      const child = target.children[i];
+      const nodeIndex = nodes.indexOf(child);
+      if (nodeIndex !== -1) {
+        if (nodeIndex < lastSeenIndex) {
+          alreadyLast = false;
+          break;
+        }
+        lastSeenIndex = nodeIndex;
+      } else if (lastSeenIndex !== -1 && (child.tagName === 'STYLE' || child.tagName === 'LINK')) {
+        alreadyLast = false;
+        break;
+      }
+    }
+    if (lastSeenIndex !== nodes.length - 1) alreadyLast = false;
     if (!alreadyLast) {
       nodes.forEach(function (node) { target.appendChild(node); });
     }
