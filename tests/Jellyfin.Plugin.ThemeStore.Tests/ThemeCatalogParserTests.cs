@@ -67,6 +67,8 @@ public sealed class ThemeCatalogParserTests
         Assert.Contains("attachShadow", script);
         Assert.Contains(".customMenuOptions", script);
         Assert.Contains("ThemeStore/Page", script);
+        Assert.Contains("#/theme-store", script);
+        Assert.Contains("handleOfficialLink", script);
         Assert.Contains("dataType: 'text'", script);
         Assert.Contains("dataType: 'json'", script);
         Assert.Contains("typeof value.text === 'function'", script);
@@ -93,6 +95,26 @@ public sealed class ThemeCatalogParserTests
         Assert.Equal(once, twice);
         Assert.Contains("plugin=\"Theme Store\"", once);
         Assert.Equal(original, SkinInjector.ApplyToHtml(twice, false));
+    }
+
+    [Fact]
+    public void Jellyfin12MenuLinkPatchPreservesOtherLinksAndIsIdempotent()
+    {
+        const string original = "{\"multiserver\":true,\"menuLinks\":[{\"name\":\"Existing\",\"icon\":\"home\",\"url\":\"https://example.test\"}]}";
+        string enabled = WebConfigMenuLink.ApplyToJson(original, "Theme Store", "palette", "#/theme-store", true);
+        Assert.Contains("#/theme-store", enabled);
+        Assert.Contains("https://example.test", enabled);
+        Assert.Equal(enabled, WebConfigMenuLink.ApplyToJson(enabled, "Theme Store", "palette", "#/theme-store", true));
+
+        const string duplicate = "{\"menuLinks\":[{\"name\":\"Old\",\"url\":\"#/theme-store\"},{\"name\":\"Old again\",\"url\":\"#/theme-store\"}]}";
+        string deduplicated = WebConfigMenuLink.ApplyToJson(duplicate, "Theme Store", "palette", "#/theme-store", true);
+        Assert.Equal(1, deduplicated.Split("#/theme-store", StringSplitOptions.None).Length - 1);
+
+        string disabled = WebConfigMenuLink.ApplyToJson(enabled, "Theme Store", "palette", "#/theme-store", false);
+        Assert.DoesNotContain("#/theme-store", disabled);
+        Assert.Contains("https://example.test", disabled);
+        Assert.Equal(disabled, WebConfigMenuLink.ApplyToJson(disabled, "Theme Store", "palette", "#/theme-store", false));
+        Assert.Throws<InvalidDataException>(() => WebConfigMenuLink.ApplyToJson("{\"menuLinks\":{}}", "Theme Store", "palette", "#/theme-store", true));
     }
 
     [Fact]

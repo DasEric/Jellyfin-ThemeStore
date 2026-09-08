@@ -56,7 +56,15 @@ https://daseric.github.io/Jellyfin-ThemeStore/manifest.json
 5. Restart Jellyfin.
 6. Open `Dashboard → Plugins → Theme Store Settings` and configure the catalog and server default.
 
-Theme Store updates Jellyfin Web's `index.html` atomically during server startup. If your package or container mounts the web root read-only, grant the Jellyfin process write access to that single file or add `<script plugin="Theme Store" src="../ThemeStore/InjectionScript?v=1.1.0.0" defer></script>` immediately before `</head>`. The server log emits a clear warning when automatic injection is not possible. Reapply a manual injection after Jellyfin Web updates.
+Theme Store updates Jellyfin Web's `index.html` atomically during server startup
+and registers `{"name":"Theme Store","icon":"palette","url":"#/theme-store"}`
+in `config.json`. Jellyfin 12 renders that native link in the Modern desktop app
+bar, its overflow menu, and the mobile drawer. Existing custom links are
+preserved. Reload already open clients after installation or configuration
+changes. If the web root is read-only, mount customized `index.html` and
+`config.json` files or add the script and `menuLinks` entry manually; the server
+log reports either failed update. Reapply manual changes after Jellyfin Web
+updates.
 
 You can also open the [Theme Store repository manifest](https://daseric.github.io/Jellyfin-ThemeStore/manifest.json) directly or read Jellyfin's [official plugin repository documentation](https://jellyfin.org/docs/general/server/plugins/#repositories).
 
@@ -195,8 +203,8 @@ dotnet publish Jellyfin.Plugin.ThemeStore.csproj --configuration Release --outpu
 Create a release with a four-part Jellyfin plugin version tag:
 
 ```bash
-git tag v1.1.0.0
-git push origin v1.1.0.0
+git tag v1.1.1.0
+git push origin v1.1.1.0
 ```
 
 GitHub Actions runs the test suite, builds the versioned Theme Store ZIP, creates the GitHub release, updates the newest Jellyfin-12 entry in `manifest.json`, and publishes both `manifest.json` and `catalog.json` through GitHub Pages. Existing Jellyfin-10.11 entries and their dependency metadata remain intact.

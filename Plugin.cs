@@ -18,6 +18,7 @@ namespace Jellyfin.Plugin.ThemeStore
         /// in the switch block below to apply safe defaults for that version.
         /// </summary>
         private const int CurrentConfigVersion = 7;
+        private const string MenuLinkUrl = "#/theme-store";
         private readonly IApplicationPaths _applicationPaths;
 
         public const string DefaultCatalogUrl = "https://daseric.github.io/Jellyfin-ThemeStore/catalog.json";
@@ -46,6 +47,7 @@ namespace Jellyfin.Plugin.ThemeStore
             ServiceProvider = serviceProvider;
             MigrateConfig();
             UpdateIndexHtml(true);
+            UpdateMenuLink(Configuration.AllowUserThemes);
         }
 
         /// <summary>
@@ -127,12 +129,28 @@ namespace Jellyfin.Plugin.ThemeStore
             Services.SkinInjector.InvalidateInjectionCache();
             base.SaveConfiguration();
             UpdateIndexHtml(true);
+            UpdateMenuLink(Configuration.AllowUserThemes);
         }
 
         public override void OnUninstalling()
         {
             UpdateIndexHtml(false);
+            UpdateMenuLink(false);
             base.OnUninstalling();
+        }
+
+        private void UpdateMenuLink(bool enabled)
+        {
+            try
+            {
+                string path = Path.Combine(_applicationPaths.WebPath, "config.json");
+                Services.WebConfigMenuLink.UpdateFile(path, "Theme Store", "palette", MenuLinkUrl, enabled);
+            }
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or ArgumentException or NotSupportedException or Newtonsoft.Json.JsonException)
+            {
+                // The legacy/mobile DOM integration remains available when web config is read-only.
+                Console.Error.WriteLine("[ThemeStore] Could not update jellyfin-web/config.json: " + exception.Message);
+            }
         }
 
         private void UpdateIndexHtml(bool enabled)

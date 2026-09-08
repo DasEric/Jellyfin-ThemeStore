@@ -7,6 +7,7 @@
   const MENU_ID = 'theme-store-sidebar';
   const MODERN_MENU_ID = 'theme-store-modern-sidebar';
   const MODAL_ID = 'theme-store-modal';
+  const OFFICIAL_LINK_HASH = '#/theme-store';
   const STYLE_ID = 'theme-store-user-theme';
   const VARS_ID = 'theme-store-user-vars';
   const COMPATIBILITY_ID = 'theme-store-compatibility';
@@ -556,6 +557,13 @@
     return entry;
   }
 
+  function handleOfficialLink(event) {
+    const anchor = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+    if (!anchor || new URL(anchor.href, document.baseURI).hash !== OFFICIAL_LINK_HASH) return;
+    event.preventDefault();
+    openStore();
+  }
+
   function debouncedInjectMenuItem() {
     if (menuDebounce) return;
     menuDebounce = setTimeout(function () {
@@ -598,6 +606,7 @@
   function start() {
     if (started) return;
     started = true;
+    document.addEventListener('click', handleOfficialLink, true);
     const menuObserver = new MutationObserver(debouncedInjectMenuItem);
     menuObserver.observe(document.documentElement, { childList: true, subtree: true });
     priorityObserver = new MutationObserver(function (mutations) {
