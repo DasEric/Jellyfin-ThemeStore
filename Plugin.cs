@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Jellyfin.Plugin.ThemeStore.Configuration;
 using MediaBrowser.Common.Configuration;
 using MediaBrowser.Common.Plugins;
@@ -17,6 +18,7 @@ namespace Jellyfin.Plugin.ThemeStore
         /// in the switch block below to apply safe defaults for that version.
         /// </summary>
         private const int CurrentConfigVersion = 7;
+        private readonly IApplicationPaths _applicationPaths;
 
         public const string DefaultCatalogUrl = "https://daseric.github.io/Jellyfin-ThemeStore/catalog.json";
 
@@ -40,8 +42,10 @@ namespace Jellyfin.Plugin.ThemeStore
             : base(applicationPaths, xmlSerializer)
         {
             Instance = this;
+            _applicationPaths = applicationPaths;
             ServiceProvider = serviceProvider;
             MigrateConfig();
+            UpdateIndexHtml(true);
         }
 
         /// <summary>
@@ -122,6 +126,53 @@ namespace Jellyfin.Plugin.ThemeStore
         {
             Services.SkinInjector.InvalidateInjectionCache();
             base.SaveConfiguration();
+            UpdateIndexHtml(true);
+        }
+
+        public override void OnUninstalling()
+        {
+            UpdateIndexHtml(false);
+            base.OnUninstalling();
+        }
+
+        private void UpdateIndexHtml(bool enabled)
+        {
+            try
+            {
+                string webPath = _applicationPaths.WebPath;
+                if (string.IsNullOrWhiteSpace(webPath))
+                    return;
+
+                string path = Path.Combine(webPath, "index.html");
+                if (!File.Exists(path))
+                    return;
+
+                string original = File.ReadAllText(path);
+                string updated = Services.SkinInjector.ApplyToHtml(original, enabled);
+                if (string.Equals(original, updated, StringComparison.Ordinal))
+                    return;
+
+                string directory = Path.GetDirectoryName(path);
+                if (string.IsNullOrEmpty(directory))
+                    return;
+
+                string temporary = Path.Combine(directory, Path.GetRandomFileName());
+                try
+                {
+                    File.WriteAllText(temporary, updated);
+                    File.Move(temporary, path, true);
+                }
+                finally
+                {
+                    if (File.Exists(temporary))
+                        File.Delete(temporary);
+                }
+            }
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or ArgumentException or NotSupportedException)
+            {
+                // Web integration is best effort and must never prevent server startup.
+                Console.Error.WriteLine("[ThemeStore] Could not update jellyfin-web/index.html. Grant Jellyfin write access or inject the Theme Store script manually: " + exception.Message);
+            }
         }
 
         public IEnumerable<PluginPageInfo> GetPages()

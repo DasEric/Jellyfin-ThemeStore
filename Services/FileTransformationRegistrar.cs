@@ -49,7 +49,7 @@ namespace Jellyfin.Plugin.ThemeStore.Services
             }
 
             if (!stoppingToken.IsCancellationRequested)
-                _logger.LogWarning("[ThemeStore] File Transformation was not available after {Attempts} registration attempts. Install or enable it, then restart Jellyfin.", RegistrationAttempts);
+                _logger.LogInformation("[ThemeStore] Optional File Transformation was not available; the built-in idempotent index.html integration remains active.");
         }
 
         private static bool TryRegisterWithFileTransformation()

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
@@ -8,7 +8,9 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AssemblyName>Jellyfin.Plugin.ThemeStore</AssemblyName>
     <RootNamespace>Jellyfin.Plugin.ThemeStore</RootNamespace>
-    <Version>1.0.0.0</Version>
+    <Version>1.1.0.0</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
     <Authors>Jellyfin Theme Store contributors; based on work by Jellyfin Plugin Group</Authors>
     <RepositoryUrl>https://github.com/DasEric/Jellyfin-ThemeStore</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -16,9 +18,9 @@
     <Copyright>Original portions Copyright © 2026 Jellyfin SM; modifications Copyright © 2026 Jellyfin Theme Store contributors</Copyright>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Jellyfin.Controller" Version="10.11.0" />
-    <PackageReference Include="Jellyfin.Model" Version="10.11.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" ExcludeAssets="runtime" />
+    <PackageReference Include="Jellyfin.Controller" Version="12.0.0" ExcludeAssets="runtime" />
+    <PackageReference Include="Jellyfin.Model" Version="12.0.0" ExcludeAssets="runtime" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" ExcludeAssets="runtime" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Configuration\configPage.html" />

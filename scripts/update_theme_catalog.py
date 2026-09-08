@@ -85,12 +85,12 @@ def validate_url(value: str, label: str) -> None:
         raise ValueError(f"{label} must be an absolute HTTPS URL: {value!r}")
 
 
-def build_catalog(sources: dict, awesome: dict[str, dict]) -> list[dict]:
+def build_catalog(sources: dict, awesome: dict[str, dict], fallback: dict[str, dict] | None = None) -> list[dict]:
     result = []
     ids: set[str] = set()
     for source in sources["themes"]:
         source_name = source["sourceName"]
-        metadata = awesome.get(source_name.casefold())
+        metadata = awesome.get(source_name.casefold()) or (fallback or {}).get(source_name.casefold())
         if metadata is None:
             raise ValueError(f"Theme {source_name!r} no longer exists in Awesome Jellyfin")
         if not metadata["sourceUrl"]:
@@ -124,19 +124,21 @@ def build_catalog(sources: dict, awesome: dict[str, dict]) -> list[dict]:
             if variant["name"].casefold() != source_name.casefold():
                 description = f"{description} Variant: {variant['name']}."
 
-            result.append({
+            entry = {
                 "id": theme_id,
                 "name": variant["name"],
                 "author": metadata["author"],
                 "description": description,
                 "version": "awesome-main",
+                **({"jellyfin": variant["jellyfin"]} if "jellyfin" in variant else {}),
                 "sourceUrl": metadata["sourceUrl"],
                 "cssUrl": css_urls[0],
                 "cssUrls": css_urls,
                 "previewUrls": previews,
                 "tags": list(dict.fromkeys([*source_tags, *variant.get("tags", [])])),
                 "license": source.get("license", "See upstream repository"),
-            })
+            }
+            result.append(entry)
     return result
 
 
@@ -152,7 +154,18 @@ def main() -> int:
 
     sources = json.loads(SOURCES_PATH.read_text(encoding="utf-8"))
     markdown = args.awesome_file.read_text(encoding="utf-8") if args.awesome_file else download_text(sources["awesomeThemesUrl"])
-    catalog = build_catalog(sources, parse_awesome(markdown))
+    fallback = {}
+    if CATALOG_PATH.exists():
+        existing_by_id = {entry["id"]: entry for entry in json.loads(CATALOG_PATH.read_text(encoding="utf-8"))}
+        for source in sources["themes"]:
+            existing = existing_by_id.get(source["variants"][0]["id"])
+            if existing:
+                fallback[source["sourceName"].casefold()] = {
+                    key: existing[key]
+                    for key in ("name", "author", "description", "sourceUrl", "previewUrls")
+                }
+
+    catalog = build_catalog(sources, parse_awesome(markdown), fallback)
     output = render_catalog(catalog)
 
     if args.check:

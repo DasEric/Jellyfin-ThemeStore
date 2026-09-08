@@ -1,6 +1,9 @@
 bin/
 obj/
 artifacts/
+dist/
+publish/
+scripts/__pycache__/
 .vs/
 TestResults/
 .vscode/settings.json

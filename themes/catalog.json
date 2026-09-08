@@ -395,16 +395,16 @@
   {
     "id": "evergarden-summer",
     "name": "Evergarden - Summer",
-    "author": "everviolet",
-    "description": "A Jellyfin theme by everviolet. Variant: Evergarden - Summer.",
+    "author": "evergardentheme",
+    "description": "A Jellyfin theme by evergardentheme. Variant: Evergarden - Summer.",
     "version": "awesome-main",
-    "sourceUrl": "https://github.com/everviolet/jellyfin",
+    "sourceUrl": "https://github.com/evergardentheme/jellyfin",
     "cssUrl": "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-summer.css",
     "cssUrls": [
       "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-summer.css"
     ],
     "previewUrls": [
-      "https://raw.githubusercontent.com/everviolet/jellyfin/main/assets/summer.webp"
+      "https://raw.githubusercontent.com/evergardentheme/jellyfin/main/assets/summer.webp"
     ],
     "tags": [
       "evergarden"
@@ -414,16 +414,16 @@
   {
     "id": "evergarden-spring",
     "name": "Evergarden - Spring",
-    "author": "everviolet",
-    "description": "A Jellyfin theme by everviolet. Variant: Evergarden - Spring.",
+    "author": "evergardentheme",
+    "description": "A Jellyfin theme by evergardentheme. Variant: Evergarden - Spring.",
     "version": "awesome-main",
-    "sourceUrl": "https://github.com/everviolet/jellyfin",
+    "sourceUrl": "https://github.com/evergardentheme/jellyfin",
     "cssUrl": "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-spring.css",
     "cssUrls": [
       "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-spring.css"
     ],
     "previewUrls": [
-      "https://raw.githubusercontent.com/everviolet/jellyfin/main/assets/spring.webp"
+      "https://raw.githubusercontent.com/evergardentheme/jellyfin/main/assets/spring.webp"
     ],
     "tags": [
       "evergarden"
@@ -433,16 +433,16 @@
   {
     "id": "evergarden-fall",
     "name": "Evergarden - Fall",
-    "author": "everviolet",
-    "description": "A Jellyfin theme by everviolet. Variant: Evergarden - Fall.",
+    "author": "evergardentheme",
+    "description": "A Jellyfin theme by evergardentheme. Variant: Evergarden - Fall.",
     "version": "awesome-main",
-    "sourceUrl": "https://github.com/everviolet/jellyfin",
+    "sourceUrl": "https://github.com/evergardentheme/jellyfin",
     "cssUrl": "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-fall.css",
     "cssUrls": [
       "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-fall.css"
     ],
     "previewUrls": [
-      "https://raw.githubusercontent.com/everviolet/jellyfin/main/assets/fall.webp"
+      "https://raw.githubusercontent.com/evergardentheme/jellyfin/main/assets/fall.webp"
     ],
     "tags": [
       "evergarden"
@@ -452,16 +452,16 @@
   {
     "id": "evergarden-winter",
     "name": "Evergarden - Winter",
-    "author": "everviolet",
-    "description": "A Jellyfin theme by everviolet. Variant: Evergarden - Winter.",
+    "author": "evergardentheme",
+    "description": "A Jellyfin theme by evergardentheme. Variant: Evergarden - Winter.",
     "version": "awesome-main",
-    "sourceUrl": "https://github.com/everviolet/jellyfin",
+    "sourceUrl": "https://github.com/evergardentheme/jellyfin",
     "cssUrl": "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-winter.css",
     "cssUrls": [
       "https://raw.githubusercontent.com/everviolet/jellyfin/main/themes/evergarden-winter.css"
     ],
     "previewUrls": [
-      "https://raw.githubusercontent.com/everviolet/jellyfin/main/assets/winter.webp"
+      "https://raw.githubusercontent.com/evergardentheme/jellyfin/main/assets/winter.webp"
     ],
     "tags": [
       "evergarden"
@@ -474,6 +474,7 @@
     "author": "tedhinklater",
     "description": "A Jellyfin theme by tedhinklater. Variant: Finimalism - Jellyfin 11.",
     "version": "awesome-main",
+    "jellyfin": "11 / Legacy layout",
     "sourceUrl": "https://github.com/tedhinklater/finimalism",
     "cssUrl": "https://cdn.jsdelivr.net/gh/tedhinklater/finimalism@main/Finimalism11.css",
     "cssUrls": [
@@ -494,6 +495,7 @@
     "author": "tedhinklater",
     "description": "A Jellyfin theme by tedhinklater. Variant: Finimalism - Jellyfin 12.",
     "version": "awesome-main",
+    "jellyfin": "12 / Modern and Legacy layouts",
     "sourceUrl": "https://github.com/tedhinklater/finimalism",
     "cssUrl": "https://cdn.jsdelivr.net/gh/tedhinklater/finimalism@main/Finimalism12.css",
     "cssUrls": [
@@ -1175,7 +1177,7 @@
     "id": "zestytheme",
     "name": "ZestyTheme",
     "author": "stpnwf",
-    "description": "A minimal and elegant theme for Jellyfin",
+    "description": "A minimal and elegant theme for Jellyfin Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a",
     "version": "awesome-main",
     "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
     "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
@@ -1199,7 +1201,7 @@
     "id": "zestytheme-blue",
     "name": "ZestyTheme - Blue",
     "author": "stpnwf",
-    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Blue.",
+    "description": "A minimal and elegant theme for Jellyfin Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: ZestyTheme - Blue.",
     "version": "awesome-main",
     "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
     "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
@@ -1224,7 +1226,7 @@
     "id": "zestytheme-coral",
     "name": "ZestyTheme - Coral",
     "author": "stpnwf",
-    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Coral.",
+    "description": "A minimal and elegant theme for Jellyfin Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: ZestyTheme - Coral.",
     "version": "awesome-main",
     "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
     "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
@@ -1249,7 +1251,7 @@
     "id": "zestytheme-gray",
     "name": "ZestyTheme - Gray",
     "author": "stpnwf",
-    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Gray.",
+    "description": "A minimal and elegant theme for Jellyfin Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: ZestyTheme - Gray.",
     "version": "awesome-main",
     "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
     "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
@@ -1274,7 +1276,7 @@
     "id": "zestytheme-green",
     "name": "ZestyTheme - Green",
     "author": "stpnwf",
-    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Green.",
+    "description": "A minimal and elegant theme for Jellyfin Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: ZestyTheme - Green.",
     "version": "awesome-main",
     "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
     "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
@@ -1299,7 +1301,7 @@
     "id": "zestytheme-purple",
     "name": "ZestyTheme - Purple",
     "author": "stpnwf",
-    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Purple.",
+    "description": "A minimal and elegant theme for Jellyfin Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: ZestyTheme - Purple.",
     "version": "awesome-main",
     "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
     "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
@@ -1324,7 +1326,7 @@
     "id": "zestytheme-red",
     "name": "ZestyTheme - Red",
     "author": "stpnwf",
-    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Red.",
+    "description": "A minimal and elegant theme for Jellyfin Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: ZestyTheme - Red.",
     "version": "awesome-main",
     "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
     "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",
@@ -1349,7 +1351,7 @@
     "id": "zestytheme-yellow",
     "name": "ZestyTheme - Yellow",
     "author": "stpnwf",
-    "description": "A minimal and elegant theme for Jellyfin Variant: ZestyTheme - Yellow.",
+    "description": "A minimal and elegant theme for Jellyfin Stale / Inactive / May not work anymore 📅 👉 Back to <a href=\"https://github.com/awesome-jellyfin/awesome-jellyfin\"awesome-jellyfin/awesome-jellyfin</a Variant: ZestyTheme - Yellow.",
     "version": "awesome-main",
     "sourceUrl": "https://github.com/stpnwf/ZestyTheme",
     "cssUrl": "https://cdn.jsdelivr.net/gh/stpnwf/ZestyTheme@latest/theme.css",

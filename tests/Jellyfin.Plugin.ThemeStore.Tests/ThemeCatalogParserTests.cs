@@ -60,6 +60,11 @@ public sealed class ThemeCatalogParserTests
     {
         string script = ReadEmbeddedText("Jellyfin.Plugin.ThemeStore.Configuration.injection.js");
         Assert.Contains(".mainDrawer-scrollContainer", script);
+        Assert.Contains(".MuiDrawer-paper", script);
+        Assert.Contains("document.createElement('li')", script);
+        Assert.Contains("item.appendChild(modern)", script);
+        Assert.Contains("if (!modernDrawer)", script);
+        Assert.Contains("attachShadow", script);
         Assert.Contains(".customMenuOptions", script);
         Assert.Contains("ThemeStore/Page", script);
         Assert.Contains("dataType: 'text'", script);
@@ -77,6 +82,17 @@ public sealed class ThemeCatalogParserTests
         Assert.Contains("state.active = data.ActiveThemeId", ReadEmbeddedText("Jellyfin.Plugin.ThemeStore.Configuration.userThemePage.js"));
         Assert.Contains("event.stopPropagation()", ReadEmbeddedText("Jellyfin.Plugin.ThemeStore.Configuration.userThemePage.js"));
         Assert.DoesNotContain(".lnkHomePreferences", script);
+    }
+
+    [Fact]
+    public void BuiltInWebFallbackIsIdempotentAndRemovable()
+    {
+        const string original = "<html><head><title>Jellyfin</title></head><body></body></html>";
+        string once = SkinInjector.ApplyToHtml(original, true);
+        string twice = SkinInjector.ApplyToHtml(once, true);
+        Assert.Equal(once, twice);
+        Assert.Contains("plugin=\"Theme Store\"", once);
+        Assert.Equal(original, SkinInjector.ApplyToHtml(twice, false));
     }
 
     [Fact]

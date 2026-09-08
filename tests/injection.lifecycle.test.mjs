@@ -265,20 +265,22 @@ test('restores the Intro Skipper compatibility layer after Jellyfin replaces sty
   assert.equal(runtime.document.body.children.at(-1), restored);
 });
 
-test('keeps theme and skip-button protection after dynamically loaded Jellyfin styles', async () => {
+test('does not reappend theme styles when Jellyfin loads another stylesheet', async () => {
   const runtime = createRuntime({ state: selectedState });
   await wait(400);
+  const originalTheme = runtime.document.getElementById('theme-store-user-theme');
   const lateStyle = runtime.document.createElement('style');
   lateStyle.textContent = '.some-jellyfin-style { display: none !important; }';
-  runtime.document.body.appendChild(lateStyle);
+  runtime.document.head.appendChild(lateStyle);
 
   for (const observer of runtime.observers) observer.callback([{ addedNodes: [lateStyle], removedNodes: [] }]);
   await wait(100);
 
   const theme = runtime.document.getElementById('theme-store-user-theme');
   const compatibility = runtime.document.getElementById('theme-store-compatibility');
-  assert.ok(runtime.document.body.children.indexOf(theme) > runtime.document.body.children.indexOf(lateStyle));
-  assert.equal(runtime.document.body.children.at(-1), compatibility);
+  assert.equal(theme, originalTheme);
+  assert.ok(compatibility);
+  assert.equal(runtime.document.head.children.at(-1), lateStyle);
 });
 
 test('refreshes an existing theme atomically when the server state changes', async () => {
@@ -286,6 +288,7 @@ test('refreshes an existing theme atomically when the server state changes', asy
   let currentCss = 'body { color: red; }';
   const runtime = createRuntime({ state: () => current, css: () => currentCss });
   await wait(400);
+  const originalStyle = runtime.document.getElementById('theme-store-user-theme');
   current = { ThemeId: 'server', Version: '2', Variables: {}, StateToken: 'server-token' };
   currentCss = 'body { color: blue; }';
 
@@ -293,6 +296,7 @@ test('refreshes an existing theme atomically when the server state changes', asy
   await wait(400);
 
   assert.equal(runtime.document.getElementById('theme-store-user-theme')?.textContent, 'body { color: blue; }');
+  assert.equal(runtime.document.getElementById('theme-store-user-theme'), originalStyle);
   assert.equal(runtime.document.getElementById('theme-store-user-theme')?.getAttribute('data-theme-store-signature'), 'server-token');
 });
 

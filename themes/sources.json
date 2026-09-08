@@ -59,8 +59,8 @@
       "sourceName": "finimalism",
       "license": "GPL-3.0",
       "variants": [
-        { "id": "finimalism-v11", "name": "Finimalism - Jellyfin 11", "cssUrls": ["https://cdn.jsdelivr.net/gh/tedhinklater/finimalism@main/Finimalism11.css"] },
-        { "id": "finimalism-v12", "name": "Finimalism - Jellyfin 12", "cssUrls": ["https://cdn.jsdelivr.net/gh/tedhinklater/finimalism@main/Finimalism12.css"] }
+        { "id": "finimalism-v11", "name": "Finimalism - Jellyfin 11", "jellyfin": "11 / Legacy layout", "cssUrls": ["https://cdn.jsdelivr.net/gh/tedhinklater/finimalism@main/Finimalism11.css"] },
+        { "id": "finimalism-v12", "name": "Finimalism - Jellyfin 12", "jellyfin": "12 / Modern and Legacy layouts", "cssUrls": ["https://cdn.jsdelivr.net/gh/tedhinklater/finimalism@main/Finimalism12.css"] }
       ]
     },
     {

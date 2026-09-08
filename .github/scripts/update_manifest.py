@@ -9,11 +9,11 @@ plugin["imageUrl"] = os.environ["IMAGE_URL"]
 version = {
     "version": os.environ["VERSION"],
     "changelog": "See the linked GitHub release notes.",
-    "targetAbi": "10.11.0.0",
+    "targetAbi": "12.0.0.0",
     "sourceUrl": os.environ["SOURCE_URL"],
     "checksum": os.environ["CHECKSUM"],
     "timestamp": os.environ["TIMESTAMP"],
-    "dependencies": ["5e87cc92-571a-4d8d-8d98-d2d4147f9f90"],
+    "dependencies": [],
 }
 plugin["versions"] = [item for item in plugin.get("versions", []) if item.get("version") != version["version"]]
 plugin["versions"].insert(0, version)

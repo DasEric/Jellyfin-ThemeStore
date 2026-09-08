@@ -25,17 +25,17 @@ This project is based on [Jellyfin-PG/Skin-Manager](https://github.com/Jellyfin-
 
 ## Requirements and compatibility
 
-- Jellyfin Server 10.11.x
-- [File Transformation](https://github.com/IAmParadox27/jellyfin-plugin-file-transformation) 2.5.5 or newer
+- Jellyfin Server 12.0.x (use a 1.0.x release for Jellyfin 10.11)
+- File Transformation is optional. Theme Store 1.1.x contains an idempotent Jellyfin Web fallback because the current File Transformation release is not compatible with Jellyfin 12/.NET 10.
 - A client that loads the Jellyfin Web frontend supplied by the server
 
 Supported clients include regular web browsers and many Jellyfin applications that embed Jellyfin Web. Fully native clients such as Android TV do not load the server's web frontend, so the plugin cannot display the store or apply CSS in those clients.
 
-Custom themes are intentionally disabled on login, setup, administrator, and Theme Store pages. This keeps a safe recovery interface available if a theme is broken.
+Custom themes are intentionally disabled on login, setup, and administrator pages. This keeps a safe recovery interface available if a theme is broken. The active theme remains mounted while the Theme Store is open so mobile WebKit does not repeatedly tear down and parse large stylesheets.
 
 ### Intro Skipper compatibility
 
-Jellyfin 10.11 renders the skip prompt in Jellyfin Web from media segments supplied by plugins such as [Intro Skipper](https://github.com/intro-skipper/intro-skipper). Because Theme Store themes are deliberately loaded after Jellyfin's normal styles, a broad theme rule could otherwise hide or block that native button. Theme Store therefore adds a narrowly scoped compatibility layer for Jellyfin's direct `body > .skip-button-container` element. It restores only the visible button's layout, stacking, opacity, and pointer handling; Jellyfin's intentional `hide` and `skip-button-hidden` states remain untouched.
+Jellyfin renders the skip prompt in Jellyfin Web from media segments supplied by plugins such as [Intro Skipper](https://github.com/intro-skipper/intro-skipper). A broad custom-theme rule could hide or block that native button. Theme Store therefore adds a narrowly scoped compatibility layer for Jellyfin's direct `body > .skip-button-container` element. It restores only the visible button's layout, stacking, opacity, and pointer handling; Jellyfin's intentional `hide` and `skip-button-hidden` states remain untouched.
 
 Theme Store does not generate intro segments or force Jellyfin to offer a skip action. If no button is created at all, finish Intro Skipper's analysis task, clear the client cache, and confirm that the client's Jellyfin skip option is set to **Ask to Skip**. Near the end of an item, Jellyfin may use **Up Next** instead of displaying a separate outro skip button. See Intro Skipper's [troubleshooting guide](https://github.com/intro-skipper/intro-skipper/wiki/Troubleshooting) and Jellyfin [skip options](https://github.com/intro-skipper/intro-skipper/wiki/Jellyfin-Skip-Options).
 
@@ -52,9 +52,11 @@ https://daseric.github.io/Jellyfin-ThemeStore/manifest.json
 1. Sign in to Jellyfin as an administrator.
 2. Open `Dashboard → Plugins → Repositories`.
 3. Add a repository named **Jellyfin Theme Store**, paste the URL above, and save it.
-4. Open the plugin catalog and install **File Transformation** first and **Theme Store** second.
+4. Open the plugin catalog and install **Theme Store**. File Transformation is optional on compatible Jellyfin versions and is not required by the Jellyfin 12 build.
 5. Restart Jellyfin.
 6. Open `Dashboard → Plugins → Theme Store Settings` and configure the catalog and server default.
+
+Theme Store updates Jellyfin Web's `index.html` atomically during server startup. If your package or container mounts the web root read-only, grant the Jellyfin process write access to that single file or add `<script plugin="Theme Store" src="../ThemeStore/InjectionScript?v=1.1.0.0" defer></script>` immediately before `</head>`. The server log emits a clear warning when automatic injection is not possible. Reapply a manual injection after Jellyfin Web updates.
 
 You can also open the [Theme Store repository manifest](https://daseric.github.io/Jellyfin-ThemeStore/manifest.json) directly or read Jellyfin's [official plugin repository documentation](https://jellyfin.org/docs/general/server/plugins/#repositories).
 
@@ -193,11 +195,11 @@ dotnet publish Jellyfin.Plugin.ThemeStore.csproj --configuration Release --outpu
 Create a release with a four-part Jellyfin plugin version tag:
 
 ```bash
-git tag v1.0.0.0
-git push origin v1.0.0.0
+git tag v1.1.0.0
+git push origin v1.1.0.0
 ```
 
-GitHub Actions runs the test suite, builds `ThemeStore_1.0.0.0.zip`, creates the GitHub release, updates the newest version in `manifest.json`, and publishes both `manifest.json` and `catalog.json` through GitHub Pages. The dependency on File Transformation is added automatically.
+GitHub Actions runs the test suite, builds the versioned Theme Store ZIP, creates the GitHub release, updates the newest Jellyfin-12 entry in `manifest.json`, and publishes both `manifest.json` and `catalog.json` through GitHub Pages. Existing Jellyfin-10.11 entries and their dependency metadata remain intact.
 
 Before the first Pages deployment, select **GitHub Actions** under `Settings → Pages → Build and deployment → Source`. After a successful release, the same workflow publishes the generated repository manifest as `/manifest.json`.
 
@@ -209,7 +211,7 @@ Personal theme assignments are stored in `user-themes.json`, and downloaded CSS 
 
 The original code was published as [Jellyfin-PG/Skin-Manager](https://github.com/Jellyfin-PG/Skin-Manager) by Jellyfin Plugin Group / Jellyfin SM. The source snapshot supplied for this fork contains the MIT License and the notice `Copyright (c) 2026 Jellyfin SM`; the complete text is preserved unchanged in [`LICENSE`](LICENSE). The original README described the project as GPL-3.0 despite the included license file. This repository follows and preserves the license text actually distributed with the source snapshot.
 
-[File Transformation](https://github.com/IAmParadox27/jellyfin-plugin-file-transformation) is maintained by IAmParadox27. It is a separately installed runtime dependency under GPL-3.0. Its source code and binaries are not bundled with this repository.
+[File Transformation](https://github.com/IAmParadox27/jellyfin-plugin-file-transformation) is maintained by IAmParadox27. It is an optional separately installed plugin under GPL-3.0. Its source code and binaries are not bundled with this repository.
 
 See [`NOTICE.md`](NOTICE.md) for additional attribution details.
 

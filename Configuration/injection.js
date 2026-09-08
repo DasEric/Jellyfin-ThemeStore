@@ -5,6 +5,7 @@
   window.__jellyfinThemeStoreLoaded = true;
 
   const MENU_ID = 'theme-store-sidebar';
+  const MODERN_MENU_ID = 'theme-store-modern-sidebar';
   const MODAL_ID = 'theme-store-modal';
   const STYLE_ID = 'theme-store-user-theme';
   const VARS_ID = 'theme-store-user-vars';
@@ -46,6 +47,7 @@
   let lastRefreshSuccess = 0;
   let applyRun = 0;
   let applyRequestSignature = '';
+  let applyAbort = null;
   let applyTimer = 0;
   let applyFailures = 0;
   let priorityFrame = 0;
@@ -55,8 +57,6 @@
   const cssCache = new Map();
   let cssCacheChars = 0;
   let mutatingDom = false;
-  let domWarMoves = 0;
-  let domWarBackoffUntil = 0;
   let menuDebounce = 0;
 
   function emptyDesired() {
@@ -128,7 +128,7 @@
   }
 
   function isSuspended() {
-    return SAFE_ROUTE.test(window.location.hash) || !!document.getElementById(MODAL_ID);
+    return SAFE_ROUTE.test(window.location.hash);
   }
 
   function isOwnElement(id) {
@@ -146,6 +146,11 @@
 
   function removeAppliedTheme() {
     ++applyRun;
+    if (applyAbort) {
+      applyAbort.abort();
+      applyAbort = null;
+    }
+    applyRequestSignature = '';
     if (applyTimer) {
       clearTimeout(applyTimer);
       applyTimer = 0;
@@ -188,6 +193,9 @@
   }
 
   function styleTarget() {
+    // Keep one stable style group after Jellyfin's head styles. This preserves
+    // custom-theme cascade priority without repeatedly moving nodes, which is
+    // particularly expensive and unstable in mobile WebKit.
     return document.body || document.head || document.documentElement;
   }
 
@@ -204,35 +212,52 @@
     const target = styleTarget();
     if (!target) return;
 
-    const themeStyle = document.createElement('style');
-    themeStyle.id = STYLE_ID + PENDING_SUFFIX;
-    themeStyle.setAttribute('data-theme-store-signature', desired.signature);
-    themeStyle.textContent = substituteVariables(rawCss || '', desired.variables);
-
-    const variableText = variablesCss(desired.variables);
-    const variableStyle = variableText ? document.createElement('style') : null;
-    if (variableStyle) {
-      variableStyle.id = VARS_ID + PENDING_SUFFIX;
-      variableStyle.setAttribute('data-theme-store-signature', desired.signature);
-      variableStyle.textContent = variableText;
-    }
-    const compatibilityStyle = createCompatibilityStyle(COMPATIBILITY_ID + PENDING_SUFFIX);
-
     mutatingDom = true;
     if (priorityObserver) priorityObserver.disconnect();
-    target.appendChild(themeStyle);
-    if (variableStyle) target.appendChild(variableStyle);
-    target.appendChild(compatibilityStyle);
-    removeElement(STYLE_ID);
-    removeElement(VARS_ID);
-    removeElement(COMPATIBILITY_ID);
-    themeStyle.id = STYLE_ID;
-    if (variableStyle) variableStyle.id = VARS_ID;
-    compatibilityStyle.id = COMPATIBILITY_ID;
-    appliedSignature = desired.signature;
-    if (priorityObserver) priorityObserver.observe(document.documentElement, { childList: true, subtree: true });
-    mutatingDom = false;
-    scheduleThemePriority();
+    try {
+      let themeStyle = document.getElementById(STYLE_ID);
+      if (!themeStyle) {
+        themeStyle = document.createElement('style');
+        themeStyle.id = STYLE_ID;
+      }
+      themeStyle.setAttribute('data-theme-store-signature', desired.signature);
+      themeStyle.textContent = substituteVariables(rawCss || '', desired.variables);
+
+      const variableText = variablesCss(desired.variables);
+      let variableStyle = variableText ? document.getElementById(VARS_ID) : null;
+      if (variableStyle) {
+        variableStyle.setAttribute('data-theme-store-signature', desired.signature);
+        variableStyle.textContent = variableText;
+      } else if (variableText) {
+        variableStyle = document.createElement('style');
+        variableStyle.id = VARS_ID;
+        variableStyle.setAttribute('data-theme-store-signature', desired.signature);
+        variableStyle.textContent = variableText;
+      } else {
+        removeElement(VARS_ID);
+      }
+      let compatibilityStyle = document.getElementById(COMPATIBILITY_ID);
+      if (!compatibilityStyle) compatibilityStyle = createCompatibilityStyle(COMPATIBILITY_ID);
+      else {
+        compatibilityStyle.setAttribute('data-theme-store-signature', desired.signature);
+        compatibilityStyle.textContent = COMPATIBILITY_CSS;
+      }
+
+      let appendedOwnedNode = false;
+      if (themeStyle.parentNode !== target) {
+        target.appendChild(themeStyle);
+        appendedOwnedNode = true;
+      }
+      if (variableStyle && variableStyle.parentNode !== target) {
+        target.appendChild(variableStyle);
+        appendedOwnedNode = true;
+      }
+      if (compatibilityStyle.parentNode !== target || appendedOwnedNode) target.appendChild(compatibilityStyle);
+      appliedSignature = desired.signature;
+    } finally {
+      if (priorityObserver) priorityObserver.observe(target, { childList: true });
+      mutatingDom = false;
+    }
   }
 
   function rememberCss(key, css) {
@@ -271,7 +296,6 @@
 
     const existing = document.getElementById(STYLE_ID);
     if (!force && appliedSignature === desired.signature && existing && existing.getAttribute('data-theme-store-signature') === desired.signature) {
-      scheduleThemePriority();
       return;
     }
     if (cssCache.has(desired.cacheKey)) {
@@ -288,7 +312,11 @@
     const epoch = ++applyRun;
     const requestedSignature = desired.signature;
     applyRequestSignature = requestedSignature;
-    apiFetch('ThemeStore/Theme.css', { type: 'GET', dataType: 'text', cache: 'no-store' }, {
+    if (applyAbort) applyAbort.abort();
+    applyAbort = typeof AbortController === 'function' ? new AbortController() : null;
+    const cssRequestOptions = { type: 'GET', dataType: 'text', cache: 'no-store' };
+    if (applyAbort) cssRequestOptions.signal = applyAbort.signal;
+    apiFetch('ThemeStore/Theme.css', cssRequestOptions, {
       id: desired.id,
       v: desired.version,
       s: desired.token || desired.signature
@@ -296,17 +324,20 @@
       .then(readText)
       .then(function (css) {
         if (epoch !== applyRun || requestedSignature !== desired.signature) return;
+        if (css.length > CSS_CACHE_MAX_CHARS) throw new Error('Theme CSS exceeds the safe 8 MiB browser limit.');
         rememberCss(desired.cacheKey, css);
         applyFailures = 0;
         installCss(css);
       })
       .catch(function (error) {
         if (epoch !== applyRun || requestedSignature !== desired.signature) return;
+        if (error && error.name === 'AbortError') return;
         applyFailures++;
         console.warn('[ThemeStore] Could not apply theme; retrying:', error);
         scheduleApplyRetry();
       })
       .finally(function () {
+        if (epoch === applyRun) applyAbort = null;
         if (applyRequestSignature === requestedSignature) applyRequestSignature = '';
         if (requestedSignature === desired.signature && !isSuspended() && !document.getElementById(STYLE_ID)) scheduleApplyRetry();
       });
@@ -417,52 +448,12 @@
 
     const target = styleTarget();
     if (!target) return;
-
-    mutatingDom = true;
-    if (priorityObserver) priorityObserver.disconnect();
-
     let compatibilityStyle = document.getElementById(COMPATIBILITY_ID);
     if (!compatibilityStyle || compatibilityStyle.getAttribute('data-theme-store-signature') !== desired.signature) {
       if (compatibilityStyle) compatibilityStyle.remove();
       compatibilityStyle = createCompatibilityStyle(COMPATIBILITY_ID);
       target.appendChild(compatibilityStyle);
     }
-    const nodes = [themeStyle, document.getElementById(VARS_ID), compatibilityStyle].filter(Boolean);
-    let alreadyLast = true;
-    let lastSeenIndex = -1;
-    for (let i = 0; i < target.children.length; i++) {
-      const child = target.children[i];
-      const nodeIndex = nodes.indexOf(child);
-      if (nodeIndex !== -1) {
-        if (nodeIndex < lastSeenIndex) {
-          alreadyLast = false;
-          break;
-        }
-        lastSeenIndex = nodeIndex;
-      } else if (lastSeenIndex !== -1 && (child.nodeName === 'STYLE' || child.nodeName === 'LINK')) {
-        const text = child.textContent || '';
-        const id = (child.id || '').toLowerCase();
-        if (id.includes('skip') || text.includes('.skip-button')) continue;
-        alreadyLast = false;
-        break;
-      }
-    }
-    if (lastSeenIndex !== nodes.length - 1) alreadyLast = false;
-    if (!alreadyLast) {
-      if (Date.now() < domWarBackoffUntil) return;
-      domWarMoves++;
-      if (domWarMoves > 10) {
-        domWarMoves = 0;
-        domWarBackoffUntil = Date.now() + 15000;
-        return;
-      }
-      nodes.forEach(function (node) { target.appendChild(node); });
-    } else {
-      domWarMoves = 0;
-    }
-
-    if (priorityObserver) priorityObserver.observe(document.documentElement, { childList: true, subtree: true });
-    mutatingDom = false;
   }
 
   function scheduleThemePriority() {
@@ -483,17 +474,16 @@
   async function openStore() {
     const old = document.getElementById(MODAL_ID);
     if (old) old.remove();
-    suspendTheme();
-
     const overlay = document.createElement('div');
     overlay.id = MODAL_ID;
-    overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#101010;overflow:auto;color:#eee;';
-    overlay.innerHTML = '<div style="position:sticky;top:0;z-index:50;display:flex;justify-content:flex-end;padding:.5rem;background:#111;border-bottom:1px solid #333"><button type="button" aria-label="Theme Store schließen" style="border:0;background:transparent;color:#fff;font-size:2rem;line-height:1;cursor:pointer;padding:.25rem .7rem">×</button></div><div data-theme-store-content><div style="padding:3rem;text-align:center">Theme Store wird geladen…</div></div>';
-    overlay.querySelector('button').addEventListener('click', closeStore);
+    overlay.style.cssText = 'position:fixed!important;inset:0!important;z-index:9999!important;display:block!important;background:#101010!important;overflow:auto!important;color:#eee!important;';
+    const storeRoot = typeof overlay.attachShadow === 'function' ? overlay.attachShadow({ mode: 'open' }) : overlay;
+    storeRoot.innerHTML = '<div style="position:sticky;top:0;z-index:50;display:flex;justify-content:flex-end;padding:.5rem;background:#111;border-bottom:1px solid #333"><button type="button" aria-label="Theme Store schließen" style="border:0;background:transparent;color:#fff;font-size:2rem;line-height:1;cursor:pointer;padding:.25rem .7rem">×</button></div><div data-theme-store-content><div style="padding:3rem;text-align:center">Theme Store wird geladen…</div></div>';
+    storeRoot.querySelector('button').addEventListener('click', closeStore);
     document.body.appendChild(overlay);
 
     const client = api();
-    const content = overlay.querySelector('[data-theme-store-content]');
+    const content = storeRoot.querySelector('[data-theme-store-content]');
     if (!client || !client.fetch || !client.getUrl) {
       content.textContent = 'Theme Store konnte noch nicht geladen werden. Bitte kurz warten und erneut öffnen.';
       scheduleRefresh(250);
@@ -514,33 +504,56 @@
   }
 
   function injectMenuItem() {
-    if (document.getElementById(MENU_ID)) return;
     const client = api();
+    if (!client) return;
     const sidebar = document.querySelector('.mainDrawer-scrollContainer, .mainDrawer .scrollContainer');
-    if (!sidebar || !client) return;
+    if (sidebar && !document.getElementById(MENU_ID)) {
+      const entry = createMenuLink(MENU_ID, 'navMenuOption lnkMediaFolder', '<span class="material-icons navMenuOptionIcon palette" aria-hidden="true"></span><span class="navMenuOptionText">Theme Store</span>');
+      entry.setAttribute('is', 'emby-linkbutton');
+      entry.setAttribute('data-itemid', 'theme-store');
+      const custom = sidebar.querySelector('.customMenuOptions');
+      const libraries = sidebar.querySelector('.libraryMenuOptions');
+      const admin = sidebar.querySelector('.adminMenuOptions');
+      if (custom) custom.appendChild(entry);
+      else if (libraries) sidebar.insertBefore(entry, libraries);
+      else if (admin) sidebar.insertBefore(entry, admin);
+      else sidebar.appendChild(entry);
+    }
 
+    if (typeof document.querySelectorAll === 'function' && !document.getElementById(MODERN_MENU_ID)) {
+      const drawer = Array.from(document.querySelectorAll('.MuiDrawer-paper')).find(function (item) {
+        return !(item.closest && item.closest('.mainDrawer'));
+      });
+      const list = drawer && drawer.querySelector('ul.MuiList-root');
+      if (list) {
+        const modern = createMenuLink(MODERN_MENU_ID, 'MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters', '<span class="material-icons" aria-hidden="true" style="min-width:2.5rem">palette</span><span>Theme Store</span>');
+        modern.style.cssText = 'display:flex;align-items:center;box-sizing:border-box;width:100%;min-height:48px;padding:8px 16px;color:inherit;text-decoration:none;gap:.5rem;';
+        const item = document.createElement('li');
+        item.className = 'MuiListItem-root MuiListItem-gutters MuiListItem-padding';
+        item.style.cssText = 'padding:0;';
+        item.appendChild(modern);
+        list.appendChild(item);
+      }
+    }
+  }
+
+  function createMenuLink(id, className, html) {
     const entry = document.createElement('a');
-    entry.id = MENU_ID;
+    entry.id = id;
     entry.href = '#';
-    entry.setAttribute('is', 'emby-linkbutton');
-    entry.setAttribute('data-itemid', 'theme-store');
-    entry.className = 'navMenuOption lnkMediaFolder';
-    entry.innerHTML = '<span class="material-icons navMenuOptionIcon palette" aria-hidden="true"></span><span class="navMenuOptionText">Theme Store</span>';
+    entry.className = className;
+    entry.innerHTML = html;
     entry.addEventListener('click', function (event) {
       event.preventDefault();
-      event.stopPropagation();
-      const backdrop = document.querySelector('.mainDrawer-backdrop');
-      if (backdrop) backdrop.click();
+      const modernDrawer = entry.closest && entry.closest('.MuiDrawer-paper');
+      if (!modernDrawer) {
+        event.stopPropagation();
+        const backdrop = document.querySelector('.mainDrawer-backdrop');
+        if (backdrop) backdrop.click();
+      }
       openStore();
     });
-
-    const custom = sidebar.querySelector('.customMenuOptions');
-    const libraries = sidebar.querySelector('.libraryMenuOptions');
-    const admin = sidebar.querySelector('.adminMenuOptions');
-    if (custom) custom.appendChild(entry);
-    else if (libraries) sidebar.insertBefore(entry, libraries);
-    else if (admin) sidebar.insertBefore(entry, admin);
-    else sidebar.appendChild(entry);
+    return entry;
   }
 
   function debouncedInjectMenuItem() {
@@ -592,12 +605,12 @@
       const relevant = mutations.some(function (mutation) {
         const changedNodes = Array.from(mutation.addedNodes).concat(Array.from(mutation.removedNodes));
         return changedNodes.some(function (node) {
-          return node.nodeName === 'STYLE' || node.nodeName === 'LINK' || node.nodeName === 'BODY';
+          return isOwnElement(node.id);
         });
       });
       if (relevant) scheduleThemePriority();
     });
-    priorityObserver.observe(document.documentElement, { childList: true, subtree: true });
+    priorityObserver.observe(styleTarget(), { childList: true });
 
     window.addEventListener('hashchange', navigation);
     window.addEventListener('popstate', navigation);
@@ -618,7 +631,6 @@
       injectMenuItem();
       if (document.visibilityState === 'hidden' || isSuspended()) return;
       if (!isAuthenticated()) return;
-      scheduleThemePriority();
       if (!lastRefreshSuccess || Date.now() - lastRefreshSuccess > 30000) scheduleRefresh(0);
     }, 15000);
 

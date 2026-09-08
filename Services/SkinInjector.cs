@@ -13,10 +13,10 @@ namespace Jellyfin.Plugin.ThemeStore.Services
         private const string StartMarker = "<!-- ThemeStore-Start -->";
         private const string EndMarker = "<!-- ThemeStore-End -->";
         private static readonly Regex StripPreviousInjection = new(
-            Regex.Escape(StartMarker) + @"[\s\S]*?" + Regex.Escape(EndMarker) + @"\n?",
+            @"(?:\r?\n)?" + Regex.Escape(StartMarker) + @"[\s\S]*?" + Regex.Escape(EndMarker) + @"\r?\n?",
             RegexOptions.Compiled);
         private static readonly Regex StripLegacyInjection = new(
-            @"<!-- SkinManager-Start -->[\s\S]*?<!-- SkinManager-End -->\n?",
+            @"(?:\r?\n)?<!-- SkinManager-Start -->[\s\S]*?<!-- SkinManager-End -->\r?\n?",
             RegexOptions.Compiled);
         private static readonly Regex HeadCloseTag = new(@"(</head>)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
@@ -24,19 +24,7 @@ namespace Jellyfin.Plugin.ThemeStore.Services
         {
             try
             {
-                string html = payload?.Contents;
-                if (string.IsNullOrEmpty(html))
-                    return html ?? string.Empty;
-
-                html = StripLegacyInjection.Replace(StripPreviousInjection.Replace(html, string.Empty), string.Empty);
-                string version = typeof(Plugin).Assembly
-                    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                    ?.InformationalVersion
-                    ?? typeof(Plugin).Assembly.GetName().Version?.ToString()
-                    ?? "1";
-                string injection = $"<script plugin=\"Theme Store\" src=\"../ThemeStore/InjectionScript?v={Uri.EscapeDataString(version)}\" defer></script>\n";
-                string block = "\n" + StartMarker + "\n" + injection + EndMarker + "\n";
-                return HeadCloseTag.Replace(html, match => block + match.Value, 1);
+                return ApplyToHtml(payload?.Contents ?? string.Empty, true);
             }
             catch (Exception ex)
             {
@@ -44,6 +32,28 @@ namespace Jellyfin.Plugin.ThemeStore.Services
                 return payload?.Contents ?? string.Empty;
             }
         }
+
+        public static string ApplyToHtml(string html, bool enabled)
+        {
+            if (string.IsNullOrEmpty(html))
+                return html ?? string.Empty;
+
+            html = RemoveInjection(html);
+            if (!enabled || !HeadCloseTag.IsMatch(html))
+                return html;
+
+            string version = typeof(Plugin).Assembly
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion
+                ?? typeof(Plugin).Assembly.GetName().Version?.ToString()
+                ?? "1";
+            string injection = $"<script plugin=\"Theme Store\" src=\"../ThemeStore/InjectionScript?v={Uri.EscapeDataString(version)}\" defer></script>\n";
+            string block = "\n" + StartMarker + "\n" + injection + EndMarker + "\n";
+            return HeadCloseTag.Replace(html, match => block + match.Value, 1);
+        }
+
+        public static string RemoveInjection(string html)
+            => StripLegacyInjection.Replace(StripPreviousInjection.Replace(html ?? string.Empty, string.Empty), string.Empty);
 
         // Retained for configuration-save compatibility. The injected bootstrap
         // is configuration-independent and fetches current settings via the API.
