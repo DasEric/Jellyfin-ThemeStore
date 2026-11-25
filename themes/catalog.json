@@ -925,6 +925,341 @@
     "license": "MIT"
   },
   {
+    "id": "nebula",
+    "name": "Nebula",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "nebula-coral",
+    "name": "Nebula - Coral",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works. Variant: Nebula - Coral.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/acento-coral.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "nebula-emerald",
+    "name": "Nebula - Emerald",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works. Variant: Nebula - Emerald.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/acento-esmeralda.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "nebula-ocean",
+    "name": "Nebula - Ocean",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works. Variant: Nebula - Ocean.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/acento-oceano.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "nebula-pink",
+    "name": "Nebula - Pink",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works. Variant: Nebula - Pink.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/acento-rosa.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "nebula-gold",
+    "name": "Nebula - Gold",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works. Variant: Nebula - Gold.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/acento-oro.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "nebula-white",
+    "name": "Nebula - White",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works. Variant: Nebula - White.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/acento-blanco.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "nebula-minimal-header",
+    "name": "Nebula - Minimal Header",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works. Variant: Nebula - Minimal Header.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/cabecera-minima.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "nebula-hide-header-libraries",
+    "name": "Nebula - Hide Header Libraries",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works. Variant: Nebula - Hide Header Libraries.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/ocultar-bibliotecas-cabecera.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "nebula-hide-header-favorites",
+    "name": "Nebula - Hide Header Favorites",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works. Variant: Nebula - Hide Header Favorites.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/ocultar-favoritos-cabecera.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "nebula-hide-more-menu",
+    "name": "Nebula - Hide More Menu",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works. Variant: Nebula - Hide More Menu.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/ocultar-menu-mas.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "nebula-text-title",
+    "name": "Nebula - Text Title",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works. Variant: Nebula - Text Title.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/titulo-en-texto.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "nebula-centered-card-text",
+    "name": "Nebula - Centered Card Text",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works. Variant: Nebula - Centered Card Text.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/tarjetas-texto-centrado.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
+    "id": "nebula-no-animations",
+    "name": "Nebula - No Animations",
+    "author": "nemesbak",
+    "description": "A dark theme with rounded cards, glass menus, the Inter font and a violet to cyan gradient accent. Movie pages show the title logo, and episodes are shown as cards. [!NOTE] Built for Jellyfin 12. On 10.x it only partly works. Variant: Nebula - No Animations.",
+    "version": "awesome-main",
+    "jellyfin": "12",
+    "sourceUrl": "https://github.com/nemesbak/jellyfin-nebula",
+    "cssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+    "cssUrls": [
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/sin-animaciones.css"
+    ],
+    "previewUrls": [
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/inicio.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/ficha.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/biblioteca.jpg",
+      "https://raw.githubusercontent.com/nemesbak/jellyfin-nebula/main/screenshots/temporada.jpg"
+    ],
+    "tags": [
+      "Nebula"
+    ],
+    "license": "MIT"
+  },
+  {
     "id": "netfin",
     "name": "NetFin",
     "author": "ya0903",

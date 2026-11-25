@@ -120,6 +120,27 @@
       ]
     },
     {
+      "sourceName": "Nebula",
+      "license": "MIT",
+      "baseCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css",
+      "variants": [
+        {"id": "nebula", "name": "Nebula", "jellyfin": "12"},
+        {"id": "nebula-coral", "name": "Nebula - Coral", "jellyfin": "12", "addonCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/acento-coral.css"},
+        {"id": "nebula-emerald", "name": "Nebula - Emerald", "jellyfin": "12", "addonCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/acento-esmeralda.css"},
+        {"id": "nebula-ocean", "name": "Nebula - Ocean", "jellyfin": "12", "addonCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/acento-oceano.css"},
+        {"id": "nebula-pink", "name": "Nebula - Pink", "jellyfin": "12", "addonCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/acento-rosa.css"},
+        {"id": "nebula-gold", "name": "Nebula - Gold", "jellyfin": "12", "addonCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/acento-oro.css"},
+        {"id": "nebula-white", "name": "Nebula - White", "jellyfin": "12", "addonCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/acento-blanco.css"},
+        {"id": "nebula-minimal-header", "name": "Nebula - Minimal Header", "jellyfin": "12", "addonCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/cabecera-minima.css"},
+        {"id": "nebula-hide-header-libraries", "name": "Nebula - Hide Header Libraries", "jellyfin": "12", "addonCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/ocultar-bibliotecas-cabecera.css"},
+        {"id": "nebula-hide-header-favorites", "name": "Nebula - Hide Header Favorites", "jellyfin": "12", "addonCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/ocultar-favoritos-cabecera.css"},
+        {"id": "nebula-hide-more-menu", "name": "Nebula - Hide More Menu", "jellyfin": "12", "addonCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/ocultar-menu-mas.css"},
+        {"id": "nebula-text-title", "name": "Nebula - Text Title", "jellyfin": "12", "addonCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/titulo-en-texto.css"},
+        {"id": "nebula-centered-card-text", "name": "Nebula - Centered Card Text", "jellyfin": "12", "addonCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/tarjetas-texto-centrado.css"},
+        {"id": "nebula-no-animations", "name": "Nebula - No Animations", "jellyfin": "12", "addonCssUrl": "https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/opciones/sin-animaciones.css"}
+      ]
+    },
+    {
       "sourceName": "NetFin",
       "license": "MIT",
       "variants": [
