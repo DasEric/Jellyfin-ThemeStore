@@ -9,6 +9,15 @@
     "imageUrl": "https://raw.githubusercontent.com/DasEric/Jellyfin-ThemeStore/main/assets/skinmanager.svg",
     "versions": [
       {
+        "version": "1.1.2.0",
+        "changelog": "See the linked GitHub release notes.",
+        "targetAbi": "12.0.0.0",
+        "sourceUrl": "https://github.com/DasEric/Jellyfin-ThemeStore/releases/download/v1.1.2.0/ThemeStore_1.1.2.0.zip",
+        "checksum": "20669e10b2b840375066e5af800d9e17",
+        "timestamp": "2026-11-25T12:23:08Z",
+        "dependencies": []
+      },
+      {
         "version": "1.1.1.0",
         "changelog": "See the linked GitHub release notes.",
         "targetAbi": "12.0.0.0",
