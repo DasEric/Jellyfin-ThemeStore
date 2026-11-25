@@ -36,10 +36,19 @@ public sealed class ThemeCatalogParserTests
         var result = ThemeCatalogParser.Parse(content, new Uri(global::Jellyfin.Plugin.ThemeStore.Plugin.DefaultCatalogUrl));
 
         Assert.Empty(result.Warnings);
-        Assert.Equal(67, result.Themes.Count);
-        Assert.Equal(67, result.Themes.Select(theme => theme.Id).Distinct(StringComparer.OrdinalIgnoreCase).Count());
+        Assert.Equal(81, result.Themes.Count);
+        Assert.Equal(81, result.Themes.Select(theme => theme.Id).Distinct(StringComparer.OrdinalIgnoreCase).Count());
         Assert.Contains(result.Themes, theme => theme.Id == "catppuccin-mocha" && theme.CssUrls.Count == 2);
         Assert.Contains(result.Themes, theme => theme.Id == "scyfin-oled" && theme.CssUrls.Count == 2);
+        var nebula = result.Themes.Where(theme => theme.Id == "nebula" || theme.Id.StartsWith("nebula-", StringComparison.Ordinal)).ToList();
+        Assert.Equal(14, nebula.Count);
+        Assert.Contains(nebula, theme => theme.Id == "nebula" && theme.CssUrls.Count == 1);
+        Assert.All(nebula, theme =>
+        {
+            Assert.Equal("https://cdn.jsdelivr.net/gh/nemesbak/jellyfin-nebula@main/nebula.css", theme.CssUrls[0]);
+            Assert.Equal(theme.Id == "nebula" ? 1 : 2, theme.CssUrls.Count);
+            Assert.Equal("MIT", theme.License);
+        });
         Assert.All(result.Themes, theme => Assert.StartsWith("https://", theme.SourceUrl));
         Assert.All(result.Themes, theme => Assert.NotEmpty(theme.PreviewUrls));
         Assert.All(result.Themes, theme => Assert.NotEmpty(theme.License));
